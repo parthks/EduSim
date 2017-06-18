@@ -10,6 +10,8 @@ $(function() {
     $("#connect").resizable().draggable();
     $("#extras").resizable().draggable();
     $("#www").resizable().draggable();
+
+    $("#topics").selectmenu();
 });
 
 var my_index = 100;

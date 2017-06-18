@@ -15,13 +15,31 @@
 
 <body>
     <div class="row">
-        <div class="col-md-2">Some button</div>
-        <div class="col-md-2">Some button</div>
-        <div class="col-md-4">
+        <div class="col-md-2">
+            <select name="topics" id="topics">
+                <option value="jquery">Home</option>
+                <optgroup label="Chapter 1">
+                    <option value="1.1">1.1 baoh</option>
+                    <option value="1.2">uisdjfnkj.js</option>
+                </optgroup>
+                <optgroup label="Chapter 2">
+                    <option value="somefile">Some unknown file</option>
+                    <option value="someotherfile">Some other file</option>
+                </optgroup>
+            </select>
+        </div>
+        <div class="col-md-2 center">
+            <button class="ui-button ui-widget ui-corner-all">Prev</button>
+        </div>
+        <div class="col-md-4 center">
             <h3>Topic Name</h3>
         </div>
-        <div class="col-md-2">Some button</div>
-        <div class="col-md-2">Some button</div>
+        <div class="col-md-2 center">
+            <button class="ui-button ui-widget ui-corner-all">Next</button>
+        </div>
+        <div class="col-md-2 right">
+            <button class="ui-button ui-widget ui-corner-all">Home</button>
+        </div>
     </div>
     <br>
     <div class="row">

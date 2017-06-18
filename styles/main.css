@@ -1,8 +1,19 @@
+div {
+    outline: 1px solid red;
+}
+
+.center {
+    text-align: center;
+}
+
+.right {
+    text-align: right;
+}
+
 .box {
     /*width: 150px;*/
     height: 350px;
     padding: 0.5em;
-    border: 1px solid red;
     overflow-y: auto;
 }
 
