@@ -1,4 +1,16 @@
 var txtRes = '{"nodes":[{"id":2,"title":"random variable","x":586,"y":263},{"id":3,"title":"random variable","x":873,"y":231},{"id":4,"title":"random variable","x":842,"y":371}],"edges":[{"source":4,"target":2},{"source":2,"target":3}]}'
+var dragged = false
+
+function clickedNode(id) {
+    if (dragged == true) {
+        return;
+    }
+
+    console.log("GO TO PAGE!", id);
+
+}
+
+
 
 document.onload = (function(d3, saveAs, Blob, undefined) {
     "use strict";
@@ -81,12 +93,13 @@ document.onload = (function(d3, saveAs, Blob, undefined) {
             });
 
         //listen for key events
-        d3.select(window).on("keydown", function() {
-                thisGraph.svgKeyDown.call(thisGraph);
-            })
-            .on("keyup", function() {
-                thisGraph.svgKeyUp.call(thisGraph);
-            });
+        // d3.select(window).on("keydown", function() {
+        //         thisGraph.svgKeyDown.call(thisGraph);
+        //     })
+        //     .on("keyup", function() {
+        //         thisGraph.svgKeyUp.call(thisGraph);
+        //     });
+
 
         svg.on("mousedown", function(d) { thisGraph.svgMouseDown.call(thisGraph, d); });
         svg.on("mouseup", function(d) { thisGraph.svgMouseUp.call(thisGraph, d); });
@@ -267,57 +280,12 @@ document.onload = (function(d3, saveAs, Blob, undefined) {
             state = thisGraph.state;
         d3.event.stopPropagation();
         state.mouseDownNode = d;
-        if (d3.event.shiftKey) {
-            //state.shiftNodeDrag = d3.event.shiftKey;
-            // reposition dragged directed edge
-            // thisGraph.dragLine.classed('hidden', false)
-            //     .attr('d', 'M' + d.x + ',' + d.y + 'L' + d.x + ',' + d.y);
-            // return;
-        }
     };
 
-    /* place editable text on node in place of svg text */
-    // GraphCreator.prototype.changeTextOfNode = function(d3node, d) {
-    //     var thisGraph = this,
-    //         consts = thisGraph.consts,
-    //         htmlEl = d3node.node();
-    //     d3node.selectAll("text").remove();
-    //     var nodeBCR = htmlEl.getBoundingClientRect(),
-    //         curScale = nodeBCR.width / consts.nodeRadius,
-    //         placePad = 5 * curScale,
-    //         useHW = curScale > 1 ? nodeBCR.width * 0.71 : consts.nodeRadius * 1.42;
-    //     // replace with editableconent text
-    //     var d3txt = thisGraph.svg.selectAll("foreignObject")
-    //         .data([d])
-    //         .enter()
-    //         .append("foreignObject")
-    //         .attr("x", nodeBCR.left + placePad)
-    //         .attr("y", nodeBCR.top + placePad)
-    //         .attr("height", 2 * useHW)
-    //         .attr("width", useHW)
-    //         .append("xhtml:p")
-    //         .attr("id", consts.activeEditId)
-    //         .attr("contentEditable", "true")
-    //         .text(d.title)
-    //         .on("mousedown", function(d) {
-    //             d3.event.stopPropagation();
-    //         })
-    //         .on("keydown", function(d) {
-    //             d3.event.stopPropagation();
-    //             if (d3.event.keyCode == consts.ENTER_KEY && !d3.event.shiftKey) {
-    //                 this.blur();
-    //             }
-    //         })
-    //         .on("blur", function(d) {
-    //             d.title = this.textContent;
-    //             thisGraph.insertTitleLinebreaks(d3node, d.title);
-    //             d3.select(this.parentElement).remove();
-    //         });
-    //     return d3txt;
-    // };
 
     // mouseup on nodes
     GraphCreator.prototype.circleMouseUp = function(d3node, d) {
+        dragged = false
         var thisGraph = this,
             state = thisGraph.state,
             consts = thisGraph.consts;
@@ -347,7 +315,9 @@ document.onload = (function(d3, saveAs, Blob, undefined) {
         } else {
             // we're in the same node
             if (state.justDragged) {
-                // dragged, not clicked
+                console.log("dragged!")
+                dragged = true
+                    // dragged, not clicked
                 state.justDragged = false;
             } else {
                 // clicked, not dragged
@@ -372,6 +342,8 @@ document.onload = (function(d3, saveAs, Blob, undefined) {
             }
         }
         state.mouseDownNode = null;
+
+        clickedNode(d.id)
         return;
 
     }; // end of circles mouseup
@@ -388,44 +360,12 @@ document.onload = (function(d3, saveAs, Blob, undefined) {
         if (state.justScaleTransGraph) {
             // dragged not clicked
             state.justScaleTransGraph = false;
-        } else if (state.graphMouseDown && d3.event.shiftKey) {
-            // clicked not dragged from svg
-            //var xycoords = d3.mouse(thisGraph.svgG.node()),
-            //d = { id: thisGraph.idct++, title: consts.defaultTitle, x: xycoords[0], y: xycoords[1] };
-            //thisGraph.nodes.push(d);
-            thisGraph.updateGraph();
-            // make title of text immediently editable
-            // var d3txt = thisGraph.changeTextOfNode(thisGraph.circles.filter(function(dval) {
-            //         return dval.id === d.id;
-            //     }), d),
-            //     txtNode = d3txt.node();
-            // thisGraph.selectElementContents(txtNode);
-            // txtNode.focus();
-        } else if (state.shiftNodeDrag) {
-            // dragged from node
-            // state.shiftNodeDrag = false;
-            // thisGraph.dragLine.classed("hidden", true);
+        } else if (state.graphMouseDown) {
+
         }
         state.graphMouseDown = false;
     };
 
-    // keydown on main svg
-    // GraphCreator.prototype.svgKeyDown = function() {
-    //     var thisGraph = this,
-    //         state = thisGraph.state,
-    //         consts = thisGraph.consts;
-    //     // make sure repeated key presses don't register for each keydown
-    //     if (state.lastKeyDown !== -1) return;
-
-    //     state.lastKeyDown = d3.event.keyCode;
-    //     var selectedNode = state.selectedNode,
-    //         selectedEdge = state.selectedEdge;
-
-    // };
-
-    // GraphCreator.prototype.svgKeyUp = function() {
-    //     this.state.lastKeyDown = -1;
-    // };
 
 
     // call to propagate changes to graph
