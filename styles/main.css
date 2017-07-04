@@ -1,5 +1,11 @@
-div {
+/*div {
     outline: 1px solid red;
+}
+*/
+
+.heading {
+    border-bottom: 1px solid black;
+    border-top: 1px solid black;
 }
 
 .center {
@@ -12,6 +18,7 @@ div {
 
 .box {
     /*width: 150px;*/
+    outline: 1px solid red;
     height: 350px;
     padding: 0.5em;
     overflow-y: auto;
@@ -22,11 +29,11 @@ h3 {
     margin: 0;
 }
 
-#summ-text {
+#summary-text {
     height: 150px;
 }
 
-#learn {
+#videoDiv {
     height: 550px;
 }
 
