@@ -2,7 +2,7 @@ $(function() {
     console.log("run")
     $("#calc").resizable().draggable();
 
-    $("#summ-text").resizable().draggable();
+    $("#summary-text").resizable().draggable();
     $("#learn").resizable().draggable();
 
     $("#sample-prob").resizable().draggable();
@@ -18,7 +18,7 @@ $(function() {
 
     obj = $("#all-content")
     obj.append('<div id="TEST" class="row"><div>')
-    obj.append('<div id="APPLICATION" class="row"><div>')
+    obj.append('<div id="APP" class="row"><div>')
     addTextBoxes($("#all-content"))
 
     // $("#all-content").append(addSummaryTextBox());
@@ -53,6 +53,7 @@ function clickText() {
         deleteTextBoxes()
     } else {
         addTextBoxes($("#all-content"))
+            //goToByScroll("TEXT")
     }
 }
 
@@ -63,6 +64,7 @@ function clickVid() {
         deleteVideoBoxes()
     } else {
         addVideoBoxes($("#all-content"))
+            //goToByScroll("VIDEO")
     }
 }
 
@@ -70,9 +72,10 @@ function clickTest() {
     selectedTestBox = !selectedTestBox
     allContent()
     if ($("#TestButton").hasClass("active")) {
-        deleteVideoBoxes()
+        deleteTestBoxes()
     } else {
         addTestBoxes($("#all-content"))
+        goToByScroll("TEST")
     }
 
 }
@@ -80,8 +83,105 @@ function clickTest() {
 function clickApp() {
     selectedAppBox = !selectedAppBox
     allContent()
+    if ($("#AppButton").hasClass("active")) {
+        deleteAppBoxes()
+    } else {
+        addAppBoxes($("#all-content"))
+        goToByScroll("APP")
+    }
 
 }
+
+
+
+function goToByScroll(id) {
+    // Scroll
+    $('html,body').animate({
+            scrollTop: $("#" + id).offset().top
+        },
+        'slow');
+}
+
+
+
+
+function deleteAppBoxes() {
+    $("#APP").remove()
+}
+
+function addAppBoxes(obj) {
+    obj.prepend('<div id="APP" class="row"><div>')
+    appDiv = $("#APP")
+    appDiv.empty()
+    addAppBox(appDiv)
+    $("#connect").resizable().draggable();
+    $("#appDiv").resizable().draggable();
+}
+
+function addAppBox(obj) {
+    obj.append(
+        '<div class = "col-md-3">' +
+        '<div id="connect" onclick="sendontop(this);" class="ui-widget-content box">' +
+        '<h3 class="ui-widget-header"> Connections</h3>' +
+        '</div>' +
+        '<div id="extras" onclick="sendontop(this);" class="ui-widget-content box">' +
+        '<h3 class="ui-widget-header"> Extra Info</h3>' +
+        '</div>' +
+        '</div>' +
+        '<div class = "col-md-9">' +
+        '<div id="appDiv" onclick="sendontop(this);" class="ui-widget-content box">' +
+        '<h3 class="ui-widget-header"> Application</h3>' +
+        '</div>' +
+        '</div>'
+    )
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+function deleteTestBoxes() {
+    $("#TEST").remove()
+}
+
+function addTestBoxes(obj) {
+    obj.prepend('<div id="TEST" class="row"><div>')
+    testDiv = $("#TEST")
+    testDiv.empty()
+    addTestBox(testDiv)
+    $("#calcDiv").resizable().draggable();
+    $("#sampleProbDiv").resizable().draggable();
+    $("#toughProbDiv").resizable().draggable();
+}
+
+function addTestBox(obj) {
+    obj.append(
+        '<div class="col-md-5">' +
+        '<div id="calcDiv" onclick="sendontop(this);" class="ui-widget-content box">' +
+        '<h3 class="ui-widget-header"> Calculator</h3>' +
+        '</div>' +
+        '</div>' +
+        '<div class="col-md-7">' +
+        '<div id="sampleProbDiv" onclick="sendontop(this);" class="ui-widget-content box">' +
+        '<h3 class="ui-widget-header"> Sample Problem</h3>' +
+        '</div>' +
+        '<div id="toughProbDiv" onclick="sendontop(this);" class="ui-widget-content box">' +
+        '<h3 class="ui-widget-header"> Ready Player One</h3>' +
+        '</div>' +
+        '</div>'
+    )
+}
+
+
+
 
 
 
@@ -94,6 +194,7 @@ function addVideoBoxes(obj) {
     videoDiv = $("#VIDEO")
     videoDiv.empty()
     addVideoBox(videoDiv)
+    $("#videoDiv").resizable().draggable();
 }
 
 function addVideoBox(obj) {
@@ -122,6 +223,8 @@ function addTextBoxes(obj) {
     textDiv.empty()
     addSummaryTextBox(textDiv)
     addReviewTextBox(textDiv)
+    $("#summ-text").resizable().draggable();
+    $("#rev-text").resizable().draggable();
 }
 
 function addReviewTextBox(obj) {
@@ -133,8 +236,6 @@ function addReviewTextBox(obj) {
         '</div>' +
         '</div>'
     )
-    $("#rev-text").resizable().draggable();
-
 }
 
 function ReviewText() {
@@ -150,8 +251,6 @@ function addSummaryTextBox(obj) {
         '</div>' +
         '</div>'
     )
-    $("#summ-text").resizable().draggable();
-
 }
 
 function summaryText() {
