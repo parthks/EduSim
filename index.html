@@ -2,13 +2,34 @@
 <html>
 
 <head>
-    <link rel="stylesheet" href="directed-graph/graph-creator.css" />
+    <link rel="stylesheet" type="text/css" href="styles/main.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 </head>
 
 <body>
-    <div></div>
-    <div id="graph">
-        <iframe width="100%" height="500px" src="directed-graph/index.html "></iframe>
+    <div>
+        <h1>Welcome</h1>
+        <h2>A holistic linear algebra learning platform</h2>
+        <div class="center">
+            <button onclick="$('html,body').animate({scrollTop: $('#graph').offset().top},'slow');">
+                <h3>Get Started</h3>
+            </button>
+        </div>
+        <br>
+        <div style="width:640px; margin:0 auto;">
+            <iframe src="https://www.youtube.com/embed/ZHYSeSAXQf4?ecver=2" width="640" height="360" frameborder="0"></iframe>
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <div id="grapdh">
+        <iframe id="graph" width="100%" height="650" frameborder="1" src="directed-graph/index.html "></iframe>
+        <div class="center">
+            <button onclick="$('html,body').animate({scrollTop: $('html').offset().top},'slow');">
+                <h3>Scroll Up</h3>
+            </button>
+        </div>
     </div>
 </body>
 

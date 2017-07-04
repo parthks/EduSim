@@ -7,8 +7,16 @@ function clickedNode(id) {
     }
 
     console.log("GO TO PAGE!", id);
+    hi()
+
 
 }
+
+
+
+
+
+
 
 
 
@@ -286,6 +294,7 @@ document.onload = (function(d3, saveAs, Blob, undefined) {
     // mouseup on nodes
     GraphCreator.prototype.circleMouseUp = function(d3node, d) {
         dragged = false
+        console.log(d)
         var thisGraph = this,
             state = thisGraph.state,
             consts = thisGraph.consts;

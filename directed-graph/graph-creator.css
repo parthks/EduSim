@@ -16,7 +16,7 @@ body {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    background-color: rgb(248, 248, 248)
+    background-color: white
 }
 
 .conceptG text {
@@ -24,46 +24,45 @@ body {
 }
 
 marker {
-    fill: #333;
+    fill: black;
 }
 
 g.conceptG circle {
-    fill: #F6FBFF;
-    stroke: #333;
+    fill: white;
+    stroke: black;
     stroke-width: 2px;
 }
 
 g.conceptG:hover circle {
-    fill: rgb(200, 238, 241);
-}
-
-g.selected circle {
-    fill: rgb(250, 232, 255);
+    fill: lightgreen;
 }
 
 g.selected:hover circle {
-    fill: rgb(250, 232, 255);
+    fill: red;
 }
 
 path.link {
     fill: none;
-    stroke: #333;
+    stroke: black;
     stroke-width: 6px;
     cursor: default;
 }
 
-path.link:hover {
-    stroke: rgb(94, 196, 204);
+
+/*path.link:hover {
+    stroke: black;
 }
+*/
 
 g.connect-node circle {
-    fill: #BEFFFF;
+    fill: red;
 }
 
 path.link.hidden {
     stroke-width: 0;
 }
 
-path.link.selected {
+
+/*path.link.selected {
     stroke: rgb(229, 172, 247);
-}
+}*/
