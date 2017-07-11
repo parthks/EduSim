@@ -31,8 +31,8 @@ if (showAllApplication == 1) {
 
 //console.log(localStorage.getItem("savedGraph"));
 // if (localStorage.getItem("savedGraph") != null) {
-    //     txtRes = localStorage.getItem("savedGraph");
-    // }
+//     txtRes = localStorage.getItem("savedGraph");
+// }
 
 
 function refresh() {
@@ -218,7 +218,32 @@ document.onload = (function(d3, saveAs, Blob, undefined) {
             window.alert("Error drawing graph " + err.message);
             return;
         }
+
+        d3.select("#default-graph").on("click", function() {
+            console.log("back to default!");
+            if (showAllApplication == 1) {
+                savedGraph = defaultAllApps;
+                localStorage.setItem("savedGraphAllApps", defaultAllApps);
+            } else {
+                savedGraph = defaultNoApps;
+                localStorage.setItem("savedGraphNoApps", defaultNoApps);
+            }
+            location.reload();
+        });
     };
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     GraphCreator.prototype.setIdCt = function(idct) {
         this.idct = idct;

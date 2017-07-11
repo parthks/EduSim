@@ -4,13 +4,15 @@ body {
     overflow: hidden;
 }
 
-
-/*p {
-    text-align: center;
+#default-graph {
+    width: 32px;
+    /* you can use % */
+    height: auto;
 }
-*/
 
-#side {
+#center {
+    margin: 0 auto;
+    width: 200px;
     text-align: center;
 }
 

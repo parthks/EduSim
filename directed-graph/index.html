@@ -6,9 +6,15 @@
 </head>
 
 <body>
-    <div id="side">
-        <p>Click on a topic</p>
-        <button id="showAllApps" onclick="refresh()">Show All Applications!</button>
+    <div style="width: 100%; overflow: hidden;">
+        <div style="width: 128px; float: left; margin-left: 10px">
+            <br>
+            <input type="image" id="default-graph" title="default graph" src="refresh-icon.png" alt="default graph">
+        </div>
+        <div id="center">
+            <p>Click on a topic</p>
+            <button id="showAllApps" onclick="refresh()">Show All Applications!</button>
+        </div>
     </div>
     <div id="graph">
     </div>
