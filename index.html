@@ -24,8 +24,8 @@
         </div>
         <br>
         <br>
-        <div style="width:640px; margin:0 auto; ">
-            <iframe src="https://www.youtube.com/embed/ZHYSeSAXQf4?ecver=2 " width="640 " height="360 " frameborder="0 " allowfullscreen></iframe>
+        <div style="width:560px; margin:0 auto; ">
+            <iframe id="vid" width="560" height="315" src="https://www.youtube.com/embed/OQajZvTgcz8?autoplay=1&rel=0" frameborder="0" allowfullscreen></iframe>
         </div>
     </div>
     <br>
@@ -42,6 +42,16 @@
                 Refresh</button>
         </div>
     </div>
+    <script type="text/javascript">
+    var b = localStorage.getItem("goToGraph");
+    if (b == 1) {
+        $('html,body').animate({
+            scrollTop: $('#graph').offset().top
+        }, 'fast');
+        $('#vid').attr('src', 'https://www.youtube.com/embed/OQajZvTgcz8?autoplay=0&rel=0');
+        localStorage.setItem("goToGraph", 0);
+    }
+    </script>
 </body>
 
 </html>

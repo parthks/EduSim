@@ -4,10 +4,14 @@ body {
     overflow: hidden;
 }
 
-p {
+
+/*p {
     text-align: center;
-    overflow: overlay;
-    position: relative;
+}
+*/
+
+#side {
+    text-align: center;
 }
 
 body {
