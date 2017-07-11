@@ -13,16 +13,26 @@ showAllApplication = localStorage.getItem("showAllApps");
 if (showAllApplication == 1) {
     //already showing all Apps
     document.getElementById("showAllApps").innerText = "Hide all Applications";
-    txtRes = '{"nodes":[{"id":2,"title":"Life is Linear","x":543,"y":47},{"id":3,"title":"Linear Systems","x":790.0282592773438,"y":105.73929595947266},{"id":4,"title":"Images","x":543.7456359863281,"y":230.32725524902344},{"id":5,"title":"Table Magic","x":965.729248046875,"y":42.30903625488281},{"id":6,"title":"Guess your number","x":952.6928100585938,"y":199.5150604248047},{"id":7,"title":"A Matrix?","x":740.33544921875,"y":314.8887939453125},{"id":8,"title":"ASCII Art","x":935.6243896484375,"y":387.4302673339844},{"id":9,"title":"Face Swap","x":789.4849853515625,"y":501.4019775390625},{"id":10,"title":"Transform","x":390.5496826171875,"y":373.0364685058594},{"id":11,"title":"Scalar Math","x":576.9598388671875,"y":458.5414733886719},{"id":12,"title":"Matrix Math","x":243.96987915039062,"y":469.0182189941406},{"id":13,"title":"Rotation","x":157.89698791503906,"y":598.2186584472656},{"id":14,"title":"Translation","x":63.02641296386719,"y":470.8568420410156},{"id":15,"title":"Blend It","x":468.5113830566406,"y":605.9899291992188},{"id":16,"title":"Color It","x":673.46484375,"y":604.3636474609375},{"id":17,"title":"Spinny Art","x":317.77391052246094,"y":684.6070175170898},{"id":18,"title":"Tile Art","x":-76.69096374511719,"y":634.8230514526367}],"edges":[{"source":2,"target":4},{"source":2,"target":3},{"source":3,"target":6},{"source":3,"target":5},{"source":4,"target":7},{"source":7,"target":8},{"source":7,"target":9},{"source":4,"target":10},{"source":10,"target":11},{"source":10,"target":12},{"source":12,"target":13},{"source":12,"target":14},{"source":11,"target":16},{"source":11,"target":15},{"source":13,"target":17},{"source":13,"target":18},{"source":14,"target":18}]}';
+    if (localStorage.getItem("savedGraphAllApps") != null) {
+        txtRes = localStorage.getItem("savedGraphAllApps");
+    } else {
+        txtRes = defaultAllApps;
+    }
+
 } else {
     //not showing all apps
     document.getElementById("showAllApps").innerText = "Show all Applications!";
+    if (localStorage.getItem("savedGraphNoApps") != null) {
+        txtRes = localStorage.getItem("savedGraphNoApps");
+    } else {
+        txtRes = defaultNoApps;
+    }
 }
 
 //console.log(localStorage.getItem("savedGraph"));
-if (localStorage.getItem("savedGraph") != null) {
-    txtRes = localStorage.getItem("savedGraph");
-}
+// if (localStorage.getItem("savedGraph") != null) {
+    //     txtRes = localStorage.getItem("savedGraph");
+    // }
 
 
 function refresh() {
@@ -43,7 +53,14 @@ function refresh() {
 
 function clickedNode(id) {
     if (dragged == true) {
+
+        if (showAllApplication == 1) {
+            localStorage.setItem("savedGraphAllApps", savedGraph);
+        } else {
+            localStorage.setItem("savedGraphNoApps", savedGraph);
+        }
         //console.log("saved!");
+
         return;
     }
 
