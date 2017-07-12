@@ -8,9 +8,19 @@ app.use(express.static('js'));
 app.use(express.static(path.join(__dirname)));
 app.use(express.static('directed-graph'));
 
+app.get('/images/represent', function(req, res) {
+    app.use(express.static('linear-life/images'));
+    res.sendFile(__dirname + '/linear-life/images/topic.html');
+});
+
 app.get('/', function(req, res) {
-    //res.sendFile(path.join(__dirname));
-    //res.sendFile(path.join(__dirname + '/index.html'));
+    res.sendFile(__dirname + '/index.html');
+});
+
+
+app.get('/images/represent/asciiart', function(req, res) {
+    app.use(express.static('linear-life/images'));
+    res.sendFile(__dirname + '/linear-life/images/topic.html');
 });
 
 app.listen(8080);
