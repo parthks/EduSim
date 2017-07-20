@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<!-- same as magic 1 ==> video and text explaining linear terms meaning, life is linear, linear systems start! -->
+
+<head>
+    <title>Matrix Magic</title>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="magic3.js"></script>
+</head>
+
+<body>
+    <style type="text/css">
+    td {
+        padding: 0 15px 0 15px;
+        text-align: center;
+    }
+    </style>
+    <h1>Matrix Magic</h1>
+    <br>
+    <br>
+    <p>Pick any number in the table</p>
+    <p>Upon picking the number, remove the row and column it is in</p>
+    <p>Keep picking numbers this way, until there are no more numbers left</p>
+    <label>If you want you can write your numbers here to keep track of them: </label>
+    <input type="text" name="">
+    <br>
+    <br>
+    <table id="magic-table">
+    </table>
+    <p>Now add together all the numbers you picked!</p>
+    <br>
+    <p>Done?</p>
+    <br>
+    <br>
+    <p>Hmm I am sensing the number you have right now is...</p>
+    <div id="ans">
+        <button id="guess">Guess my final sum</button>
+    </div>
+    <br>
+    <button id="go-again">Want to go again!</button>
+    <br>
+    <br>
+    <h4>Where to go from here?</h4>
+    <button onclick="location.href='magic3-explain.html'">What Kind of Sorcery is this?!?</button>
+    <br>
+    <br>
+    <button onclick="location.href='../home.html'">Phew, enough magic already</button>
+</body>
+
+</html>

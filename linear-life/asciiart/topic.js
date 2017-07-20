@@ -1,5 +1,5 @@
 $(function() {
-    console.log("run")
+    console.log("run");
     $("#calc").resizable().draggable();
 
     $("#summary-text").resizable().draggable();
@@ -14,22 +14,22 @@ $(function() {
 
     $("#topics").selectmenu();
 
-    $("#content").hide()
+    $("#content").hide();
 
-    obj = $("#all-content")
-    obj.append('<div id="TEST" class="row"><div>')
-    obj.append('<div id="APP" class="row"><div>')
+    obj = $("#all-content");
+    obj.append('<div id="TEST" class="row"><div>');
+    obj.append('<div id="APP" class="row"><div>');
     addTextBoxes($("#all-content"))
-
+    alert("hi");
     // $("#all-content").append(addSummaryTextBox());
 });
 
 var my_index = 100;
 
-var selectedTextBox = true
-var selectedVideoBox = false
-var selectedTestBox = false
-var selectedAppBox = false
+var selectedTextBox = true;
+var selectedVideoBox = false;
+var selectedTestBox = false;
+var selectedAppBox = false;
 
 
 function sendontop(div_id) {
@@ -40,54 +40,55 @@ function sendontop(div_id) {
 
 function allContent() {
     if (!selectedTextBox && !selectedVideoBox && !selectedTestBox && !selectedAppBox) {
-        $("#content").show()
+        $("#content").show();
     } else {
-        $("#content").hide()
+        $("#content").hide();
     }
 }
 
 function clickText() {
     selectedTextBox = !selectedTextBox
-    allContent()
+    allContent();
     if ($("#TextButton").hasClass("active")) {
-        deleteTextBoxes()
+        deleteTextBoxes();
     } else {
-        addTextBoxes($("#all-content"))
-            //goToByScroll("TEXT")
+        addTextBoxes($("#all-content"));
+        //goToByScroll("TEXT")
     }
 }
 
 function clickVid() {
     selectedVideoBox = !selectedVideoBox
-    allContent()
+    allContent();
     if ($("#VideoButton").hasClass("active")) {
-        deleteVideoBoxes()
+        deleteVideoBoxes();
     } else {
-        addVideoBoxes($("#all-content"))
-            //goToByScroll("VIDEO")
+        addVideoBoxes($("#all-content"));
+        //goToByScroll("VIDEO")
     }
 }
 
 function clickTest() {
     selectedTestBox = !selectedTestBox
-    allContent()
+    allContent();
     if ($("#TestButton").hasClass("active")) {
-        deleteTestBoxes()
+        deleteTestBoxes();
     } else {
-        addTestBoxes($("#all-content"))
-        goToByScroll("TEST")
+        addTestBoxes($("#all-content"));
+        goToByScroll("TEST");
     }
 
 }
 
 function clickApp() {
-    selectedAppBox = !selectedAppBox
-    allContent()
+    selectedAppBox = !selectedAppBox;
+    allContent();
     if ($("#AppButton").hasClass("active")) {
-        deleteAppBoxes()
+        deleteAppBoxes();
     } else {
-        addAppBoxes($("#all-content"))
-        goToByScroll("APP")
+        addAppBoxes($("#all-content"));
+        goToByScroll("APP");
+        go_for_ascii();
     }
 
 }
@@ -106,14 +107,14 @@ function goToByScroll(id) {
 
 
 function deleteAppBoxes() {
-    $("#APP").remove()
+    $("#APP").remove();
 }
 
 function addAppBoxes(obj) {
-    obj.prepend('<div id="APP" class="row"><div>')
-    appDiv = $("#APP")
-    appDiv.empty()
-    addAppBox(appDiv)
+    obj.prepend('<div id="APP" class="row"><div>');
+    appDiv = $("#APP");
+    appDiv.empty();
+    addAppBox(appDiv);
     $("#connect").resizable().draggable();
     $("#appDiv").resizable().draggable();
 }
@@ -133,7 +134,7 @@ function addAppBox(obj) {
         '<h3 class="ui-widget-header"> Application</h3>' +
         '</div>' +
         '</div>'
-    )
+    );
 
 }
 
@@ -149,14 +150,14 @@ function addAppBox(obj) {
 
 
 function deleteTestBoxes() {
-    $("#TEST").remove()
+    $("#TEST").remove();
 }
 
 function addTestBoxes(obj) {
-    obj.prepend('<div id="TEST" class="row"><div>')
-    testDiv = $("#TEST")
-    testDiv.empty()
-    addTestBox(testDiv)
+    obj.prepend('<div id="TEST" class="row"><div>');
+    testDiv = $("#TEST");
+    testDiv.empty();
+    addTestBox(testDiv);
     $("#calcDiv").resizable().draggable();
     $("#sampleProbDiv").resizable().draggable();
     $("#toughProbDiv").resizable().draggable();
@@ -177,7 +178,7 @@ function addTestBox(obj) {
         '<h3 class="ui-widget-header"> Ready Player One</h3>' +
         '</div>' +
         '</div>'
-    )
+    );
 }
 
 
@@ -186,14 +187,14 @@ function addTestBox(obj) {
 
 
 function deleteVideoBoxes() {
-    $("#VIDEO").remove()
+    $("#VIDEO").remove();
 }
 
 function addVideoBoxes(obj) {
-    obj.prepend('<div id="VIDEO" class="row"><div>')
-    videoDiv = $("#VIDEO")
-    videoDiv.empty()
-    addVideoBox(videoDiv)
+    obj.prepend('<div id="VIDEO" class="row"><div>');
+    videoDiv = $("#VIDEO");
+    videoDiv.empty();
+    addVideoBox(videoDiv);
     $("#videoDiv").resizable().draggable();
 }
 
@@ -206,7 +207,7 @@ function addVideoBox(obj) {
         '</div>' +
         '</div>' +
         '<div class = "col-md-2"></div>'
-    )
+    );
 }
 
 
@@ -214,7 +215,7 @@ function addVideoBox(obj) {
 
 
 function deleteTextBoxes() {
-    $("#TEXT").remove()
+    $("#TEXT").remove();
 }
 
 function addTextBoxes(obj) {
@@ -235,11 +236,11 @@ function addReviewTextBox(obj) {
         '<p id = "rev-text-content" >' + ReviewText() + '</p >' +
         '</div>' +
         '</div>'
-    )
+    );
 }
 
 function ReviewText() {
-    return "this is some review text"
+    return "this is some review text";
 }
 
 function addSummaryTextBox(obj) {
@@ -250,9 +251,11 @@ function addSummaryTextBox(obj) {
         '<p id = "summ-text-content" >' + summaryText() + '</p >' +
         '</div>' +
         '</div>'
-    )
+    );
 }
 
 function summaryText() {
-    return "this is summary Text!"
+    return "Images can easily be represented using alphabets, letter and symbols!<br><br> " +
+        "Since pixels in the image matrix are simply numbers, based on the pixel value we can convert each pixel into some character.<br>" +
+        "Where this really gets cool, is when we convert ascii-fy video or gifs!";
 }

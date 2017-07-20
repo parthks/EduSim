@@ -2,15 +2,15 @@
 <html>
 
 <head>
-    <title>linear algebra!</title>
+    <title>Magic</title>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="external/jquery-ui.js"></script>
-    <link rel="stylesheet" href="external/jquery-ui.css">
+    <script src="../external/jquery-ui.js"></script>
+    <link rel="stylesheet" href="../external/jquery-ui.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-    <link rel="stylesheet" type="text/css" href="styles/main.css">
-    <script type="text/javascript" src="js/topic.js"></script>
+    <link rel="stylesheet" type="text/css" href="../styles/main.css">
+    <script type="text/javascript" src="topic.js"></script>
 </head>
 
 <body>
@@ -42,7 +42,7 @@
             <button id="AppButton" type="button" data-toggle="button" aria-pressed="true" autocomplete="off" class="btn btn-secondary" onclick="clickApp();">Application</button>
         </div>
         <div class="col-md-4 center">
-            <h3>Topic Name</h3>
+            <h3>Linear Algebra Magic</h3>
         </div>
         <div class="col-md-1 center">
             <button class="btn btn-primary">Prev</button>
@@ -55,7 +55,7 @@
         </div> 
         -->
         <div class="col-md-2 right">
-            <button onclick="localStorage.setItem('goToGraph', 1);window.open('index.html', '_self');" class="btn btn-primary">Home</button>
+            <button onclick="window.top.location = '/home'" class="btn btn-primary">Home</button>
         </div>
     </div>
     <br id="break">

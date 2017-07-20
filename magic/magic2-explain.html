@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Digits Magic Demystified</title>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+</head>
+
+<body>
+    <h1>Magic of the Digits Demystified</h1>
+    <br>
+    <br>
+    <p>Try to see if you can understand how this trick is done</p>
+    <p>It is only linear algebra => algebra with linear terms!</p>
+    <br>
+    <p>Hint: Think of numbers in powers of 10, eg 73 = 10*7 + 1*3</p>
+    <p>So now adding the numbers 7+3 and then subtracting from the original number...</p>
+    <br>
+    <p>Use the power of Linear Algebra!</p>
+    <br>
+    <br>
+    <div id="sol">
+        <button id="solution">Show Me the Power!</button>
+    </div>
+    <script type="text/javascript">
+    $('#solution').click(function(e) {
+        $('#sol').empty();
+        var html = '';
+        html += '<h3>Solution</h3>';
+        html += '<p>Any number between 10 and 83 can be represented as 10a + b</p>';
+        html += '<p>Adding the digits in the number gives a+b</p>';
+        html += '<p>When we subtract that from the original number: 10a+b - (a+b)</p>';
+        html += '<p>which gives simply 9a!</p>';
+        html += '<h4>This means no matter what number you choose the result will always be a multiple of 9!</h4>';
+        html += '<p>Thought the magic table was random? Go back and check! Every multiple of 9 will have the magic symbol!</p>';
+        html += '<p>Note: Multiples of 9 from 81 and above are random symbols since choosing any number between 10 and 83 will never yield those numbers.</p><br>';
+        $('#sol').append(html);
+    });
+    </script>
+    <br>
+    <br>
+    <h4>Where to go from here?</h4>
+    <!-- <button onclick="location.href='magic2-do.html'">Create your own custom Magical Digits</button> -->
+    <br>
+    <br>
+    <button onclick="location.href='magic3.html'">Ready for real magic?</button>
+</body>
+
+</html>

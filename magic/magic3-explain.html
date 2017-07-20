@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<!-- same as magic 1 ==> video and text explaining linear terms meaning, life is linear, linear systems start! -->
+
+<head>
+    <title>Matrix Magic Demystified</title>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="magic3-explain.js"></script>
+</head>
+
+<body>
+    <style type="text/css">
+    td {
+        padding: 0 15px 0 15px;
+        text-align: center;
+    }
+    </style>
+    <h1>Matrix Magic</h1>
+    <br>
+    <br>
+    <p>The Magic, as you may have guessed lies in the structure of the matrix</p>
+    <p>The structure of this seemingly random matrix is highly ordered</p>
+    <p>Take a look at the magical matrix again, play close attention to the bolded numbers - the row and column headers!</p>
+    <br>
+    <br>
+    <table id="magic-table-key">
+    </table>
+    <p>Can you see the structure in the table, now?</p>
+    <p>Notice how there's underlying structure in the matrix. But unless you're told what that structure is and how that structure led to the matrix, it can be hard to see. </p>
+    <h4>Linear algebra will enable us to uncover structure and information within matrices. The structure of the matrices are magical, sometimes quite literally! </h4>
+    <br>
+    <p>The magical sum is simply the sum of all the bolded numbers!</p>
+    <div id="ans">
+        <button id="guess">Magical Sum</button>
+    </div>
+    <br>
+    <button id="go-again">New Magic Matrix</button>
+    <br>
+    <p>Do you understand how the trick works?</p>
+    <p>Try playing the game again by removing rows and columns from the matrix above and see why adding all the table headers will always be the magical sum!</p>
+    <p>You can see that as you select a number and remove the row and corrosponding column you are pairing that row header with that column header to the number you selected, which is simply the sum of the two numbers! By removing the row and column you ensure that those headers will not be chosen again!</p>
+    <br>
+    <br>
+    <h4>Where to go from here?</h4>
+    <button onclick="location.href='../home.html'">Wow, Whats next?!</button>
+</body>
+
+</html>

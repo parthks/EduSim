@@ -18,7 +18,11 @@
         <h2>A linear algebra learning platform</h2>
         <br>
         <div class="center">
-            <button type="button" class="btn btn-lg btn-primary" onclick="$('html,body').animate({scrollTop:$('#graph').offset().top}, 'slow');">
+            <!-- <button type="button" class="btn btn-lg btn-primary" onclick="$('html,body').animate({scrollTop:$('#graph').offset().top}, 'slow');">
+    <h3>Get Started</h3>
+</button>
+ -->
+            <button type="button" class="btn btn-lg btn-primary" onclick="location.href='home.html'">
                 <h3>Get Started</h3>
             </button>
         </div>
@@ -28,21 +32,7 @@
             <iframe id="vid" width="560" height="315" src="https://www.youtube.com/embed/OQajZvTgcz8?autoplay=1&rel=0" frameborder="0" allowfullscreen></iframe>
         </div>
     </div>
-    <br>
-    <br>
-    <br>
-    <div id="graphh">
-        <!-- taken from https://github.com/cjrd/directed-graph-creator -->
-        <iframe id="graph" width="100%" height="650" frameborder="1" src="directed-graph/index.html"></iframe>
-        <div class="center">
-            <button type="button" class="btn btn-sm btn-secondary" onclick="$('html,body').animate({scrollTop: $('html').offset().top},'slow');">
-                Scroll Up
-            </button>
-            <button type="button" class="btn btn-sm btn-secondary" onclick="document.getElementById('graph').contentWindow.location.reload(true); ">
-                Refresh</button>
-        </div>
-    </div>
-    <script type="text/javascript">
+    <!-- <script type="text/javascript">
     var b = localStorage.getItem("goToGraph");
     if (b == 1) {
         $('html,body').animate({
@@ -51,7 +41,7 @@
         $('#vid').attr('src', 'https://www.youtube.com/embed/OQajZvTgcz8?autoplay=0&rel=0');
         localStorage.setItem("goToGraph", 0);
     }
-    </script>
+    </script> -->
 </body>
 
 </html>

@@ -1,0 +1,55 @@
+pick a num
+double it
+add 8
+divide 2
+subtract original number
+
+==> result is 4 :P
+linear algebra since its algebra with linear terms
+(2x + 8) / 2 = x+4
+x+4 - x ==> 4 LOL
+
+
+
+
+pick a num bw 10-83
+find the sum of the 2 digits, eg 21=> 2+1=3
+subtract this sum from the original number, eg 21-3=18
+Then ask the user to concentrate of a table with numbers and speical char next to the numbers
+
+
+10a + b - (a+b) = 9a, so always multiple of 9 ==> thus all multiples of 9 same char, except 81 since not poss to get
+
+
+
+
+
+
+Magic Answer = 5+2+1 + 3+2+1 = 14
+
+ 5 2 1
+38 5 4
+27 4 3
+16 3 2
+
+Magic Table:
+8 5 4
+7 4 3
+6 3 2
+
+pick a number remove the row and column it is in, eg 8 so remove 8 5 4 and 8 7 6
+so now table is:
+4 3
+3 2
+pick another number the same way, eg 2 so now table is:
+4
+and another the same way, well just 4 remains!
+adding all the numbers u picked ==> 8+2+4 = 14 <- the magic answer :P
+
+
+Notice how there's underlying structure in the matrix.
+But unless you're told what that structure is
+and how that structure led to the matrix, it can be hard to see.
+Linear algebra will enable us to uncover structure and information
+within matrices.
+The structure of the matrices are magical, sometimes quite literally! 

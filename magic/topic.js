@@ -21,6 +21,12 @@ $(function() {
     obj.append('<div id="APP" class="row"><div>')
     addTextBoxes($("#all-content"))
 
+    if (localStorage.getItem("appName") == 'Linear_Magic' ||
+        localStorage.getItem("appName") == 'Digits_Magic' ||
+        localStorage.getItem("appName") == 'Matrix_Magic') {
+        $('#AppButton').click();
+    }
+
     // $("#all-content").append(addSummaryTextBox());
 });
 
@@ -119,26 +125,50 @@ function addAppBoxes(obj) {
 }
 
 function addAppBox(obj) {
-    obj.append(
-        '<div class = "col-md-3">' +
+    var html = '<div class = "col-md-3">' +
         '<div id="connect" onclick="sendontop(this);" class="ui-widget-content box">' +
         '<h3 class="ui-widget-header"> Connections</h3>' +
+        Connections() +
         '</div>' +
         '<div id="extras" onclick="sendontop(this);" class="ui-widget-content box">' +
         '<h3 class="ui-widget-header"> Extra Info</h3>' +
+        Extra_Info() +
         '</div>' +
         '</div>' +
         '<div class = "col-md-9">' +
         '<div id="appDiv" onclick="sendontop(this);" class="ui-widget-content box">' +
-        '<h3 class="ui-widget-header"> Application</h3>' +
-        '</div>' +
-        '</div>'
-    )
+        '<h3 class="ui-widget-header"> !Application!</h3>';
+
+    if (localStorage.getItem("appName") == 'Matrix_Magic') {
+        html += '<iframe width=100% height=100% src="magic3.html"></iframe>';
+    } else if (localStorage.getItem("appName") == 'Digits_Magic') {
+        html += '<iframe width=100% height=100% src="magic2.html"></iframe>';
+    } else {
+        html += '<iframe width=100% height=100% src="magic1.html"></iframe>';
+    }
+    localStorage.setItem("appName", '0');
+
+    html += '</div>' + '</div>';
+
+
+    obj.append(html);
 
 }
 
+function Extra_Info() {
+    var html = '<p>In linear algebra, the variables in the linear equations are often matrices and other powerful structures!</p>';
+    html += '<br><p>Try to make your own linear equation and convert it to magic!</p>'
 
+    return html;
+}
 
+function Connections() {
+    var html = '<p>Linear equations is the start to linear systems!</p>'
+    html += '<p>The process of solving mutiple linear equations is what linear algebra is all about!</p>'
+    html += '<p>We use Matrices to solve these linear equations and that is why they are so important and are used everywhere!</p>'
+
+    return html;
+}
 
 
 
@@ -203,6 +233,7 @@ function addVideoBox(obj) {
         '<div class = "col-md-8">' +
         '<div id="videoDiv" onclick="sendontop(this);" class="ui-widget-content box">' +
         '<h3 class="ui-widget-header"> Learn</h3>' +
+        "<p>No Video for this section. ¯\\_(ツ)_/¯</p>" +
         '</div>' +
         '</div>' +
         '<div class = "col-md-2"></div>'
@@ -232,14 +263,18 @@ function addReviewTextBox(obj) {
         '<div class = "col-md-6">' +
         '<div id = "rev-text" onclick = "sendontop(this);" class = "ui-widget-content box" >' +
         '<h3 class = "ui-widget-header" > Review Concepts </h3>' +
-        '<p id = "rev-text-content" >' + ReviewText() + '</p >' +
+        '<div id = "rev-text-content">' +
+        ReviewText() +
+        '</div>' +
         '</div>' +
         '</div>'
     )
 }
 
 function ReviewText() {
-    return "this is some review text"
+    var html = '<p> Nothing to review for now! </p>';
+    html += '<p>Congratulations on starting your Linear Algebra Journey!!';
+    return html;
 }
 
 function addSummaryTextBox(obj) {
@@ -247,12 +282,17 @@ function addSummaryTextBox(obj) {
         '<div class = "col-md-6">' +
         '<div id = "summ-text" onclick = "sendontop(this);" class = "ui-widget-content box" >' +
         '<h3 class = "ui-widget-header" > Summary Text </h3>' +
-        '<p id = "summ-text-content" >' + summaryText() + '</p >' +
+        '<div id = "summ-text-content" >' +
+        summaryText() +
+        '</div' +
         '</div>' +
         '</div>'
     )
 }
 
 function summaryText() {
-    return "this is summary Text"
+    var html = '<p>Linear Algebra is simply algebra with "linear" terms! It is that simple :P</p>';
+    html += '<p>When thinking of linear terms, think line. Constant terms and single variables to the first power</p>';
+    html += '<p>Bascially, no funny business! Just simple terms and with simple operations!</p>'
+    return html;
 }

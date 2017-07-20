@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<!-- video and text explaining linear terms meaning, life is linear, linear systems start! -->
+
+<head>
+    <title>Linear Magic</title>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+</head>
+
+<body>
+    <h1>Linear Magic</h1>
+    <br>
+    <br>
+    <p>Pick a number, any number (I recommend between 1-20)</p>
+    <p>Double your number</p>
+    <p>Add 8 to your number</p>
+    <p>Now divide by 2</p>
+    <p>Finally, subtract your original number from this result</p>
+    <br>
+    <p>Done?</p>
+    <br>
+    <br>
+    <p>I can sense that the number you have right now is...</p>
+    <div id="ans">
+        <button id="guess">Guess my current number</button>
+    </div>
+    <script type="text/javascript">
+    $('#guess').click(function(e) {
+        $('#ans').empty();
+        $('#ans').append('<p>Well 4 of course!</p>');
+    });
+    </script>
+    <br>
+    <br>
+    <h4>Where to go from here?</h4>
+    <button onclick="location.href='magic1-explain.html'">What Kind of Sorcery is this?!?</button>
+    <br>
+    <br>
+    <button id="next_topic" onclick="location.href='magic2.html'">Alright, what's next...</button>
+    <br>
+    <br>
+    <button onclick="location.href='../home.html'">Phew, enough magic already</button>
+</body>
+
+</html>

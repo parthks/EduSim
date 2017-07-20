@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>HOME</title>
+    <link rel="stylesheet" href="directed-graph/graph-creator.css">
+</head>
+
+<body>
+    <!-- taken from https://github.com/cjrd/directed-graph-creator -->
+    <div style="width: 100%; overflow: hidden;">
+        <div style="width: 128px; float: left; margin-left: 10px">
+            <br>
+            <input type="image" id="default-graph" title="default graph" src="refresh-icon.png" alt="default graph">
+        </div>
+        <div id="center">
+            <p>Click on a topic</p>
+            <button id="showAllApps" onclick="refresh()">Show All Applications!</button>
+        </div>
+    </div>
+    <!-- <div class="center">
+    <button type="button" class="btn btn-sm btn-secondary" onclick="location.reload(true); ">
+        Refresh</button>
+</div>
+ -->
+    <div id="graph">
+    </div>
+    <script src="//d3js.org/d3.v3.js" charset="utf-8"></script>
+    <!-- <button type="button" class="btn btn-sm btn-secondary" onclick="$('html,body').animate({scrollTop: $('html').offset().top},'slow');">
+    Scroll Up
+</button>
+ -->
+</body>
+<script src="js/graph-selector.js"></script>
+<script src="directed-graph/graph-creator.js"></script>
+
+</html>
