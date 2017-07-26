@@ -121,6 +121,7 @@ function addAppBoxes(obj) {
     appDiv.empty()
     addAppBox(appDiv)
     $("#connect").resizable().draggable();
+    $("#extras").resizable().draggable();
     $("#appDiv").resizable().draggable();
 }
 
