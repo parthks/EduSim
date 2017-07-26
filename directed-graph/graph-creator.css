@@ -40,7 +40,7 @@ g.conceptG circle {
 }
 
 g.conceptG:hover circle {
-    fill: lightgreen;
+    fill: lightblue;
 }
 
 g.selected:hover circle {

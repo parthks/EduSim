@@ -40,6 +40,14 @@ h2 {
     font-size: 32px
 }
 
+body {
+    background: lightblue;
+}
+
+.heading {
+    background: white;
+}
+
 #all-content {
     background: lightblue;
 }

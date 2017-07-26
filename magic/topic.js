@@ -75,14 +75,15 @@ function clickVid() {
 }
 
 function clickTest() {
+      
     selectedTestBox = !selectedTestBox
-    allContent()
+    //allContent()
     if ($("#TestButton").hasClass("active")) {
-        deleteTestBoxes()
+        //deleteTestBoxes()
     } else {
-        addTestBoxes($("#all-content"))
-        goToByScroll("TEST")
-        alert("Coming Soon...");
+        alert("Coming Soon...");  
+        //addTestBoxes($("#all-content"))
+        //goToByScroll("TEST")
     }
 
 
