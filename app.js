@@ -22,6 +22,11 @@ app.get('/magic', function(req, res) {
     res.sendFile(__dirname + '/magic/topic.html');
 });
 
+app.get('/asciiart', function(req, res) {
+    app.use(express.static('/asciiart'));
+    res.sendFile(__dirname + '/asciiart/topic.html');
+});
+
 // app.get('/images/represent/asciiart', function(req, res) {
 //     app.use(express.static('linear-life/asciiart'));
 //     res.sendFile(__dirname + '/linear-life/asciiart/topic.html');
