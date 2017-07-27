@@ -199,16 +199,17 @@ function addCalculator(){
 }
 
 function Extra_Info() {
-    var html = '<p>In linear algebra, the variables in the linear equations are often matrices and other powerful structures!</p>';
-    html += '<br><p>Try to make your own linear equation and convert it to magic!</p>'
+    var html = '<p>While making ASCII Art, some images can be represented beautifully, while others not so much!</p>';
+    html += '<p>Why is this? Can you figure out a way around that?</p>';
+    html += '<br><p>Some images require a bit of "tweaking" to get them to look right! Try experimenting and see the difference it makes!</p>'
 
     return html;
 }
 
 function Connections() {
-    var html = '<p>Linear equations is the start to linear systems!</p>'
-    html += '<p>The process of solving mutiple linear equations is what linear algebra is all about!</p>'
-    html += '<p>We use Matrices to solve these linear equations and that is why they are so important and are used everywhere!</p>'
+    var html = '<p>ASCII Art relies on the fundamental concept of Linear Algebra, that is, Matrices!</p>'
+    html += '<p>Images are only one form of data that are represented using Matrices</p>'
+    html += '<p>As you will soon discover, the power of Matrices lies its ability to manipulate vast amounts of data quickly and *cough* easily</p>'
 
     return html;
 }
@@ -292,15 +293,39 @@ function deleteTextBoxes() {
 }
 
 function addTextBoxes(obj) {
-    obj.prepend('<div id="TEXT" class="row"><div>')
-    textDiv = $("#TEXT")
-    textDiv.empty()
-    addSummaryTextBox(textDiv)
-    addReviewTextBox(textDiv)
+    obj.prepend('<div id="TEXT" class="row"><div>');
+    obj.append('<br><div id="NOTES" class="row"><div>');
+    textDiv = $("#TEXT");
+    textDiv.empty();
+    addSummaryTextBox(textDiv);
+    addReviewTextBox(textDiv);
+    addNotesTextBox($("#NOTES"));
     $("#summ-text").resizable().draggable();
     $("#rev-text").resizable().draggable();
+    $("#notes").resizable().draggable();
 }
 
+
+function addNotesTextBox(obj){
+    obj.append(
+        '<div class = "col-md-12">' +
+        '<div id = "notes" onclick = "sendontop(this);" class = "ui-widget-content box" >' +
+        '<h3 class = "ui-widget-header" > My Notes </h3>' +
+        '<textarea class="text_edit" id="my_text">'+
+        MyNotes() +
+        '</textarea>' +
+        '</div>' +
+        '</div>'
+    );
+
+    $('#my_text').bind('input propertychange', function() {
+        console.log('saved!');
+    });
+}
+
+function MyNotes(){
+    return 'hi, these are my saved notes!';
+}
 function addReviewTextBox(obj) {
     obj.append(
         '<div class = "col-md-6">' +
@@ -315,8 +340,8 @@ function addReviewTextBox(obj) {
 }
 
 function ReviewText() {
-    var html = '<p> Nothing to review for now! </p>';
-    html += '<p>Congratulations on starting your Linear Algebra Journey!!';
+    var html = '<p>Images are nothing but Matrices! </p>';
+    html += '<p>The pixels are stored as red, green, blue and alpha numeric values that can easily be manipulated.';
     return html;
 }
 
@@ -334,9 +359,9 @@ function addSummaryTextBox(obj) {
 }
 
 function summaryText() {
-    var html = '<p>Linear Algebra is simply algebra with "linear" terms! It is that simple :P</p>';
-    html += '<p>When thinking of linear terms, think line. Constant terms and single variables to the first power</p>';
-    html += '<p>Bascially, no funny business! Just simple terms and with simple operations!</p>'
+    var html = '<p>Using the power of submatrices, we can swap manipulate parts of a large Matrix to form a new Matrix!</p>';
+    html += '<p>Since images are simply Matrices, we can convert the image pixel data into ASCII values - text, numbers, symbols etc</p>';
+    html += '<p>The conversion happens by swapping out various submatrices to form new values.</p>'
     return html;
 }
 

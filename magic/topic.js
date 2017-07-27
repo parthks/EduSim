@@ -294,13 +294,38 @@ function deleteTextBoxes() {
 }
 
 function addTextBoxes(obj) {
-    obj.prepend('<div id="TEXT" class="row"><div>')
-    textDiv = $("#TEXT")
-    textDiv.empty()
-    addSummaryTextBox(textDiv)
-    addReviewTextBox(textDiv)
+    obj.prepend('<div id="TEXT" class="row"><div>');
+    obj.append('<br><div id="NOTES" class="row"><div>');
+    textDiv = $("#TEXT");
+    textDiv.empty();
+    addSummaryTextBox(textDiv);
+    addReviewTextBox(textDiv);
+    addNotesTextBox($("#NOTES"));
     $("#summ-text").resizable().draggable();
     $("#rev-text").resizable().draggable();
+    $("#notes").resizable().draggable();
+}
+
+
+function addNotesTextBox(obj){
+    obj.append(
+        '<div class = "col-md-12">' +
+        '<div id = "notes" onclick = "sendontop(this);" class = "ui-widget-content box" >' +
+        '<h3 class = "ui-widget-header" > My Notes </h3>' +
+        '<textarea class="text_edit" id="my_text">'+
+        MyNotes() +
+        '</textarea>' +
+        '</div>' +
+        '</div>'
+    );
+
+    $('#my_text').bind('input propertychange', function() {
+        console.log('saved!');
+    });
+}
+
+function MyNotes(){
+    return 'hi, these are my saved notes!';
 }
 
 function addReviewTextBox(obj) {
