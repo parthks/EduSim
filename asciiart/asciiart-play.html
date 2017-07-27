@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+    <link rel="stylesheet" href="http://getbootstrap.com/dist/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="asciiart-play.js"></script>
+</head>
+
+<body>
+    <div style="display: inline-block;">
+        <button id="img1">Img 1</button>
+        <button id="img2">Img 2</button>
+        <button id="img3">Img 3</button>
+        <span>OR, Upload you own: </span>
+        <input style="display: inline-block;" type="file" onchange="previewFile()">
+    </div>
+    <div id="images">
+        <br>
+        <img id="source" src="randomimage.png">
+    </div>
+
+    <h4 id="img-width">Width = 300</h4>
+    <h4 id="img-height">Height = 300</h4>
+
+    <div class="form-group text-center">
+        <label for="min-height">Min Height of Picture</label>
+        <input type="number" class="form-control" name="min-height" value="300" required>
+    </div>
+
+    <div class="form-group text-center">
+        <label for="min-width">Min Width of Picture</label>
+        <input type="number" class="form-control" name="min-width" value="300" required>
+    </div>
+
+    <div>
+        <h3 class="text-left page-header">Asciification Specifications</h3>
+        <p>Each ASCII character replaces some number of pixels. Here you can select the height and width (i.e. number of pixels) of the submatrix to be represented by a single character. </p>
+        <div class="form-group text-center">
+            <label for="height">Height of each character</label>
+            <input type="number" class="form-control" name="height" min="1" step="1" max="10" value="2" required>
+        </div>
+        <div class="form-group text-center">
+            <label for="width">Width of each character</label>
+            <input type="number" class="form-control" name="width" min="1" step="1" max="10" value="1" required>
+        </div>
+        <p> In addition, here you can select the character that will be used for the shaded sections (dark, medium, light, lightest).
+            <div class="form-group text-center">
+                <label for="darkest">Dark Character</label>
+                <select type="form_id" class="form-control  center-block input.center-input" name="dark" required>
+                    <option value="8">8</option>
+                    <option value="W">W</option>
+                    <option value="%">%</option>
+                    <option value="$">$</option>
+                    <option value="X">X</option>
+                    <option value="#">#</option>
+                    <option value="@">@</option>
+                </select>
+            </div>
+            <div class="form-group text-center">
+                <label for="darkest">Medium Character</label>
+                <select type="form_id" class="form-control  center-block input.center-input" name="medium" required>
+                    <option value="5">5</option>
+                    <option value="H">H</option>
+                    <option value="=">=</option>
+                    <option value="I">I</option>
+                    <option value="/">/</option>
+                    <option value="0">0</option>
+                    <option value="?">?</option>
+                </select>
+            </div>
+            <div class="form-group text-center">
+                <label for="darkest">Light Character</label>
+                <select type="form_id" class="form-control  center-block input.center-input" name="light" required>
+                    <option value="3">3</option>
+                    <option value="|">|</option>
+                    <option value=":">:</option>
+                    <option value="1">1</option>
+                    <option value="*">*</option>
+                    <option value="+">+</option>
+                    <option value="~">~</option>
+                    <option value="!">!</option>
+                </select>
+            </div>
+            <div class="form-group text-center">
+                <label for="darkest">Lightest Character</label>
+                <select type="form_id" class="form-control  center-block input.center-input" name="lightest" required>
+                    <option value="^">^</option>
+                    <option value="1">1</option>
+                    <option value=".">.</option>
+                    <option value="'">'</option>
+                    <option value=",">,</option>
+                    <option value="-">-</option>
+                    <option value=" "> </option>
+                    <option value="`">`</option>
+                </select>
+            </div>
+    </div>
+    <button id="submit" class="btn btn-lg btn-primary btn-block">ASCIIFY</button>
+</body>
+
+</html>
