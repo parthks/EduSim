@@ -47,7 +47,10 @@ function sendontop(div_id) {
 function allContent() {
     if (!selectedTextBox && !selectedVideoBox && !selectedTestBox && !selectedAppBox) {
         $("#content").show()
+        addNotesTextBox($('#my_notes'));
+
     } else {
+        $('#my_notes').empty();
         $("#content").hide()
     }
 }
@@ -289,12 +292,15 @@ function addVideoBox(obj) {
 
 
 function deleteTextBoxes() {
-    $("#TEXT").remove()
+    $("#TEXT").remove();
+    $("#NOTES").remove();
+    $('#text-break').remove();
 }
 
 function addTextBoxes(obj) {
     obj.prepend('<div id="TEXT" class="row"><div>');
-    obj.append('<br><div id="NOTES" class="row"><div>');
+    obj.append('<br id="text-break">');
+    obj.append('<div id="NOTES" class="row"><div>');
     textDiv = $("#TEXT");
     textDiv.empty();
     addSummaryTextBox(textDiv);
@@ -302,7 +308,7 @@ function addTextBoxes(obj) {
     addNotesTextBox($("#NOTES"));
     $("#summ-text").resizable().draggable();
     $("#rev-text").resizable().draggable();
-    $("#notes").resizable().draggable();
+    
 }
 
 
@@ -310,7 +316,7 @@ function addNotesTextBox(obj){
     getSaveNote("asciiart", function(result){
         obj.append(
         '<div class = "col-md-12">' +
-        '<div id = "notes" onclick = "sendontop(this);" class = "ui-widget-content box" >' +
+        '<div id = "note" onclick = "sendontop(this);" class = "ui-widget-content box" >' +
         '<h3 class = "ui-widget-header" > My Notes </h3>' +
         '<textarea class="text_edit" id="my_text">'+
         result +
@@ -318,7 +324,7 @@ function addNotesTextBox(obj){
         '</div>' +
         '</div>'
         );
-
+        $("#note").resizable().draggable();
         $('#my_text').bind('input propertychange', function() {
             console.log('saved!');
             saveNote($('#my_text').val(), "asciiart");
