@@ -4,6 +4,9 @@
 <head>
     <title>HOME</title>
     <link rel="stylesheet" href="directed-graph/graph-creator.css">
+     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+     <script src="https://www.gstatic.com/firebasejs/4.1.5/firebase.js"></script>
+     <script src="js/fire.js"></script>
 </head>
 
 <body>
@@ -13,10 +16,20 @@
             <br>
             <input type="image" id="default-graph" title="default graph" src="refresh-icon.png" alt="default graph">
         </div>
+        <div style="width: auto; float: right; margin-right: 5px;">
+            <h4 id="identity">ERROR unknown user!</h4>
+            <script type="text/javascript">
+            console.log(localStorage.getItem("uniquename"));
+            if (localStorage.getItem("uniquename") != ''){
+                document.getElementById('identity').innerText = localStorage.getItem("uniquename");
+            }
+            </script>
+        </div>
         <div id="center">
             <p>Click on a topic</p>
             <button id="showAllApps" onclick="refresh()">Show All Applications!</button>
         </div>
+        
     </div>
     <!-- <div class="center">
     <button type="button" class="btn btn-sm btn-secondary" onclick="location.reload(true); ">
@@ -31,6 +44,7 @@
 </button>
  -->
 </body>
+
 <script src="js/graph-selector.js"></script>
 <script src="directed-graph/graph-creator.js"></script>
 

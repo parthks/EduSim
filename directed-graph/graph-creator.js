@@ -43,11 +43,13 @@ function refresh() {
         //are showing all Apps and then clicked to Hide all Apps
         document.getElementById("showAllApps").innerText = "Show all Applications!";
         localStorage.setItem("showAllApps", 0);
+
         //console.log(localStorage.getItem("showAllApps"));
         location.reload();
     } else {
         document.getElementById("showAllApps").innerText = "Hide Applications";
         localStorage.setItem("showAllApps", 1);
+        
         //console.log(localStorage.getItem("showAllApps"));
         location.reload();
     }
@@ -59,8 +61,12 @@ function clickedNode(id) {
 
         if (showAllApplication == 1) {
             localStorage.setItem("savedGraphAllApps", savedGraph);
+
+            saveGraph($('#graph')[0].innerHTML, 'Apps');
         } else {
             localStorage.setItem("savedGraphNoApps", savedGraph);
+
+            saveGraph($('#graph')[0].innerHTML, 'NoApps');
         }
         //console.log("saved!");
 

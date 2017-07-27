@@ -308,25 +308,28 @@ function addTextBoxes(obj) {
 
 
 function addNotesTextBox(obj){
-    obj.append(
+    getSaveNote("magic", function(result){
+        obj.append(
         '<div class = "col-md-12">' +
         '<div id = "notes" onclick = "sendontop(this);" class = "ui-widget-content box" >' +
         '<h3 class = "ui-widget-header" > My Notes </h3>' +
         '<textarea class="text_edit" id="my_text">'+
-        MyNotes() +
+        result +
         '</textarea>' +
         '</div>' +
         '</div>'
-    );
+        );
 
-    $('#my_text').bind('input propertychange', function() {
-        console.log('saved!');
+        $('#my_text').bind('input propertychange', function() {
+            console.log('saved!');
+            saveNote($('#my_text').val(), "magic");
+        });
     });
+    
+
+    
 }
 
-function MyNotes(){
-    return 'hi, these are my saved notes!';
-}
 
 function addReviewTextBox(obj) {
     obj.append(

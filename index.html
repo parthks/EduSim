@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.1.5/firebase.js"></script>
+    <script src="js/fire.js"></script>
 </head>
 
 <body>
@@ -20,11 +22,27 @@
         <div class="center">
             <!-- <button type="button" class="btn btn-lg btn-primary" onclick="$('html,body').animate({scrollTop:$('#graph').offset().top}, 'slow');">
     <h3>Get Started</h3>
-</button>
- -->
-            <button type="button" class="btn btn-lg btn-primary" onclick="location.href='home.html'">
+</button>   
+ -->        
+            <label>Please enter your uniquename, to create your own personalized space - </label>
+            <input type="text" id="uniquename"><br><br>
+            <script type="text/javascript">
+                $('#uniquename').val(localStorage.getItem("uniquename"));
+            </script>
+            <button id="start" type="button" class="btn btn-lg btn-primary">
                 <h3>Get Started</h3>
             </button>
+            <script type="text/javascript">
+                $('#start').click(function(){
+                    if ($('#uniquename').val() != ''){
+                        fireLogin($('#uniquename').val());
+                        localStorage.setItem("uniquename", $('#uniquename').val());
+                        window.top.location = '/home';
+                    } else {
+                        alert('PLease enter your uniquename');
+                    }
+                });
+            </script>
         </div>
         <br>
         <br>

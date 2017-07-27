@@ -201,8 +201,8 @@ function addCalculator(){
 function Extra_Info() {
     var html = '<p>While making ASCII Art, some images can be represented beautifully, while others not so much!</p>';
     html += '<p>Why is this? Can you figure out a way around that?</p>';
-    html += '<br><p>Some images require a bit of "tweaking" to get them to look right! Try experimenting and see the difference it makes!</p>'
-
+    html += '<br><p>Some images require a bit of "tweaking" to get them to look right! Try experimenting and see the difference it makes!</p>';
+    html += "Don't give up! Enthusiasts have recreated the entire 'Star Wars: A New Hope' movie using ascii values! LOOK IT UP!";
     return html;
 }
 
@@ -307,25 +307,26 @@ function addTextBoxes(obj) {
 
 
 function addNotesTextBox(obj){
-    obj.append(
+    getSaveNote("asciiart", function(result){
+        obj.append(
         '<div class = "col-md-12">' +
         '<div id = "notes" onclick = "sendontop(this);" class = "ui-widget-content box" >' +
         '<h3 class = "ui-widget-header" > My Notes </h3>' +
         '<textarea class="text_edit" id="my_text">'+
-        MyNotes() +
+        result +
         '</textarea>' +
         '</div>' +
         '</div>'
-    );
+        );
 
-    $('#my_text').bind('input propertychange', function() {
-        console.log('saved!');
+        $('#my_text').bind('input propertychange', function() {
+            console.log('saved!');
+            saveNote($('#my_text').val(), "asciiart");
+        });
     });
 }
 
-function MyNotes(){
-    return 'hi, these are my saved notes!';
-}
+
 function addReviewTextBox(obj) {
     obj.append(
         '<div class = "col-md-6">' +
