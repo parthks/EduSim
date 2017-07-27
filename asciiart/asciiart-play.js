@@ -25,7 +25,7 @@ $(document).ready(function() {
 
     $('#img3').click(function(e){
         var pic = new Image();
-        pic.src = 'monalisa.jpg';
+        pic.src = 'monalisa2.jpeg';
         picSource = pic.src;
         make_canvas(pic.src);
     }); 
@@ -111,11 +111,31 @@ $('#submit').click(function(e){
     
     //console.log(imgArray);
     var wnd = window.open("about:blank", "", "_blank");
-
+    
     wnd.document.write("<span id='hi'>"+imgArray+'</span>');
-    var y = 2850.0 / row;
+    var y = 2400.0 / row;
+
+    var x = wnd.document.createElement("INPUT");
+    x.setAttribute("type", "range");
+    x.style.width = "100%";
+    x.step = 1;
+    x.max = 2*y;
+    x.min = 0;
+    x.value = y;
+    x.onchange = function(){
+        image.style.fontSize = x.value;
+    }; 
+    var image = wnd.document.getElementById("hi");
+    var t = wnd.document.createTextNode("Adjust Font Size");
+
+    wnd.document.body.insertBefore(x, image);
+    wnd.document.body.insertBefore(t, x);
+    
+
+    
     console.log(y);
-    wnd.document.getElementById("hi").style.fontSize = y;
+    image.style.fontSize = y;
+    image.style.fontFamily = "Courier New, Courier, monospace";
 
 
     

@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();
 var path = require('path');
 
+
 app.use(express.static('external'));
 app.use(express.static('styles'));
 app.use(express.static('js'));
@@ -23,6 +24,7 @@ app.get('/magic', function(req, res) {
 });
 
 app.get('/asciiart', function(req, res) {
+
     app.use(express.static('/asciiart'));
     res.sendFile(__dirname + '/asciiart/topic.html');
 });

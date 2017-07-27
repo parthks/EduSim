@@ -48,8 +48,9 @@ $('#asciify').click(function(e){
     $('#myCanvas').remove();
     //ctx.putImageData(imgData,0,0);
     var wnd = window.open("about:blank", "", "_blank");
-    wnd.document.write(imgArray);
-    wnd.parent.document.body.style.zoom = 0.1;
+    wnd.document.write("<span id='hi'>"+imgArray+'</span>');
+    wnd.document.getElementById("hi").style.fontSize = 6;
+    wnd.document.getElementById("hi").style.fontFamily = "Courier New, Courier, monospace";
 
 });
 

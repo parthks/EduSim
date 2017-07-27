@@ -1,3 +1,5 @@
+//DONT USE ANYMORE TO EXP - USE MAGIC OR ASCII TOPIC.JS
+
 $(function() {
     console.log("run")
     $("#calc").resizable().draggable();

@@ -1,6 +1,7 @@
 
 //<script src="https://www.gstatic.com/firebasejs/4.1.5/firebase.js"></script>
 // Initialize Firebase
+
 var config = {
   apiKey: "AIzaSyDiB3zpYdH0h2_ucJWdvI2OQTnDrDyEiaI",
   authDomain: "edusim-150921.firebaseapp.com",
@@ -10,12 +11,18 @@ var config = {
   messagingSenderId: "826200897633"
 };
 
+
 firebase.initializeApp(config);
 
 var database = firebase.database();
 
-function fireLogin(name){
-  database.ref(name+'/active').set(Date.now())
+function fireLogin(name=localStorage.getItem("uniquename")){
+  if (name != '') {
+    database.ref(name+'/active').set(Date.now());
+  } else {
+    alert('ERROR - Unknown user!');
+  }
+  
 }
 
 function saveGraph(graph, type){
