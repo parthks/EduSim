@@ -119,10 +119,6 @@ $('#submit').click(function(e){
 
 
     
-    // $(wnd.document).ready(function(){
-    //     wnd.document.getElementById("hi").style.fontSize = "xx-small";
-    // });
-    
 
 });
 
