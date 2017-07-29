@@ -18,7 +18,7 @@ var database = firebase.database();
 
 function fireLogin(name=localStorage.getItem("uniquename")){
   if (name != '') {
-    database.ref(name+'/active').set(Date.now());
+    database.ref('users/'+name+'/active').set(Date.now());
   } else {
     alert('ERROR - Unknown user!');
   }
@@ -30,9 +30,9 @@ function saveGraph(graph, type){
   if(name != ''){
     if (type == 'Apps'){
       console.log(graph);
-      database.ref(name+'/graphWithApps').set(graph);
+      database.ref('users/'+name+'/graphWithApps').set(graph);
     } else {
-      database.ref(name+'/graphNoApps').set(graph);
+      database.ref('users/'+name+'/graphNoApps').set(graph);
     }
   } else {
     alert('ERROR - Unknown user!');
@@ -43,16 +43,17 @@ function saveGraph(graph, type){
 function saveNote(note, topic){
   var name = localStorage.getItem("uniquename");
   if(name != ''){
-    database.ref(name+'/notes/'+topic).set(note);
+    database.ref('users/'+name+'/notes/'+topic).set(note);
   } else {
     alert('ERROR - Unknown user!');
   }
 }
 
+
 function getSaveNote(topic, callback){
   var name = localStorage.getItem("uniquename");
   if(name != ''){
-    database.ref(name+'/notes/'+topic).once('value').then(function(snapshot) {
+    database.ref('users/'+name+'/notes/'+topic).once('value').then(function(snapshot) {
       callback(snapshot.val());
     });
   } else {
@@ -61,6 +62,37 @@ function getSaveNote(topic, callback){
 }
 
 
+
+
+function getDefaultLayout(callback){
+  database.ref('DefaultLayout').once('value').then(function(snapshot) {
+      callback(snapshot.val());
+    });
+}
+
+function saveDefaultLayout(layout){
+  database.ref('DefaultLayout/').set(layout);
+}
+
+function saveLayout(layout){
+  var name = localStorage.getItem("uniquename");
+  if(name != ''){
+    database.ref('users/'+name+'/layout').set(layout);
+  } else {
+    alert('ERROR - Unknown user!');
+  }
+}
+
+function getLayout(callback){
+  var name = localStorage.getItem("uniquename");
+  if(name != ''){
+    database.ref('users/'+name+'/layout').once('value').then(function(snapshot) {
+      callback(snapshot.val());
+    });
+  } else {
+    alert('ERROR - Unknown user!');
+  }
+}
 
 
 

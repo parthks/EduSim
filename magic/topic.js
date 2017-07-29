@@ -1,5 +1,5 @@
-$(function() {
-    console.log("run")
+function startUpStuff(){
+  console.log("run")
     $("#calc").resizable().draggable();
 
     $("#summary-text").resizable().draggable();
@@ -13,8 +13,18 @@ $(function() {
     $("#www").resizable().draggable();
 
     $("#topics").selectmenu();
+    $("#note").resizable().draggable();
+}
 
-    $("#content").hide()
+$(function() {
+    startUpStuff();
+    $('#content').empty();
+    getLayout(function(result){
+      $("#content").html(result);
+      $("#content").hide();
+    });
+    
+    $("#reset-image").hide();
 
     obj = $("#all-content")
     obj.append('<div id="TEST" class="row"><div>')
@@ -26,7 +36,6 @@ $(function() {
         localStorage.getItem("appName") == 'Matrix_Magic') {
         $('#AppButton').click();
     }
-
     // $("#all-content").append(addSummaryTextBox());
 });
 
@@ -47,12 +56,48 @@ function sendontop(div_id) {
 function allContent() {
     if (!selectedTextBox && !selectedVideoBox && !selectedTestBox && !selectedAppBox) {
         $("#content").show()
-        addNotesTextBox($('#my_notes'));
+        $('#reset-image').show();
+        resetImageListener();
+        getNoteData();
+        startUpStuff();
+        //addNotesTextBox($('#my_notes'));
+        saveLayoutListiner();
     } else {
-        $('#my_notes').empty();
-        $("#content").hide()
+        //$('#my_notes').empty();
+        $("#content").hide();
+        $('#reset-image').hide();
     }
 }
+
+
+function saveLayoutListiner(){
+  // $('#content').on('DOMSubtreeModified', function() { 
+  //   console.log('saved layout!');
+  //   saveLayout($('#content').html());
+  // });
+  var target = document.querySelector('#content');
+  // create an observer instance
+  var observer = new MutationObserver(function(mutations) {
+    console.log('yolo!');   
+  });
+  // configuration of the observer:
+  var config = { attributes: true, childList: true, characterData: true };
+  // pass in the target node, as well as the observer options
+  console.log('put');
+  observer.observe(target, config);
+
+}
+
+function resetImageListener(){
+  $('#reset-image').click(function(){
+    getDefaultLayout(function(result){
+        $('#content').html(result);
+        startUpStuff();
+        addNotesTextBox($('#my_notes'));
+    });
+  });
+}
+
 
 function clickText() {
     selectedTextBox = !selectedTextBox
@@ -79,7 +124,7 @@ function clickVid() {
 function clickTest() {
       
     selectedTestBox = !selectedTestBox
-    //allContent()
+    allContent()
     if ($("#TestButton").hasClass("active")) {
         //deleteTestBoxes()
     } else {
@@ -235,7 +280,7 @@ function addTestBoxes(obj) {
     testDiv = $("#TEST")
     testDiv.empty()
     addTestBox(testDiv)
-    $("#calcDiv").resizable().draggable();
+    $("#calcTestDiv").resizable().draggable();
     $("#sampleProbDiv").resizable().draggable();
     $("#toughProbDiv").resizable().draggable();
 }
@@ -243,7 +288,7 @@ function addTestBoxes(obj) {
 function addTestBox(obj) {
     obj.append(
         '<div class="col-md-5">' +
-        '<div id="calcDiv" onclick="sendontop(this);" class="ui-widget-content box">' +
+        '<div id="calcTestDiv" onclick="sendontop(this);" class="ui-widget-content box">' +
         '<h3 class="ui-widget-header"> Calculator</h3>' +
         '</div>' +
         '</div>' +
@@ -309,13 +354,14 @@ function addTextBoxes(obj) {
     addNotesTextBox($("#NOTES"));
     $("#summ-text").resizable().draggable();
     $("#rev-text").resizable().draggable();
+    $("#note").resizable().draggable();
     
 }
 
 
 function addNotesTextBox(obj){
-    getSaveNote("magic", function(result){
-        obj.append(
+
+    obj.append(
         '<div class = "col-md-12">' +
         '<div id = "note" onclick = "sendontop(this);" class = "ui-widget-content box" >' +
         '<h3 class = "ui-widget-header" > My Notes </h3>' +
@@ -324,15 +370,21 @@ function addNotesTextBox(obj){
         '</textarea>' +
         '</div>' +
         '</div>'
-        );
-        $("#note").resizable().draggable();
+    );
+
+    getNoteData();   
+}
+
+function getNoteData(){
+  getSaveNote("magic", function(result){
+        $('#my_text').val(result);
+        
         $('#my_text').bind('input propertychange', function() {
             console.log('saved!');
             saveNote($('#my_text').val(), "magic");
         });
-    });   
+    });
 }
-
 
 function addReviewTextBox(obj) {
     obj.append(

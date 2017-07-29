@@ -80,7 +80,7 @@ function clickVid() {
 function clickTest() {
       
     selectedTestBox = !selectedTestBox
-    //allContent()
+    allContent()
     if ($("#TestButton").hasClass("active")) {
         //deleteTestBoxes()
     } else {

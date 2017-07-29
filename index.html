@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 
+
 <head>
     <link rel="stylesheet" type="text/css" href="styles/main.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -24,7 +25,7 @@
     <h3>Get Started</h3>
 </button>   
  -->        
-            <label>Please enter your uniquename, to create your own personalized space - </label>
+            <label>Please enter your unique name, to create your own personalized space - </label>
             <input type="text" id="uniquename"><br><br>
             <script type="text/javascript">
                 $('#uniquename').val(localStorage.getItem("uniquename"));
@@ -39,7 +40,7 @@
                         localStorage.setItem("uniquename", $('#uniquename').val());
                         window.top.location = '/home';
                     } else {
-                        alert('PLease enter your uniquename');
+                        alert('PLease enter your unique name');
                     }
                 });
             </script>
