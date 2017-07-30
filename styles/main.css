@@ -42,6 +42,11 @@
 .big-boy {
     outline: 1px solid blue;
     height: 300px;
+    /*position: absolute;*/
+}
+
+#content {
+    position: absolute;
 }
 
 h3 {

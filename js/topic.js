@@ -133,6 +133,11 @@ function Hello_World(){
             $('#revTextBigBoy').attr('style',result[currentKey]);
             break
 
+          case 'videoDivBigBoy':
+            addCustomBox('#videoDivBigBoy', getVideoBox());
+            $('#videoDivBigBoy').attr('style',result[currentKey]);
+            break;
+
           }
 
         if(parseInt($('#'+currentKey).css("z-index")) >= my_index){
@@ -231,14 +236,14 @@ function customButtonImageListeners(){
   });
 
 
-  $('#reset-image').click(function(){
-    console.log('clicked reset image!');
-    getDefaultLayout(function(result){
-        $('#content').html(result);
-        startUpStuff();
-        getNoteData();
-    });
-  });
+  // $('#reset-image').click(function(){
+  //   console.log('clicked reset image!');
+  //   getDefaultLayout(function(result){
+  //       $('#content').html(result);
+  //       startUpStuff();
+  //       getNoteData();
+  //   });
+  // });
 }
 
 
@@ -297,9 +302,11 @@ function customGoBackButton(){
 
 function clickCustomButton(ele){
   var textNames = ['Summary Text', 'Review Text', 'My Notes'];
+  var videoNames = ['Video'];
   var names;
   switch ($(ele).text()) {
     case 'Text': names = textNames; break;
+    case 'Video': names = videoNames; break;
   }
   
 
@@ -345,18 +352,31 @@ function CustomBoxButton(ele){
       case 'Summary Text': id='#summTextBigBoy'; method=getSummaryTextBox(); break;
       case 'Review Text': id='#revTextBigBoy'; method=getReviewTextBox(); break;
       case 'My Notes': id='#noteBigBoy'; method='Imma NOTE :P'; break;
+      case 'Video': id='#videoDivBigBoy'; method=getVideoBox(); break;
     }
 
     addCustomBox(id, method);
 }
 
 function addCustomBox(id, method){
-  if (id == '#noteBigBoy') {CustomNotesButton();} //need to fix this :/
+  if (id == '#noteBigBoy') {
+      CustomNotesButton(); 
+      $(id).css('position','absolute');
+      $(id).css('width','300px');
+      $(id).css('height','300px');
+      $(id).css('z-index',++my_index);
+  } //need to fix this :/
 
     if ($(id).length == 0) {
       $('#content').prepend(method);
       $(id).resizable().draggable();
+      
       saveLayoutListiner(id);
+      $(id).css('position','absolute');
+      $(id).css('width','300px');
+      $(id).css('height','300px');
+      $(id).css('z-index',++my_index);
+
   }
 }
 
@@ -654,22 +674,21 @@ function addVideoBoxes(obj) {
     videoDiv = $("#VIDEO");
     videoDiv.empty();
     addNotesVideotBox(videoDiv);
-    addVideoBox(videoDiv);
+    videoDiv.append('<div class = "col-md-8">'+getVideoBox()+'</div>');
     $("#videoDivBigBoy").resizable().draggable();
     $('#noteVidBigBoy').resizable().draggable();
 }
 
-function addVideoBox(obj) {
-    obj.append(
-        '<div class = "col-md-8">' +
-        '<div id="videoDivBigBoy" onclick="sendontop(this);" class="big-boy ui-widget-content">'+
+function getVideoBox() {
+    return '<div id="videoDivBigBoy" onclick="sendontop(this);" class="big-boy ui-widget-content">'+
         '<div id="videoDiv" class="box">' +
-        '<h3 class="ui-widget-header"> Learn</h3>' +
+        '<div class = "ui-widget-header">'+
+        '<h3 > Learn </h3>' +
+        '<button onclick="CustomCloseBox(this)" class="close-button-right">X</button>'+
+        '</div>' +
         addVideoDetails() + 
         '</div>'+
-        '</div>'+
-        '</div>'
-    );
+        '</div>';
 }
 
 function addNotesVideotBox(obj){
