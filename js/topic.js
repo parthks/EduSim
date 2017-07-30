@@ -63,6 +63,22 @@ var Hello_World_Details = function(){
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function startUpStuff(){
   console.log("run")
     $("#calc").resizable().draggable();
@@ -113,10 +129,18 @@ function sendontop(div_id) {
     ele.style.zIndex = my_index++;
 }
 
+function CustomCloseBox(ele) {
+    $(ele).parent().parent().parent().attrchange('remove');
+    $(ele).parent().parent().parent().remove();
+}
+
 
 function goForCustomLayout() {
     $("#content").show()
-    $('#reset-image').show();
+    //$('#reset-image').show();
+    $('#customBoxes').show();
+    $('#customBoxesBreak').show();
+    $('.close-button-right').show();
     resetImageListener();
     getNoteData();
     startUpStuff();
@@ -126,7 +150,10 @@ function goForCustomLayout() {
 
 function hideCustomLayout(){
   $("#content").hide();
-  $('#reset-image').hide();
+  $('#customBoxes').hide();
+  $('#customBoxesBreak').hide();
+  $('.close-button-right').hide();
+  //$('#reset-image').hide();
 }
 
 function deselectAllBoxes(){
@@ -145,14 +172,16 @@ function deselectAllBoxes(){
 }
 
 
-function saveLayoutListiner(){
-  $('#videoDivBigBoy').attrchange({
+function saveLayoutListiner(id){
+  $(id).attrchange({
   trackValues: true, 
   callback: function (event) {
   //event.attributeName - Attribute Name
   //event.oldValue - Prev Value
   //event.newValue - New Value
-  console.log(event.newValue);
+  if (event.attributeName == "style"){
+        console.log(event.newValue);
+    }
   }
 });
 
@@ -170,6 +199,202 @@ function resetImageListener(){
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function customGoBackButton(){
+  $('#go-back').click(function(){
+    $('#customCurrentTitle').remove();
+    $('#customOptions').remove();
+    $('#goBack').remove();
+
+    var html = '<div id="CustomTextButton" class="col-md-1 center">' +
+            '<button class="btn btn-secondary" onclick="clickCustomText();">Text</button>' +
+        '</div>' +
+        '<div id="CustomVideoButton" class="col-md-1 center">' +
+            '<button class="btn btn-secondary" onclick="clickCustomVid();">Video</button>' +
+        '</div>' +
+        '<div id="CustomTestButton" class=" col-md-1 center">' +
+            '<button class="btn btn-secondary" onclick="clickCustomTest();">Test</button>' +
+        '</div>' +
+        '<div id="CustomAppButton" class="col-md-1 center">' +
+            '<button class="btn btn-secondary" onclick="clickCustomApp();">Application</button>' +
+        '</div>' +
+        '<div id="CustomExtraSpace" class="col-md-3 center"></div>';
+
+    $('#CustomBoxesTitle').after(html);
+  });
+}
+
+function clickCustomText(){
+  var html = '<div id="customCurrentTitle" class="col-md-2 center">' +
+            '<h3>Text: </h3>'+
+         '</div>'+
+        '<div id="customOptions" class="col-md-4 center">'+
+            '<button onclick="CustomSummaryTextButton();" class="btn btn-secondary">Summary Text</button>'+
+            '&nbsp'+
+            '<button onclick="CustomReviewTextButton();" class="btn btn-secondary">Review Text</button>'+
+            '&nbsp'+
+            '<button onclick="CustomNotesButton();" class="btn btn-secondary">My Notes</button>'+
+             '&nbsp  &nbsp'+
+        '</div>'+
+        '<div id="goBack" class="col-md-1 center">'+
+            '<img id="go-back" style="width: 38px;" src="../external/go-back-icon.png"  alt="go back">'+
+        '</div>';
+
+  $('#CustomTextButton').remove();
+  $('#CustomVideoButton').remove();
+  $('#CustomTestButton').remove();
+  $('#CustomAppButton').remove();
+  $('#CustomExtraSpace').remove();
+
+  $('#CustomBoxesTitle').after(html);
+  customGoBackButton();
+
+}
+
+
+function clickCustomVid(){
+  var html = '<div id="customCurrentTitle" class="col-md-2 center">' +
+            '<h3>Video: </h3>'+
+         '</div>'+
+        '<div id="customOptions" class="col-md-4 center">'+
+            '<button id="TextButton" class="btn btn-secondary">Video</button>'+
+        '</div>'+
+        '<div id="goBack" class="col-md-1 center">'+
+            '<img id="go-back" style="width: 38px;" src="../external/go-back-icon.png"  alt="go back">'+
+        '</div>';
+
+  $('#CustomTextButton').remove();
+  $('#CustomVideoButton').remove();
+  $('#CustomTestButton').remove();
+  $('#CustomAppButton').remove();
+  $('#CustomExtraSpace').remove();
+
+  $('#CustomBoxesTitle').after(html);
+  customGoBackButton();
+
+}
+
+function clickCustomTest(){
+  var html = '<div id="customCurrentTitle" class="col-md-2 center">' +
+            '<h3>Test: </h3>'+
+         '</div>'+
+        '<div id="customOptions" class="col-md-4 center">'+
+            '<button id="TextButton" class="btn btn-secondary">Sample Problem</button>'+
+            '&nbsp'+
+            '<button id="TextButton" class="btn btn-secondary">Tough Problem</button>'+
+            '&nbsp'+
+            '<button id="TextButton" class="btn btn-secondary">Calculator</button>'+
+             '&nbsp  &nbsp'+
+        '</div>'+
+        '<div id="goBack" class="col-md-1 center">'+
+            '<img id="go-back" style="width: 38px;" src="../external/go-back-icon.png"  alt="go back">'+
+        '</div>';
+
+  $('#CustomTextButton').remove();
+  $('#CustomVideoButton').remove();
+  $('#CustomTestButton').remove();
+  $('#CustomAppButton').remove();
+  $('#CustomExtraSpace').remove();
+
+  $('#CustomBoxesTitle').after(html);
+  customGoBackButton();
+
+}
+
+
+function clickCustomApp(){
+  var html = '<div id="customCurrentTitle" class="col-md-2 center">' +
+            '<h3>Application: </h3>'+
+         '</div>'+
+        '<div id="customOptions" class="col-md-4 center">'+
+            '<button id="TextButton" class="btn btn-secondary">Application</button>'+
+            '&nbsp'+
+            '<button id="TextButton" class="btn btn-secondary">Extra Info</button>'+
+            '&nbsp'+
+            '<button id="TextButton" class="btn btn-secondary">Connections</button>'+
+             '&nbsp  &nbsp'+
+        '</div>'+
+        '<div id="goBack" class="col-md-1 center">'+
+            '<img id="go-back" style="width: 38px;" src="../external/go-back-icon.png"  alt="go back">'+
+        '</div>';
+
+  $('#CustomTextButton').remove();
+  $('#CustomVideoButton').remove();
+  $('#CustomTestButton').remove();
+  $('#CustomAppButton').remove();
+  $('#CustomExtraSpace').remove();
+
+  $('#CustomBoxesTitle').after(html);
+  customGoBackButton();
+
+}
+
+
+
+
+
+function CustomSummaryTextButton(){
+  console.log('hi');
+  $('#content').prepend(getSummaryTextBox());
+  $('#summTextBigBoy').resizable().draggable();
+  saveLayoutListiner('#summTextBigBoy');
+}
+
+
+function CustomReviewTextButton(){
+  $('#content').prepend(getReviewTextBox());
+  $('#revTextBigBoy').resizable().draggable();
+  saveLayoutListiner('#revTextBigBoy');
+}
+
+function CustomNotesButton(){
+  addNotesTextBox($('#content'), 'prepend');
+  $('#noteBigBoy').resizable().draggable();
+  saveLayoutListiner('#noteBigBoy')
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function clickText() {
     if(selectedTextBox){
       selectedTextBox = false;
@@ -180,6 +405,7 @@ function clickText() {
       deselectAllBoxes();
       addTextBoxes($("#all-content"))
       selectedTextBox = true;
+      $('.close-button-right').hide();
     }
 }
 
@@ -191,9 +417,10 @@ function clickVid() {
     } else {
       hideCustomLayout();
       deselectAllBoxes();
-      addVideoBoxes($("#all-content"))
-      selectedVideoBox = true;
+      addVideoBoxes($("#all-content"));
       saveLayoutListiner();
+      selectedVideoBox = true;
+      $('.close-button-right').show();
     }
 }
 
@@ -221,6 +448,7 @@ function clickApp() {
       deselectAllBoxes();
       addAppBoxes($("#all-content"))
       selectedAppBox = true;
+      $('.close-button-right').show();
     }
 
 }
@@ -234,6 +462,18 @@ function goToByScroll(id) {
         },
         'slow');
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -352,6 +592,20 @@ function addCalculator(obj){
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function deleteTestBoxes() {
     $("#TEST").remove();
 
@@ -387,6 +641,14 @@ function addTestBox(obj) {
         '</div>'
     )
 }
+
+
+
+
+
+
+
+
 
 
 
@@ -443,17 +705,28 @@ function addNotesVideotBox(obj){
 
 
 
+
+
+
+
+
+
+
+
+
+
+
 function deleteTextBoxes() {
     $("#TEXT").remove();
 }
 
 function addTextBoxes(obj) {
     obj.prepend('<div id="TEXT" class="row"><div>');
-    textDiv = $("#TEXT");
+    var textDiv = $("#TEXT");
     textDiv.empty();
-    addSummaryTextBox(textDiv);
-    addReviewTextBox(textDiv);
-    addNotesTextBox(textDiv);
+    textDiv.append('<div class = "col-md-6">'+getSummaryTextBox()+'</div>');
+    textDiv.append('<div class = "col-md-6">'+getReviewTextBox()+'</div>');
+    addNotesTextBox(textDiv, 'append');
     $("#summTextBigBoy").resizable().draggable();
     $("#revTextBigBoy").resizable().draggable();
     $("#noteBigBoy").resizable().draggable();
@@ -461,9 +734,29 @@ function addTextBoxes(obj) {
 }
 
 
-function addNotesTextBox(obj){
+function addNotesTextBox(obj, type){
+    console.log(type);
 
-    obj.append(
+    if (type == 'prepend') {
+      obj.prepend(
+        '<div id = "noteBigBoy" onclick = "sendontop(this);" class = "ui-widget-content big-boy" >' +
+        '<div id = "note" class="box">'+
+        '<div class="ui-widget-header">'+
+        '<h3> My Notes </h3>' +
+        '<button onclick="CustomCloseBox(this)" class="close-button-right">X</button>'+
+        '</div>'+
+        '<div style="height: calc(100% - 28px);">'+
+        '<textarea class="text_edit" id="my_text">'+
+        'Loading your saved text...\nPlease wait!' +
+        '</textarea>' +
+        '</div>'+
+        '</div>' +
+        '</div>' +
+        '</div>'
+      );
+      console.log('type');
+    } else {
+        obj.append(
         '<div class = "col-md-12">' +
         '<br>'+
         '<div id = "noteBigBoy" onclick = "sendontop(this);" class = "ui-widget-content big-boy" >' +
@@ -477,7 +770,8 @@ function addNotesTextBox(obj){
         '</div>' +
         '</div>' +
         '</div>'
-    );
+      );
+    }
 
     getNoteData();   
 }
@@ -493,32 +787,56 @@ function getNoteData(){
     });
 }
 
-function addReviewTextBox(obj) {
-    obj.append(
-        '<div class = "col-md-6">' +
-        '<div id = "revTextBigBoy" onclick = "sendontop(this);" class = "ui-widget-content big-boy" >' +
+function getReviewTextBox() {
+    return '<div id = "revTextBigBoy" onclick = "sendontop(this);" class = "ui-widget-content big-boy" >' +
         '<div id = "revtext" class = "box" >' +
-        '<h3 class = "ui-widget-header" > Review Concepts </h3>' +
+        '<div class = "ui-widget-header">' +
+        '<h3> Review Concepts </h3>' +
+        '<button onclick="CustomCloseBox(this)" class="close-button-right">X</button>' +
+        '</div>' +
         reviewText() +
         '</div>' +
-        '</div>' +
-        '</div>'
-    )
+        '</div>';
+        
+    
 }
 
 
-function addSummaryTextBox(obj) {
-    obj.append(
-        '<div class = "col-md-6">' +
-        '<div id = "summTextBigBoy" onclick = "sendontop(this);" class = "ui-widget-content big-boy" >' +
+function getSummaryTextBox() {
+    return '<div id = "summTextBigBoy" onclick = "sendontop(this);" class = "ui-widget-content big-boy" >' +
         '<div id = "summText" class = "box" >' +
-        '<h3 class = "ui-widget-header" > Summary Text </h3>' +
+        '<div class = "ui-widget-header">'+
+        '<h3 > Summary Text </h3>' +
+        '<button onclick="CustomCloseBox(this)" class="close-button-right">X</button>'+
+        '</div>' +
         summaryText() +
         '</div' +
-        '</div>' +
-        '</div>'
-    )
+        '</div>';
+        
+    
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 function calculator(){
