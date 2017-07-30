@@ -101,20 +101,36 @@ function Hello_World(){
   console.log("Hello_World");
 
     $('#content').empty();
-    resetImageListener();
+    customButtonImageListeners();
 
-    // getLayout(function(result){
-    //   console.log('got layout!');
-    //   $("#content").html(result);
-    //   getNoteData();
-    //   startUpStuff();
-    //   saveLayoutListiner();
-    //   //$("#content").hide();
-    // });
+    getLayout(function(result){
+      console.log('got layout!');
+      Object.keys(result).forEach(function(currentKey) {
+        console.log(currentKey, result[currentKey]);
+        switch (currentKey){
+
+          case 'noteBigBoy':
+            CustomNotesButton();
+            $('#noteBigBoy').attr('style',result[currentKey]);  
+            break;
+
+          case 'summTextBigBoy':
+            CustomSummaryTextButton(); 
+            $('#summTextBigBoy').attr('style',result[currentKey]);  
+            break;  
+
+
+          }
+      });
+    });
        
     //addTextBoxes($("#all-content"))
      Hello_World_Details();
 }
+
+
+
+
 
 var my_index = 100;
 
@@ -130,8 +146,11 @@ function sendontop(div_id) {
 }
 
 function CustomCloseBox(ele) {
-    $(ele).parent().parent().parent().attrchange('remove');
-    $(ele).parent().parent().parent().remove();
+    var bigBoy = $(ele).parent().parent().parent();
+    bigBoy.attrchange('remove');
+    console.log('deleteee  '+bigBoy.attr('id'));
+    deleteLayout(bigBoy.attr('id'));
+    bigBoy.remove();
 }
 
 
@@ -141,7 +160,7 @@ function goForCustomLayout() {
     $('#customBoxes').show();
     $('#customBoxesBreak').show();
     $('.close-button-right').show();
-    resetImageListener();
+    customButtonImageListeners();
     getNoteData();
     startUpStuff();
     saveLayoutListiner();
@@ -179,15 +198,26 @@ function saveLayoutListiner(id){
   //event.attributeName - Attribute Name
   //event.oldValue - Prev Value
   //event.newValue - New Value
+
   if (event.attributeName == "style"){
+        console.log(event.target.id);
         console.log(event.newValue);
+        saveLayout(event.target.id, event.newValue);
     }
   }
 });
 
 }
 
-function resetImageListener(){
+function customButtonImageListeners(){
+
+  $('#trash-image').click(function(){
+    $('#content').empty();
+    deleteAllLayout();
+    //location.reload();
+  });
+
+
   $('#reset-image').click(function(){
     console.log('clicked reset image!');
     getDefaultLayout(function(result){
@@ -754,6 +784,7 @@ function addNotesTextBox(obj, type){
         '</div>' +
         '</div>'
       );
+      //$('#noteBigBoy').attr('style','width: 648px; height: 353px; z-index: 101; left: 117px; top: -10px;');
       console.log('type');
     } else {
         obj.append(

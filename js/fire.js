@@ -18,7 +18,9 @@ var database = firebase.database();
 
 function fireLogin(name=localStorage.getItem("uniquename")){
   if (name != '') {
-    database.ref('users/'+name+'/active').set(Date.now());
+    var d = new Date();
+    var sd = d.getUTCHours() + ':' +  d.getUTCMinutes() + ' ' + d.getUTCDay() + '-' + (parseInt(d.getUTCMonth())+1) + '-' + d.getUTCFullYear();
+    database.ref('users/'+name+'/active').set(sd);
   } else {
     alert('ERROR - Unknown user!');
   }
@@ -74,10 +76,14 @@ function saveDefaultLayout(layout){
   database.ref('DefaultLayout/').set(layout);
 }
 
-function saveLayout(layout){
+
+
+function saveLayout(id, style){
   var name = localStorage.getItem("uniquename");
   if(name != ''){
-    database.ref('users/'+name+'/layout').set(layout);
+    database.ref('users/'+name+'/layout').update({
+      [id]: style
+    });
   } else {
     alert('ERROR - Unknown user!');
   }
@@ -93,6 +99,24 @@ function getLayout(callback){
   } else {
     alert('ERROR - Unknown user!');
   }
+}
+
+function deleteLayout(id){
+  var name = localStorage.getItem("uniquename");
+  if(name != ''){
+    database.ref('users/'+name+'/layout/'+id).remove();
+  } else {
+    alert('ERROR - Unknown user!');
+  } 
+}
+
+function deleteAllLayout(){
+  var name = localStorage.getItem("uniquename");
+  if(name != ''){
+    database.ref('users/'+name+'/layout').remove();
+  } else {
+    alert('ERROR - Unknown user!');
+  } 
 }
 
 
