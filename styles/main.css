@@ -25,6 +25,7 @@
 
 .big-boy {
     outline: 1px solid blue;
+    height: 300px;
 }
 
 h3 {
@@ -54,40 +55,25 @@ body {
     background: lightblue;
 }
 
-#summary-text {
-    height: 150px;
-}
 
-#learn {
+#videoDivBigBoy {
     height: 550px;
 }
 
-#videoDiv {
-    height: 550px;
+#noteVidBigBoy{
+    height: 630px;
 }
 
-/*#calcDiv {
-    height: 700px;
-}*/
-
-#calculatorDiv {
-    height: 690px;
+#calculatorDivBigBoy {
+    height: 624px;
 }
 
-#toughProbDiv {
-    height: 450px;
-}
-
-#sampleProbDiv {
-    height: 250px;
-}
 
 #appDiv {
-    height: 690px;
+    height: calc(100% - 32px);
 }
-
-#extras{
-    height: 315px;
+#appDivBigBoy {
+    height: 624px;
 }
 
 textarea {

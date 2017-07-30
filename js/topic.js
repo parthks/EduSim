@@ -87,14 +87,14 @@ function Hello_World(){
     $('#content').empty();
     resetImageListener();
 
-    getLayout(function(result){
-      console.log('got layout!');
-      $("#content").html(result);
-      getNoteData();
-      startUpStuff();
-      saveLayoutListiner();
-      //$("#content").hide();
-    });
+    // getLayout(function(result){
+    //   console.log('got layout!');
+    //   $("#content").html(result);
+    //   getNoteData();
+    //   startUpStuff();
+    //   saveLayoutListiner();
+    //   //$("#content").hide();
+    // });
        
     //addTextBoxes($("#all-content"))
      Hello_World_Details();
@@ -266,13 +266,14 @@ function addAppBox(obj) {
         '<h3 class="ui-widget-header"> Connections</h3>' +
         connections() +
         '</div>' +
+        '</div>' +
         '<br>' +
         '<div id="extrasBigBoy" onclick="sendontop(this);" class="ui-widget-content big-boy">' +
         '<div id="extras" class="box">' +
         '<h3 class="ui-widget-header"> Extra Info</h3>' +
         extraInfo() +
         '</div>' +
-        '</div>';
+        '</div></div>';
         if (addCalculatorInApplication){
           html += '<div class = "col-md-6">';
         } else {
@@ -280,12 +281,13 @@ function addAppBox(obj) {
         }
 
     html += '<div id="appDivBigBoy" onclick="sendontop(this);" class="ui-widget-content big-boy">' +
-        '<div id="appDiv" class= box">' +
+        '<div id="appDiv" class= box">'+
         '<h3 class="ui-widget-header"> !Application!</h3>';
+        ;
 
     html += addAppDetails();
 
-    html += '</div></div>';
+    html += '</div></div></div>';
 
 
     if (addCalculatorInApplication){
@@ -392,32 +394,51 @@ function addTestBox(obj) {
 
 
 function deleteVideoBoxes() {
-    $("#VIDEO").remove()
+    $("#VIDEO").remove();
 }
 
 function addVideoBoxes(obj) {
-    obj.prepend('<div id="VIDEO" class="row"><div>')
-    videoDiv = $("#VIDEO")
-    videoDiv.empty()
-    addVideoBox(videoDiv)
+    obj.prepend('<div id="VIDEO" class="row"><div>');
+    videoDiv = $("#VIDEO");
+    videoDiv.empty();
+    addNotesVideotBox(videoDiv);
+    addVideoBox(videoDiv);
     $("#videoDivBigBoy").resizable().draggable();
+    $('#noteVidBigBoy').resizable().draggable();
 }
 
 function addVideoBox(obj) {
     obj.append(
-        '<div class = "col-md-2"></div>' +
         '<div class = "col-md-8">' +
-        '<div id="videoDivBigBoy" onclick="sendontop(this);" class="big-boy ui-widget-content"'+
+        '<div id="videoDivBigBoy" onclick="sendontop(this);" class="big-boy ui-widget-content">'+
         '<div id="videoDiv" class="box">' +
         '<h3 class="ui-widget-header"> Learn</h3>' +
         addVideoDetails() + 
         '</div>'+
-        '</div>' +
-        '</div>' +
-        '<div class = "col-md-2"></div>'
-    )
+        '</div>'+
+        '</div>'
+    );
 }
 
+function addNotesVideotBox(obj){
+
+    obj.append(
+        '<div class = "col-md-4">' +
+        '<div id = "noteVidBigBoy" onclick = "sendontop(this);" class = "ui-widget-content big-boy">' +
+        '<div id = "note" class="box">'+
+        '<h3 class = "ui-widget-header" > My Notes </h3>' +
+        '<div style="height: calc(100% - 28px);">'+
+        '<textarea class="text_edit" id="my_text">'+
+        'Loading your saved text...\nPlease wait!' +
+        '</textarea>' +
+        '</div>'+
+        '</div>' +
+        '</div>' +
+        '</div>'
+    );
+
+    getNoteData();   
+}
 
 
 
