@@ -78,6 +78,13 @@ var Hello_World_Details = function(){
 
 
 
+var my_index = 100;
+
+var selectedTextBox = false;
+var selectedVideoBox = false;
+var selectedTestBox = false;
+var selectedAppBox = false;
+
 
 function startUpStuff(){
   console.log("run")
@@ -102,6 +109,8 @@ function Hello_World(){
 
     $('#content').empty();
     customButtonImageListeners();
+    
+
 
     getLayout(function(result){
       console.log('got layout!');
@@ -110,17 +119,25 @@ function Hello_World(){
         switch (currentKey){
 
           case 'noteBigBoy':
-            CustomNotesButton();
+            addCustomBox('#noteBigBoy', CustomNotesButton());
             $('#noteBigBoy').attr('style',result[currentKey]);  
             break;
 
           case 'summTextBigBoy':
-            CustomSummaryTextButton(); 
-            $('#summTextBigBoy').attr('style',result[currentKey]);  
+            addCustomBox('#summTextBigBoy', getSummaryTextBox());  
+            $('#summTextBigBoy').attr('style',result[currentKey]); 
             break;  
 
+          case 'revTextBigBoy':
+            addCustomBox('#revTextBigBoy', getReviewTextBox());
+            $('#revTextBigBoy').attr('style',result[currentKey]);
+            break
 
           }
+
+        if(parseInt($('#'+currentKey).css("z-index")) >= my_index){
+          my_index = parseInt($('#'+currentKey).css("z-index"));
+        }
       });
     });
        
@@ -132,17 +149,13 @@ function Hello_World(){
 
 
 
-var my_index = 100;
 
-var selectedTextBox = false;
-var selectedVideoBox = false;
-var selectedTestBox = false;
-var selectedAppBox = false;
+
 
 
 function sendontop(div_id) {
     ele = document.getElementById(div_id.id);
-    ele.style.zIndex = my_index++;
+    ele.style.zIndex = ++my_index;
 }
 
 function CustomCloseBox(ele) {
@@ -261,18 +274,17 @@ function customGoBackButton(){
     $('#customCurrentTitle').remove();
     $('#customOptions').remove();
     $('#goBack').remove();
-
     var html = '<div id="CustomTextButton" class="col-md-1 center">' +
-            '<button class="btn btn-secondary" onclick="clickCustomText();">Text</button>' +
+            '<button class="btn btn-secondary" onclick="clickCustomButton(this);">Text</button>' +
         '</div>' +
         '<div id="CustomVideoButton" class="col-md-1 center">' +
-            '<button class="btn btn-secondary" onclick="clickCustomVid();">Video</button>' +
+            '<button class="btn btn-secondary" onclick="clickCustomButton(this);">Video</button>' +
         '</div>' +
         '<div id="CustomTestButton" class=" col-md-1 center">' +
-            '<button class="btn btn-secondary" onclick="clickCustomTest();">Test</button>' +
+            '<button class="btn btn-secondary" onclick="clickCustomButton(this);">Test</button>' +
         '</div>' +
         '<div id="CustomAppButton" class="col-md-1 center">' +
-            '<button class="btn btn-secondary" onclick="clickCustomApp();">Application</button>' +
+            '<button class="btn btn-secondary" onclick="clickCustomButton(this);">Application</button>' +
         '</div>' +
         '<div id="CustomExtraSpace" class="col-md-3 center"></div>';
 
@@ -280,21 +292,40 @@ function customGoBackButton(){
   });
 }
 
-function clickCustomText(){
+
+
+
+function clickCustomButton(ele){
+  var textNames = ['Summary Text', 'Review Text', 'My Notes'];
+  var names;
+  switch ($(ele).text()) {
+    case 'Text': names = textNames; break;
+  }
+  
+
   var html = '<div id="customCurrentTitle" class="col-md-2 center">' +
             '<h3>Text: </h3>'+
          '</div>'+
-        '<div id="customOptions" class="col-md-4 center">'+
-            '<button onclick="CustomSummaryTextButton();" class="btn btn-secondary">Summary Text</button>'+
-            '&nbsp'+
-            '<button onclick="CustomReviewTextButton();" class="btn btn-secondary">Review Text</button>'+
-            '&nbsp'+
-            '<button onclick="CustomNotesButton();" class="btn btn-secondary">My Notes</button>'+
-             '&nbsp  &nbsp'+
-        '</div>'+
+        '<div id="customOptions" class="col-md-4 center">';
+
+            // '<button onclick="CustomSummaryTextButton();" class="btn btn-secondary">Summary Text</button>'+
+            // '&nbsp'+
+            // '<button onclick="CustomReviewTextButton();" class="btn btn-secondary">Review Text</button>'+
+            // '&nbsp'+
+            // '<button onclick="CustomNotesButton();" class="btn btn-secondary">My Notes</button>'+
+            //  '&nbsp  &nbsp'+
+
+        
+  for (var i = 0; i < names.length; i++) {
+    html += '<button onclick="CustomBoxButton(this);" class="btn btn-secondary">'+names[i]+'</button>'+
+            '&nbsp';
+  }
+
+  html += '</div>'+
         '<div id="goBack" class="col-md-1 center">'+
             '<img id="go-back" style="width: 38px;" src="../external/go-back-icon.png"  alt="go back">'+
         '</div>';
+
 
   $('#CustomTextButton').remove();
   $('#CustomVideoButton').remove();
@@ -304,109 +335,38 @@ function clickCustomText(){
 
   $('#CustomBoxesTitle').after(html);
   customGoBackButton();
-
 }
 
 
-function clickCustomVid(){
-  var html = '<div id="customCurrentTitle" class="col-md-2 center">' +
-            '<h3>Video: </h3>'+
-         '</div>'+
-        '<div id="customOptions" class="col-md-4 center">'+
-            '<button id="TextButton" class="btn btn-secondary">Video</button>'+
-        '</div>'+
-        '<div id="goBack" class="col-md-1 center">'+
-            '<img id="go-back" style="width: 38px;" src="../external/go-back-icon.png"  alt="go back">'+
-        '</div>';
+function CustomBoxButton(ele){
+    var id;
+    var method;
+    switch ($(ele).text()){
+      case 'Summary Text': id='#summTextBigBoy'; method=getSummaryTextBox(); break;
+      case 'Review Text': id='#revTextBigBoy'; method=getReviewTextBox(); break;
+      case 'My Notes': id='#noteBigBoy'; method='Imma NOTE :P'; break;
+    }
 
-  $('#CustomTextButton').remove();
-  $('#CustomVideoButton').remove();
-  $('#CustomTestButton').remove();
-  $('#CustomAppButton').remove();
-  $('#CustomExtraSpace').remove();
-
-  $('#CustomBoxesTitle').after(html);
-  customGoBackButton();
-
+    addCustomBox(id, method);
 }
 
-function clickCustomTest(){
-  var html = '<div id="customCurrentTitle" class="col-md-2 center">' +
-            '<h3>Test: </h3>'+
-         '</div>'+
-        '<div id="customOptions" class="col-md-4 center">'+
-            '<button id="TextButton" class="btn btn-secondary">Sample Problem</button>'+
-            '&nbsp'+
-            '<button id="TextButton" class="btn btn-secondary">Tough Problem</button>'+
-            '&nbsp'+
-            '<button id="TextButton" class="btn btn-secondary">Calculator</button>'+
-             '&nbsp  &nbsp'+
-        '</div>'+
-        '<div id="goBack" class="col-md-1 center">'+
-            '<img id="go-back" style="width: 38px;" src="../external/go-back-icon.png"  alt="go back">'+
-        '</div>';
+function addCustomBox(id, method){
+  if (id == '#noteBigBoy') {CustomNotesButton();} //need to fix this :/
 
-  $('#CustomTextButton').remove();
-  $('#CustomVideoButton').remove();
-  $('#CustomTestButton').remove();
-  $('#CustomAppButton').remove();
-  $('#CustomExtraSpace').remove();
-
-  $('#CustomBoxesTitle').after(html);
-  customGoBackButton();
-
+    if ($(id).length == 0) {
+      $('#content').prepend(method);
+      $(id).resizable().draggable();
+      saveLayoutListiner(id);
+  }
 }
 
-
-function clickCustomApp(){
-  var html = '<div id="customCurrentTitle" class="col-md-2 center">' +
-            '<h3>Application: </h3>'+
-         '</div>'+
-        '<div id="customOptions" class="col-md-4 center">'+
-            '<button id="TextButton" class="btn btn-secondary">Application</button>'+
-            '&nbsp'+
-            '<button id="TextButton" class="btn btn-secondary">Extra Info</button>'+
-            '&nbsp'+
-            '<button id="TextButton" class="btn btn-secondary">Connections</button>'+
-             '&nbsp  &nbsp'+
-        '</div>'+
-        '<div id="goBack" class="col-md-1 center">'+
-            '<img id="go-back" style="width: 38px;" src="../external/go-back-icon.png"  alt="go back">'+
-        '</div>';
-
-  $('#CustomTextButton').remove();
-  $('#CustomVideoButton').remove();
-  $('#CustomTestButton').remove();
-  $('#CustomAppButton').remove();
-  $('#CustomExtraSpace').remove();
-
-  $('#CustomBoxesTitle').after(html);
-  customGoBackButton();
-
-}
-
-
-
-
-
-function CustomSummaryTextButton(){
-  console.log('hi');
-  $('#content').prepend(getSummaryTextBox());
-  $('#summTextBigBoy').resizable().draggable();
-  saveLayoutListiner('#summTextBigBoy');
-}
-
-
-function CustomReviewTextButton(){
-  $('#content').prepend(getReviewTextBox());
-  $('#revTextBigBoy').resizable().draggable();
-  saveLayoutListiner('#revTextBigBoy');
-}
 
 function CustomNotesButton(){
-  addNotesTextBox($('#content'), 'prepend');
-  $('#noteBigBoy').resizable().draggable();
-  saveLayoutListiner('#noteBigBoy')
+  if ($('#noteBigBoy').length == 0) {
+    addNotesTextBox($('#content'), 'prepend');
+    $('#noteBigBoy').resizable().draggable();
+    saveLayoutListiner('#noteBigBoy')
+  }
 }
 
 
