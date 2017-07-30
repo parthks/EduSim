@@ -13,33 +13,21 @@
     <link rel="stylesheet" type="text/css" href="../styles/calculator.css">
     <script src="https://www.gstatic.com/firebasejs/4.1.5/firebase.js"></script>
     <script type="text/javascript" src="../js/fire.js"></script>
-    <script type="text/javascript" src="topic.js"></script>
+    <script type="text/javascript" src="../js/topic.js"></script>
+    <script type="text/javascript" src="topic-asciiart.js"></script>
 </head>
 
 <body>
     <div class="row heading">
-        <!-- <div class="col-md-2">
-    <select name="topics" id="topics">
-        <option value="jquery">Home</option>
-        <optgroup label="Chapter 1">
-            <option value="1.1">1.1 baoh</option>
-            <option value="1.2">uisdjfnkj.js</option>
-        </optgroup>
-        <optgroup label="Chapter 2">
-            <option value="somefile">Some unknown file</option>
-            <option value="someotherfile">Some other file</option>
-        </optgroup>
-    </select>
-</div>
- -->
+        
         <div class="col-md-1 center">
-            <button id="TextButton" type="button" data-toggle="button" aria-pressed="true" autocomplete="off" class="btn btn-secondary active" onclick="clickText();">Text!</button>
+            <button id="TextButton" type="button" data-toggle="button" aria-pressed="true" autocomplete="off" class="btn btn-secondary" onclick="clickText();">Text</button>
         </div>
         <div class="col-md-1 center">
             <button id="VideoButton" type="button" data-toggle="button" aria-pressed="true" autocomplete="off" class="btn btn-secondary" onclick="clickVid();">Video</button>
         </div>
         <div class=" col-md-1 center">
-            <button id="TestButton" type="button" data-toggle="button" aria-pressed="true" autocomplete="off" class="btn btn-secondary" onclick="clickTest();">Test</button>
+            <button id="TestButton" type="button" autocomplete="off" class="btn btn-secondary" onclick="clickTest();">Test</button>
         </div>
         <div class="col-md-1 center">
             <button id="AppButton" type="button" data-toggle="button" aria-pressed="true" autocomplete="off" class="btn btn-secondary" onclick="clickApp();">Application</button>
@@ -53,62 +41,19 @@
         <div class="col-md-1 center">
             <button class="btn btn-primary">Next</button>
         </div>
-        <!-- <div class="col-md-1 center">
-            <button class="ui-button ui-widget ui-corner-all">Custom</button>
-        </div> 
-        -->
+        
         <div class="col-md-2 right">
+            <img id="reset-image" style="width: 32px;" src="../directed-graph/refresh-icon.png"  alt="reset layout">
+            &nbsp &nbsp
             <button onclick="window.top.location = '/home'" class="btn btn-primary">Home</button>
         </div>
+
     </div>
     <br id="break">
     <div id="all-content"></div>
-    <div id="content">
-
-        <div id="my_notes" class="row">
-        </div>
-        <br>
-        
-
-        <div class="row">
-            <div class="col-md-3">
-                <div id="calc" onclick="sendontop(this);" class="ui-widget-content box">
-                    <h3 class="ui-widget-header"> Calculator</h3>
-                </div>
-                <div id="connect" onclick="sendontop(this);" class="ui-widget-content box">
-                    <h3 class="ui-widget-header"> Connections</h3>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div id="summary-text" onclick="sendontop(this);" class="ui-widget-content box">
-                    <h3 class="ui-widget-header"> Summary Text</h3>
-                </div>
-                <div id="learn" onclick="sendontop(this);" class="ui-widget-content box">
-                    <h3 class="ui-widget-header"> Learn</h3>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div id="sample-prob" onclick="sendontop(this);" class="ui-widget-content box">
-                    <h3 class="ui-widget-header"> Sample Problem</h3>
-                </div>
-                <div id="tough-prob" onclick="sendontop(this);" class="ui-widget-content box">
-                    <h3 class="ui-widget-header"> Ready Player One</h3>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-8">
-                <div id="extras" onclick="sendontop(this);" class="ui-widget-content box">
-                    <h3 class="ui-widget-header"> Extra Info</h3>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div id="www" onclick="sendontop(this);" class="ui-widget-content box">
-                    <h3 class="ui-widget-header"> WWW</h3>
-                </div>
-            </div>
-        </div>
-    </div>
+    <div id="content"></div>
 </body>
+
+<script type="text/javascript"> Hello_World();</script>
 
 </html>

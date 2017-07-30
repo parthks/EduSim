@@ -87,6 +87,7 @@ function getLayout(callback){
   var name = localStorage.getItem("uniquename");
   if(name != ''){
     database.ref('users/'+name+'/layout').once('value').then(function(snapshot) {
+      console.log('layout fire');
       callback(snapshot.val());
     });
   } else {

@@ -1,0 +1,23 @@
+<html>
+<head>
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+<link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"/>
+
+</head>
+<body>
+
+<div id="draggableHelper" style="display:inline-block">
+    <img id="image" src="http://www.google.com.br/images/srpr/logo3w.png" />
+</div>
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+$('#draggableHelper').draggable();
+$('#image').resizable();
+
+});
+</script>
+</body>
+</html>
