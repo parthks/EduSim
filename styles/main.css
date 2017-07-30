@@ -17,13 +17,15 @@
 }
 
 .box {
-    /*width: 150px;*/
-    outline: 1px solid red;
-    height: 350px;
+    /*outline: 1px solid red;*/
+    height: 100%;
     padding: 0.5em;
     overflow-y: auto;
 }
 
+.big-boy {
+    outline: 1px solid blue;
+}
 
 h3 {
     text-align: center;

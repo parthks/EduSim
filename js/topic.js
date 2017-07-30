@@ -68,17 +68,17 @@ function startUpStuff(){
     $("#calc").resizable().draggable();
 
     $("#summary-text").resizable().draggable();
-    $("#learn").draggable().resizable();
+    $("#learnBigBoy").draggable().resizable();
 
     $("#sample-prob").resizable().draggable();
     $("#tough-prob").resizable().draggable();
 
-    $("#connect").resizable().draggable();
-    $("#extras").resizable().draggable();
-    $("#www").resizable().draggable();
+    $("#connectBigBoy").resizable().draggable();
+    $("#extrasBigBoy").resizable().draggable();
+    $("#wwwBigBoy").resizable().draggable();
 
     $("#topics").selectmenu();
-    $("#note").resizable().draggable();
+    $("#noteBigBoy").resizable().draggable();
 }
 
 function Hello_World(){
@@ -146,7 +146,7 @@ function deselectAllBoxes(){
 
 
 function saveLayoutListiner(){
-  $('#videoDiv').attrchange({
+  $('#videoDivBigBoy').attrchange({
   trackValues: true, 
   callback: function (event) {
   //event.attributeName - Attribute Name
@@ -247,12 +247,12 @@ function addAppBoxes(obj) {
     appDiv = $("#APP")
     appDiv.empty()
     addAppBox(appDiv)
-    $("#connect").resizable().draggable();
-    $("#extras").resizable().draggable();
-    $("#appDiv").resizable().draggable();
+    $("#connectBigBoy").resizable().draggable();
+    $("#extrasBigBoy").resizable().draggable();
+    $("#appDivBigBoy").resizable().draggable();
 
     if(addCalculatorInApplication){
-      $('#calculatorDiv').resizable().draggable();
+      $('#calculatorDivBigBoy').resizable().draggable();
       calculator();
     }
 
@@ -261,12 +261,14 @@ function addAppBoxes(obj) {
 
 function addAppBox(obj) {
     var html = '<div class = "col-md-3">' +
-        '<div id="connect" onclick="sendontop(this);" class="ui-widget-content box">' +
+        '<div id="connectBigBoy" onclick="sendontop(this);" class="ui-widget-content big-boy">' +
+        '<div id="connect" class="box">' +
         '<h3 class="ui-widget-header"> Connections</h3>' +
         connections() +
         '</div>' +
         '<br>' +
-        '<div id="extras" onclick="sendontop(this);" class="ui-widget-content box">' +
+        '<div id="extrasBigBoy" onclick="sendontop(this);" class="ui-widget-content big-boy">' +
+        '<div id="extras" class="box">' +
         '<h3 class="ui-widget-header"> Extra Info</h3>' +
         extraInfo() +
         '</div>' +
@@ -277,7 +279,8 @@ function addAppBox(obj) {
           html += '<div class = "col-md-9">'
         }
 
-    html += '<div id="appDiv" onclick="sendontop(this);" class="ui-widget-content box">' +
+    html += '<div id="appDivBigBoy" onclick="sendontop(this);" class="ui-widget-content big-boy">' +
+        '<div id="appDiv" class= box">' +
         '<h3 class="ui-widget-header"> !Application!</h3>';
 
     html += addAppDetails();
@@ -298,7 +301,8 @@ function addAppBox(obj) {
 
 function addCalculator(obj){
   var html = '<div class = "col-md-3">' +
-            '<div id="calculatorDiv" onclick="sendontop(this);" class="ui-widget-content box">'+
+            '<div id="calculatorDivBigBoy" onclick="sendontop(this);" class="ui-widget-content big-boy">'+
+            '<div id="calculatorDiv" class="box">'+
             '<h3 class="ui-widget-header"> Calculator</h3>'+
             '<br>'+
             '<div class="input" id="input"></div>'+
@@ -356,23 +360,26 @@ function addTestBoxes(obj) {
     testDiv = $("#TEST")
     testDiv.empty()
     addTestBox(testDiv)
-    $("#calcTestDiv").resizable().draggable();
-    $("#sampleProbDiv").resizable().draggable();
-    $("#toughProbDiv").resizable().draggable();
+    $("#calcTestDivBigBoy").resizable().draggable();
+    $("#sampleProbDivBigBoy").resizable().draggable();
+    $("#toughProbDivBigBoy").resizable().draggable();
 }
 
 function addTestBox(obj) {
     obj.append(
         '<div class="col-md-5">' +
-        '<div id="calcTestDiv" onclick="sendontop(this);" class="ui-widget-content box">' +
+        '<div id="calcTestDivBigBoy" onclick="sendontop(this);" class="ui-widget-content big-boy">' +
+        '<div id="calcTestDiv" class="box">' +
         '<h3 class="ui-widget-header"> Calculator</h3>' +
         '</div>' +
         '</div>' +
         '<div class="col-md-7">' +
-        '<div id="sampleProbDiv" onclick="sendontop(this);" class="ui-widget-content box">' +
+        '<div id="sampleProbDivBigBoy" onclick="sendontop(this);" class="ui-widget-content big-boy">' +
+        '<div id="sampleProbDiv" class="box">' +
         '<h3 class="ui-widget-header"> Sample Problem</h3>' +
         '</div>' +
-        '<div id="toughProbDiv" onclick="sendontop(this);" class="ui-widget-content box">' +
+        '<div id="toughProbDivBigBoy" onclick="sendontop(this);" class="ui-widget-content big-boy">' +
+        '<div id="toughProbDiv" class="box">' +
         '<h3 class="ui-widget-header"> Ready Player One</h3>' +
         '</div>' +
         '</div>'
@@ -393,16 +400,18 @@ function addVideoBoxes(obj) {
     videoDiv = $("#VIDEO")
     videoDiv.empty()
     addVideoBox(videoDiv)
-    $("#videoDiv").resizable();
+    $("#videoDivBigBoy").resizable().draggable();
 }
 
 function addVideoBox(obj) {
     obj.append(
         '<div class = "col-md-2"></div>' +
         '<div class = "col-md-8">' +
-        '<div id="videoDiv" onclick="sendontop(this);" class="ui-widget-content box">' +
+        '<div id="videoDivBigBoy" onclick="sendontop(this);" class="big-boy ui-widget-content"'+
+        '<div id="videoDiv" class="box">' +
         '<h3 class="ui-widget-header"> Learn</h3>' +
         addVideoDetails() + 
+        '</div>'+
         '</div>' +
         '</div>' +
         '<div class = "col-md-2"></div>'
@@ -424,9 +433,9 @@ function addTextBoxes(obj) {
     addSummaryTextBox(textDiv);
     addReviewTextBox(textDiv);
     addNotesTextBox(textDiv);
-    $("#summ-text").resizable().draggable();
-    $("#rev-text").resizable().draggable();
-    $("#note").resizable().draggable();
+    $("#summTextBigBoy").resizable().draggable();
+    $("#revTextBigBoy").resizable().draggable();
+    $("#noteBigBoy").resizable().draggable();
     
 }
 
@@ -436,11 +445,15 @@ function addNotesTextBox(obj){
     obj.append(
         '<div class = "col-md-12">' +
         '<br>'+
-        '<div id = "note" onclick = "sendontop(this);" class = "ui-widget-content box" >' +
+        '<div id = "noteBigBoy" onclick = "sendontop(this);" class = "ui-widget-content big-boy" >' +
+        '<div id = "note" class="box">'+
         '<h3 class = "ui-widget-header" > My Notes </h3>' +
+        '<div style="height: calc(100% - 28px);">'+
         '<textarea class="text_edit" id="my_text">'+
         'Loading your saved text...\nPlease wait!' +
         '</textarea>' +
+        '</div>'+
+        '</div>' +
         '</div>' +
         '</div>'
     );
@@ -462,9 +475,9 @@ function getNoteData(){
 function addReviewTextBox(obj) {
     obj.append(
         '<div class = "col-md-6">' +
-        '<div id = "rev-text" onclick = "sendontop(this);" class = "ui-widget-content box" >' +
+        '<div id = "revTextBigBoy" onclick = "sendontop(this);" class = "ui-widget-content big-boy" >' +
+        '<div id = "revtext" class = "box" >' +
         '<h3 class = "ui-widget-header" > Review Concepts </h3>' +
-        '<div id = "rev-text-content">' +
         reviewText() +
         '</div>' +
         '</div>' +
@@ -476,9 +489,9 @@ function addReviewTextBox(obj) {
 function addSummaryTextBox(obj) {
     obj.append(
         '<div class = "col-md-6">' +
-        '<div id = "summ-text" onclick = "sendontop(this);" class = "ui-widget-content box" >' +
+        '<div id = "summTextBigBoy" onclick = "sendontop(this);" class = "ui-widget-content big-boy" >' +
+        '<div id = "summText" class = "box" >' +
         '<h3 class = "ui-widget-header" > Summary Text </h3>' +
-        '<div id = "summ-text-content" >' +
         summaryText() +
         '</div' +
         '</div>' +
