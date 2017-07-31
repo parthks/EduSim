@@ -14,7 +14,7 @@
 
 <body>
     <br>
-    <br>
+    
     <div>
         <h1>Welcome</h1>
         <br>
@@ -25,22 +25,32 @@
     <h3>Get Started</h3>
 </button>   
  -->        
-            <label>Please enter your unique name, to create your own personalized space - </label>
-            <input type="text" id="uniquename"><br><br>
+            <label>Please enter your unique-name, to create your own personalized space - </label>
+            <input type="text" id="uniquename"><br>
             <script type="text/javascript">
                 $('#uniquename').val(localStorage.getItem("uniquename"));
             </script>
+
+            <label>And a simple passcode to secure your space - </label>
+            <input type="password" id="passcode"><br><br>
+            <script type="text/javascript">
+                $('#passcode').val(localStorage.getItem("passcode"));
+            </script>
+
             <button id="start" type="button" class="btn btn-lg btn-primary">
                 <h3>Get Started</h3>
             </button>
             <script type="text/javascript">
                 $('#start').click(function(){
-                    if ($('#uniquename').val() != ''){
-                        fireLogin($('#uniquename').val());
-                        localStorage.setItem("uniquename", $('#uniquename').val());
-                        window.top.location = '/home';
+                    if (($('#uniquename').val() != '') && ($('#passcode').val() != '')){
+                        fireLogin($('#uniquename').val(), $('#passcode').val(), function(){
+                            localStorage.setItem("uniquename", $('#uniquename').val());
+                            localStorage.setItem("passcode", $('#passcode').val());
+                            window.top.location = '/home';
+                        });
+                        
                     } else {
-                        alert('PLease enter your unique name');
+                        alert('Please enter your unique-name and passcode');
                     }
                 });
             </script>

@@ -16,14 +16,20 @@ firebase.initializeApp(config);
 
 var database = firebase.database();
 
-function fireLogin(name=localStorage.getItem("uniquename")){
-  if (name != '') {
-    var d = new Date();
-    var sd = d.getUTCHours() + ':' +  d.getUTCMinutes() + ' ' + d.getUTCDay() + '-' + (parseInt(d.getUTCMonth())+1) + '-' + d.getUTCFullYear();
-    database.ref('users/'+name+'/active').set(sd);
-  } else {
-    alert('ERROR - Unknown user!');
-  }
+function fireLogin(name, passcode, callback) {
+  database.ref('users/'+name+'/passcode').once('value').then(function(snapshot) {
+    if (!(snapshot.val()) || passcode == snapshot.val()) {
+      database.ref('users/'+name+'/passcode').set(passcode);
+      var d = new Date();
+      var sd = d.getUTCHours() + ':' +  d.getUTCMinutes() + ' ' + d.getUTCDay() + '-' + (parseInt(d.getUTCMonth())+1) + '-' + d.getUTCFullYear();
+      database.ref('users/'+name+'/active').set(sd);
+      console.log('success login!');
+      callback();
+    } else {
+      alert('Incorrect passcode for unique-name: '+name+
+        '\nPlease contact parthks@umich.edu for passcode recovery');
+    }
+  });
   
 }
 
