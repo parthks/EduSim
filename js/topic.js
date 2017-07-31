@@ -108,43 +108,14 @@ function Hello_World(){
   console.log("Hello_World");
 
     $('#content').empty();
-    customButtonImageListeners();
+    $('#content').append('<div id="loader"></div>');
     
+    getMyLayout();
+    customButtonImageListeners();
+    customBoxBarListener();
 
-
-    getLayout(function(result){
-      console.log('got layout!');
-      Object.keys(result).forEach(function(currentKey) {
-        console.log(currentKey, result[currentKey]);
-        switch (currentKey){
-
-          case 'noteBigBoy':
-            addCustomBox('#noteBigBoy', CustomNotesButton());
-            $('#noteBigBoy').attr('style',result[currentKey]);  
-            break;
-
-          case 'summTextBigBoy':
-            addCustomBox('#summTextBigBoy', getSummaryTextBox());  
-            $('#summTextBigBoy').attr('style',result[currentKey]); 
-            break;  
-
-          case 'revTextBigBoy':
-            addCustomBox('#revTextBigBoy', getReviewTextBox());
-            $('#revTextBigBoy').attr('style',result[currentKey]);
-            break
-
-          case 'videoDivBigBoy':
-            addCustomBox('#videoDivBigBoy', getVideoBox());
-            $('#videoDivBigBoy').attr('style',result[currentKey]);
-            break;
-
-          }
-
-        if(parseInt($('#'+currentKey).css("z-index")) >= my_index){
-          my_index = parseInt($('#'+currentKey).css("z-index"));
-        }
-      });
-    });
+    $('#customBoxes').hide();
+    $('#customBoxesBreak').hide();
        
     //addTextBoxes($("#all-content"))
      Hello_World_Details();
@@ -171,17 +142,26 @@ function CustomCloseBox(ele) {
     bigBoy.remove();
 }
 
+function customBoxBarListener(){
+  $('#buildBoxBarButton').click(function(){
+    if ($('#customBoxes').css('display') != 'none') {
+      console.log('hide');
+      $('#customBoxes').hide();
+      $('#customBoxesBreak').hide();
+    } else {
+      console.log('show');
+      $('#customBoxes').show();
+      $('#customBoxesBreak').show();
+    }
+  });
+}
 
 function goForCustomLayout() {
     $("#content").show()
-    //$('#reset-image').show();
-    $('#customBoxes').show();
-    $('#customBoxesBreak').show();
+    //$('#customBoxes').show();
+    //$('#customBoxesBreak').show();
     $('.close-button-right').show();
-    customButtonImageListeners();
-    getNoteData();
-    startUpStuff();
-    saveLayoutListiner();
+    $('#buildBoxBarButton').show();
     
 }
 
@@ -190,7 +170,7 @@ function hideCustomLayout(){
   $('#customBoxes').hide();
   $('#customBoxesBreak').hide();
   $('.close-button-right').hide();
-  //$('#reset-image').hide();
+  $('#buildBoxBarButton').hide();
 }
 
 function deselectAllBoxes(){
@@ -228,22 +208,73 @@ function saveLayoutListiner(id){
 }
 
 function customButtonImageListeners(){
-
   $('#trash-image').click(function(){
     $('#content').empty();
     deleteAllLayout();
     //location.reload();
   });
+}
 
+function getMyLayout(){
+  getLayout(function(result){
+      console.log('got layout!');
 
-  // $('#reset-image').click(function(){
-  //   console.log('clicked reset image!');
-  //   getDefaultLayout(function(result){
-  //       $('#content').html(result);
-  //       startUpStuff();
-  //       getNoteData();
-  //   });
-  // });
+      Object.keys(result).forEach(function(currentKey) {
+        console.log(currentKey, result[currentKey]);
+        switch (currentKey){
+
+          case 'noteBigBoy':
+            addCustomBox('#'+currentKey, CustomNotesButton());
+            $('#'+currentKey).attr('style',result[currentKey]);  
+            break;
+
+          case 'summTextBigBoy':
+            addCustomBox('#'+currentKey, getSummaryTextBox());  
+            $('#'+currentKey).attr('style',result[currentKey]); 
+            break;  
+
+          case 'revTextBigBoy':
+            addCustomBox('#'+currentKey, getReviewTextBox());
+            $('#'+currentKey).attr('style',result[currentKey]);
+            break
+
+          case 'videoDivBigBoy':
+            addCustomBox('#'+currentKey, getVideoBox());
+            $('#'+currentKey).attr('style',result[currentKey]);
+            break;
+
+          case 'appDivBigBoy':
+            addCustomBox('#'+currentKey, getApplicationBox());
+            $('#'+currentKey).attr('style',result[currentKey]);
+            break;
+
+          case 'calculatorDivBigBoy':
+            addCustomBox('#'+currentKey, getCalculatorBox());
+            $('#'+currentKey).attr('style',result[currentKey]);
+            break;
+
+          case 'connectBigBoy':
+            addCustomBox('#'+currentKey, getConnectionsBox());
+            $('#'+currentKey).attr('style',result[currentKey]);
+            break;
+
+          case 'extrasBigBoy':
+            addCustomBox('#'+currentKey, getExtraInfoBox());
+            $('#'+currentKey).attr('style',result[currentKey]);
+            break;
+
+         
+          
+
+          }
+
+        if(parseInt($('#'+currentKey).css("z-index")) >= my_index){
+          my_index = parseInt($('#'+currentKey).css("z-index"));
+        }
+      });
+
+      $('#loader').css('display', 'none');
+    });
 }
 
 
@@ -272,9 +303,7 @@ function customButtonImageListeners(){
 
 
 
-
-
-function customGoBackButton(){
+function customGoBackButton() {
   $('#go-back').click(function(){
     $('#customCurrentTitle').remove();
     $('#customOptions').remove();
@@ -301,28 +330,25 @@ function customGoBackButton(){
 
 
 function clickCustomButton(ele){
+
+  if ($(ele).text() == 'Test') {alert('Coming Soon...'); return;}
+
   var textNames = ['Summary Text', 'Review Text', 'My Notes'];
   var videoNames = ['Video'];
+  var appNames = ['Application', 'Calculator', 'Connections', 'Extra Info'];
   var names;
   switch ($(ele).text()) {
     case 'Text': names = textNames; break;
     case 'Video': names = videoNames; break;
+    case 'Application': names = appNames; break;
   }
   
 
   var html = '<div id="customCurrentTitle" class="col-md-2 center">' +
-            '<h3>Text: </h3>'+
+            '<h3 style="padding-top: 3px">'+$(ele).text()+': </h3>'+
          '</div>'+
         '<div id="customOptions" class="col-md-4 center">';
 
-            // '<button onclick="CustomSummaryTextButton();" class="btn btn-secondary">Summary Text</button>'+
-            // '&nbsp'+
-            // '<button onclick="CustomReviewTextButton();" class="btn btn-secondary">Review Text</button>'+
-            // '&nbsp'+
-            // '<button onclick="CustomNotesButton();" class="btn btn-secondary">My Notes</button>'+
-            //  '&nbsp  &nbsp'+
-
-        
   for (var i = 0; i < names.length; i++) {
     html += '<button onclick="CustomBoxButton(this);" class="btn btn-secondary">'+names[i]+'</button>'+
             '&nbsp';
@@ -330,7 +356,7 @@ function clickCustomButton(ele){
 
   html += '</div>'+
         '<div id="goBack" class="col-md-1 center">'+
-            '<img id="go-back" style="width: 38px;" src="../external/go-back-icon.png"  alt="go back">'+
+            '<img id="go-back" style="width: 32px; padding-top: 3px" src="../external/go-back-icon.png"  alt="go back">'+
         '</div>';
 
 
@@ -353,6 +379,10 @@ function CustomBoxButton(ele){
       case 'Review Text': id='#revTextBigBoy'; method=getReviewTextBox(); break;
       case 'My Notes': id='#noteBigBoy'; method='Imma NOTE :P'; break;
       case 'Video': id='#videoDivBigBoy'; method=getVideoBox(); break;
+      case 'Application': id='#appDivBigBoy'; method=getApplicationBox(); break;
+      case 'Connections': id='#connectBigBoy'; method=getConnectionsBox(); break;
+      case 'Extra Info': id='#extrasBigBoy'; method=getExtraInfoBox(); break;
+      case 'Calculator': id='#calculatorDivBigBoy'; method=getCalculatorBox(); break;
     }
 
     addCustomBox(id, method);
@@ -376,6 +406,11 @@ function addCustomBox(id, method){
       $(id).css('width','300px');
       $(id).css('height','300px');
       $(id).css('z-index',++my_index);
+
+      if (id=='#appDivBigBoy') {
+        $(id).css('width','500px');
+        $(id).css('height','500px');
+      }
 
   }
 }
@@ -430,7 +465,7 @@ function clickVid() {
       addVideoBoxes($("#all-content"));
       saveLayoutListiner();
       selectedVideoBox = true;
-      $('.close-button-right').show();
+      $('.close-button-right').hide();
     }
 }
 
@@ -458,7 +493,7 @@ function clickApp() {
       deselectAllBoxes();
       addAppBoxes($("#all-content"))
       selectedAppBox = true;
-      $('.close-button-right').show();
+      $('.close-button-right').hide();
     }
 
 }
@@ -509,53 +544,79 @@ function addAppBoxes(obj) {
     
 }
 
+
+function getConnectionsBox(){
+     return '<div id="connectBigBoy" onclick="sendontop(this);" class="ui-widget-content big-boy">' +
+        '<div id="connect" class="box">' +
+
+        '<div class = "ui-widget-header">'+
+        '<h3 > Connections </h3>' +
+        '<button onclick="CustomCloseBox(this)" class="close-button-right">X</button>'+
+        '</div>'+
+        connections() +
+
+        '</div></div>';
+        
+}
+
+
+function getExtraInfoBox(){
+  return '<div id="extrasBigBoy" onclick="sendontop(this);" class="ui-widget-content big-boy">' +
+        '<div id="extras" class="box">' +
+
+        '<div class = "ui-widget-header">'+
+        '<h3 > Extra Info </h3>' +
+        '<button onclick="CustomCloseBox(this)" class="close-button-right">X</button>'+
+        '</div>'+
+        extraInfo() +
+        '</div></div>';
+}
+
+function getApplicationBox(){
+      return '<div id="appDivBigBoy" onclick="sendontop(this);" class="ui-widget-content big-boy">' +
+        '<div id="appDiv" class= box">'+
+        '<div class = "ui-widget-header">'+
+        '<h3 > !Application! </h3>' +
+        '<button onclick="CustomCloseBox(this)" class="close-button-right">X</button>'+
+        '</div>'+
+        addAppDetails() +
+
+        '</div></div>';
+}
+
 function addAppBox(obj) {
     var html = '<div class = "col-md-3">' +
-        '<div id="connectBigBoy" onclick="sendontop(this);" class="ui-widget-content big-boy">' +
-        '<div id="connect" class="box">' +
-        '<h3 class="ui-widget-header"> Connections</h3>' +
-        connections() +
-        '</div>' +
-        '</div>' +
+        getConnectionsBox()+
         '<br>' +
-        '<div id="extrasBigBoy" onclick="sendontop(this);" class="ui-widget-content big-boy">' +
-        '<div id="extras" class="box">' +
-        '<h3 class="ui-widget-header"> Extra Info</h3>' +
-        extraInfo() +
-        '</div>' +
-        '</div></div>';
+        getExtraInfoBox()+
+        '</div>';
+
         if (addCalculatorInApplication){
           html += '<div class = "col-md-6">';
         } else {
           html += '<div class = "col-md-9">'
         }
 
-    html += '<div id="appDivBigBoy" onclick="sendontop(this);" class="ui-widget-content big-boy">' +
-        '<div id="appDiv" class= box">'+
-        '<h3 class="ui-widget-header"> !Application!</h3>';
-        ;
-
-    html += addAppDetails();
-
-    html += '</div></div></div>';
-
+    html += getApplicationBox();
+    html += '</div>';
 
     if (addCalculatorInApplication){
-      html += addCalculator();
+      html += '<div class = "col-md-3">' + getCalculatorBox() +'</div>';
     }
 
-    
-
+  
     obj.append(html);
 
 }
 
 
-function addCalculator(obj){
-  var html = '<div class = "col-md-3">' +
-            '<div id="calculatorDivBigBoy" onclick="sendontop(this);" class="ui-widget-content big-boy">'+
+function getCalculatorBox(){
+    return '<div id="calculatorDivBigBoy" onclick="sendontop(this);" class="ui-widget-content big-boy">'+
             '<div id="calculatorDiv" class="box">'+
-            '<h3 class="ui-widget-header"> Calculator</h3>'+
+            '<div class = "ui-widget-header">'+
+              '<h3 > Calculator </h3>' +
+              '<button onclick="CustomCloseBox(this)" class="close-button-right">X</button>'+
+            '</div>' +
             '<br>'+
             '<div class="input" id="input"></div>'+
               '<div class="butt">'+
@@ -588,11 +649,8 @@ function addCalculator(obj){
                   '</div>'+
                 '</div>'+
                 '<div class="equal" id="result">=</div>'+
-            '</div>'+
             '</div>';
             
-
-  return html;
 }
 
 
@@ -849,7 +907,7 @@ function getSummaryTextBox() {
 
 
 
-function calculator(){
+function calculator() {
     var input = document.getElementById('input'), // input/output button
       number = document.querySelectorAll('.numbers div'), // number buttons
       operator = document.querySelectorAll('.operators div'), // operator buttons
@@ -969,4 +1027,5 @@ function calculator(){
       input.innerHTML = "";
     });
 }
+
 
