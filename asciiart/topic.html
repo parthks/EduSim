@@ -13,15 +13,14 @@
     <link rel="stylesheet" type="text/css" href="../styles/calculator.css">
     <script src="https://www.gstatic.com/firebasejs/4.1.5/firebase.js"></script>
     <script type="text/javascript" src="../js/fire.js"></script>
-     <script type="text/javascript" src="../js/attrchange.js"></script>
-     <script type="text/javascript" src="../js/attrchange_ext.js"></script>
+    <script type="text/javascript" src="../js/attrchange.js"></script>
+    <script type="text/javascript" src="../js/attrchange_ext.js"></script>
     <script type="text/javascript" src="../js/topic.js"></script>
     <script type="text/javascript" src="topic-asciiart.js"></script>
 </head>
 
 <body>
     <div class="row heading">
-        
         <div class="col-md-1 center">
             <button id="TextButton" type="button" data-toggle="button" aria-pressed="true" autocomplete="off" class="btn btn-secondary" onclick="clickText();">Text</button>
         </div>
@@ -45,17 +44,42 @@
         </div>
         
         <div class="col-md-2 right">
-            <!-- <img id="reset-image" style="width: 32px;" src="../directed-graph/refresh-icon.png"  alt="reset layout"> -->
-            &nbsp &nbsp
+            <img id="buildBoxBarButton" style="width: 35px;" src="../external/build-custom-boxes.png"  alt="custom boxes"> &nbsp &nbsp
             <button onclick="window.top.location = '/home'" class="btn btn-primary">Home</button>
+        </div>
+    </div>
+    <br id="customBoxesBreak">
+    <div id="customBoxes" class="row heading">
+        <div id="CustomBoxesTitle" class="col-md-3 center">
+            <h4 style="padding-top: 5px">Boxes to chose from: </h4>
+        </div>
+
+         <div id="CustomTextButton" class="col-md-1 center">
+            <button class="btn btn-secondary" onclick="clickCustomButton(this);">Text</button>
+        </div>
+        <div id="CustomVideoButton" class="col-md-1 center">
+            <button class="btn btn-secondary" onclick="clickCustomButton(this);">Video</button>
+        </div>
+        <div id="CustomTestButton" class=" col-md-1 center">
+            <button class="btn btn-secondary" onclick="clickCustomButton(this);">Test</button>
+        </div>
+        <div id="CustomAppButton" class="col-md-1 center">
+            <button class="btn btn-secondary" onclick="clickCustomButton(this);">Application</button>
+        </div>
+        <div id="CustomExtraSpace" class="col-md-4 center"></div>
+
+        <div class="col-md-1 center">
+            
+            <img id="trash-image" style="width: 35px; padding-top: 2px;" src="../external/trash-icon.png"  alt="trash layout">
         </div>
 
     </div>
     <br id="break">
     <div id="all-content"></div>
     <div id="content"></div>
+
 </body>
 
-<script type="text/javascript"> Hello_World();</script>
+<script type="text/javascript">Hello_World()</script>
 
 </html>

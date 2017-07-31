@@ -218,7 +218,7 @@ function customButtonImageListeners(){
 function getMyLayout(){
   getLayout(function(result){
       console.log('got layout!');
-
+      if (!result) {$('#loader').css('display', 'none');return;}
       Object.keys(result).forEach(function(currentKey) {
         console.log(currentKey, result[currentKey]);
         switch (currentKey){
@@ -389,15 +389,17 @@ function CustomBoxButton(ele){
 }
 
 function addCustomBox(id, method){
-  if (id == '#noteBigBoy') {
-      CustomNotesButton(); 
-      $(id).css('position','absolute');
-      $(id).css('width','300px');
-      $(id).css('height','300px');
-      $(id).css('z-index',++my_index);
-  } //need to fix this :/
+  if ($(id).length == 0) {
+      if (id == '#noteBigBoy') {
+          CustomNotesButton(); 
+          $(id).css('position','absolute');
+          $(id).css('width','300px');
+          $(id).css('height','300px');
+          $(id).css('z-index',++my_index);
+          return;
+      } //need to fix this :/
 
-    if ($(id).length == 0) {
+    
       $('#content').prepend(method);
       $(id).resizable().draggable();
       
