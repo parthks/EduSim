@@ -108,9 +108,8 @@ function Hello_World(){
   console.log("Hello_World");
 
     $('#content').empty();
-    $('#content').append('<div id="loader"></div>');
     
-    getMyLayout();
+    
     customButtonImageListeners();
     customBoxBarListener();
 
@@ -118,7 +117,10 @@ function Hello_World(){
     $('#customBoxesBreak').hide();
        
     //addTextBoxes($("#all-content"))
-     Hello_World_Details();
+    if (Hello_World_Details()){
+        goForCustomLayout();
+    }
+    
 }
 
 
@@ -157,7 +159,12 @@ function customBoxBarListener(){
 }
 
 function goForCustomLayout() {
-    $("#content").show()
+    //$("#content").empty();
+    console.log('hiiii');
+    $('#content').append('<div id="loader"></div>');
+    getMyLayout();
+    console.log('got layout?');
+    getNoteData();
     //$('#customBoxes').show();
     //$('#customBoxesBreak').show();
     $('.close-button-right').show();
@@ -166,7 +173,7 @@ function goForCustomLayout() {
 }
 
 function hideCustomLayout(){
-  $("#content").hide();
+  $("#content").empty();
   $('#customBoxes').hide();
   $('#customBoxesBreak').hide();
   $('.close-button-right').hide();

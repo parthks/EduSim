@@ -54,5 +54,8 @@ Hello_World_Details = function(){
         localStorage.getItem("appName") == 'Digits_Magic' ||
         localStorage.getItem("appName") == 'Matrix_Magic') {
         $('#AppButton').click();
+        return false;
     }
+    
+    return true;
 }

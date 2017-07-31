@@ -45,4 +45,4 @@ addAppDetails = function(){
 
 addCalculatorInApplication = false;
 
-Hello_World_Details = function(){}
+Hello_World_Details = function(){return true}
