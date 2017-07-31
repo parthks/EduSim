@@ -47,14 +47,15 @@
         function feedbackClick(){
             
             $('#feedbackArea').html(
-                '<label>Questions, Comments, Concerns?<br>Anything and Everything is welcome!<br></label><br>'+
+                '<div style="background: white"><button onclick="putFeedbackButton();">X</button>&nbsp&nbsp<label>Questions, Comments, Concerns?<br>Anything and Everything is welcome!<br></label>&nbsp &nbsp'+
+                '</div>'+
                 '<textarea id="feebackBox" style="width: 300px; height: 300px;">'+
                 '</textarea>'+
 
                 '<br><button onclick="giveFeddback'+
                      "($('#feebackBox').val(), "+
                      "function(){$('#feedbackArea').empty();"+
-                         "setTimeout(putFeedbackButton, 3000);"+
+                         "setTimeout(putFeedbackButton, 2000);"+
                          "$('#feedbackArea').append('<h3>Thank You! &nbsp </h3>');"+
                     "});" +
 
