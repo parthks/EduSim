@@ -1,4 +1,4 @@
-var noteFireTitle = "magic";
+var noteFireTitle = "";
 
 var summaryText = function () {
     var html = '<p>Linear Algebra is simply algebra with "linear" terms! It is that simple :P</p>';

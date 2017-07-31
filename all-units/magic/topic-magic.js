@@ -36,11 +36,11 @@ connections = function() {
 addAppDetails = function(){
   var html = '';
   if (localStorage.getItem("appName") == 'Matrix_Magic') {
-        html += '<iframe width=100% height=100% src="magic3.html"></iframe>';
+        html += '<iframe width=100% height=100% src="/all-units/magic/magic3.html"></iframe>';
     } else if (localStorage.getItem("appName") == 'Digits_Magic') {
-        html += '<iframe width=100% height=100% src="magic2.html"></iframe>';
+        html += '<iframe width=100% height=100% src="/all-units/magic/magic2.html"></iframe>';
     } else {
-        html += '<iframe width=100% height=100% src="magic1.html"></iframe>';
+        html += '<iframe width=100% height=100% src="/all-units/magic/magic1.html"></iframe>';
     }
     localStorage.setItem("appName", '0');
 
@@ -56,6 +56,7 @@ Hello_World_Details = function(){
         $('#AppButton').click();
         return false;
     }
-    
+
     return true;
 }
+

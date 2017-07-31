@@ -19,14 +19,14 @@ app.get('/home', function(req, res) {
 });
 
 app.get('/magic', function(req, res) {
-    app.use(express.static('/magic'));
-    res.sendFile(__dirname + '/magic/topic.html');
+    app.use(express.static('/all-units/magic'));
+    res.sendFile(__dirname + '/all-units/magic/topic.html');
 });
 
 app.get('/asciiart', function(req, res) {
 
-    app.use(express.static('/asciiart'));
-    res.sendFile(__dirname + '/asciiart/topic.html');
+    app.use(express.static('/all-units/asciiart'));
+    res.sendFile(__dirname + '/all-units/asciiart/topic.html');
 });
 
 // app.get('/images/represent/asciiart', function(req, res) {

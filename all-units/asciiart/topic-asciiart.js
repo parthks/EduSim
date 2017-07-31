@@ -38,7 +38,7 @@ connections = function() {
 }
 
 addAppDetails = function(){
-  var html = '<iframe width=100% height=100% src="asciiart.html"></iframe>';
+  var html = '<iframe width=100% height=100% src="/all-units/asciiart/asciiart.html"></iframe>';
 
   return html;
 }
@@ -46,3 +46,4 @@ addAppDetails = function(){
 addCalculatorInApplication = false;
 
 Hello_World_Details = function(){return true}
+
