@@ -5,6 +5,7 @@
     <title>HOME</title>
     <link rel="stylesheet" href="directed-graph/graph-creator.css">
      <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+     <link rel="stylesheet" href="http://getbootstrap.com/dist/css/bootstrap.min.css">
      <script src="https://www.gstatic.com/firebasejs/4.1.5/firebase.js"></script>
      <script src="js/fire.js"></script>
 </head>
@@ -31,18 +32,41 @@
         </div>
         
     </div>
-    <!-- <div class="center">
-    <button type="button" class="btn btn-sm btn-secondary" onclick="location.reload(true); ">
-        Refresh</button>
-</div>
- -->
+    <div id="feedbackArea" style="position: fixed;bottom: 0;right: 0;">
+        <button class="btn" onclick="feedbackClick()" id="feedbackButton" >FEEDBACK!</button>
+    </div>
+    
+    <script type="text/javascript">
+    function putFeedbackButton(){
+        $('#feedbackArea').empty();
+        $('#feedbackArea').append(
+            '<button class="btn" onclick="feedbackClick()" id="feedbackButton" >FEEDBACK!</button>'
+        );            
+    }
+
+        function feedbackClick(){
+            
+            $('#feedbackArea').html(
+                '<label>Questions, Comments, Concerns?<br>Anything and Everything is welcome!<br></label><br>'+
+                '<textarea id="feebackBox" style="width: 300px; height: 300px;">'+
+                '</textarea>'+
+
+                '<br><button onclick="giveFeddback'+
+                     "($('#feebackBox').val(), "+
+                     "function(){$('#feedbackArea').empty();"+
+                         "setTimeout(putFeedbackButton, 3000);"+
+                         "$('#feedbackArea').append('<h3>Thank You! &nbsp </h3>');"+
+                    "});" +
+
+                 '" style="width: 100%">Submit</button>');
+
+        }
+    </script>
+
     <div id="graph">
     </div>
     <script src="//d3js.org/d3.v3.js" charset="utf-8"></script>
-    <!-- <button type="button" class="btn btn-sm btn-secondary" onclick="$('html,body').animate({scrollTop: $('html').offset().top},'slow');">
-    Scroll Up
-</button>
- -->
+    
 </body>
 
 <script src="js/graph-selector.js"></script>

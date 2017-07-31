@@ -33,6 +33,23 @@ function fireLogin(name, passcode, callback) {
   
 }
 
+
+function giveFeddback(info, callback){
+  var name = localStorage.getItem("uniquename");
+  if(name != ''){
+    var go = database.ref().child('Feedback').push().key;
+    database.ref('Feedback/'+go).set({
+      name: name,
+      feeback: info
+    });
+    callback();
+  } 
+  else {
+    alert('ERROR - Unknown user!');
+  }
+}
+
+
 function saveGraph(graph, type){
   var name = localStorage.getItem("uniquename");
   if(name != ''){
