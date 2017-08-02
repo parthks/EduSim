@@ -85,6 +85,8 @@ var selectedVideoBox = false;
 var selectedTestBox = false;
 var selectedAppBox = false;
 
+var gettingStartedBool = false
+
 
 function startUpStuff(){
   console.log("run")
@@ -115,9 +117,15 @@ function Hello_World(){
 
     $('#customBoxes').hide();
     $('#customBoxesBreak').hide();
-       
+    
+    if (localStorage.getItem("gettingStartedBool") == null){
+      gettingStartedBool = true;
+    }
+
     //addTextBoxes($("#all-content"))
+    console.log('CHECK FOR LAYOUT!');
     if (Hello_World_Details()){
+        console.log('GO FOR LAYOUT!');
         goForCustomLayout();
     }
     
@@ -150,10 +158,23 @@ function customBoxBarListener(){
       console.log('hide');
       $('#customBoxes').hide();
       $('#customBoxesBreak').hide();
+
+      if (gettingStartedBool) {
+        $('#content').empty();
+        $('#content').append("<div><h1>Looks like you don't have a Custom Layout!</h1><br>"+
+        "<h1>Click the Builder Icon on the top right to get started!</h1></div>")
+      }
+
     } else {
       console.log('show');
       $('#customBoxes').show();
       $('#customBoxesBreak').show();
+
+      if (gettingStartedBool) {
+        $('#content').empty()
+        $('#content').append("<h1>Select a box from the Builder Box Menu Bar to add it your Layout!</h1>")
+      }
+
     }
   });
 }
@@ -225,7 +246,14 @@ function customButtonImageListeners(){
 function getMyLayout(){
   getLayout(function(result){
       console.log('got layout!');
-      if (!result) {$('#loader').css('display', 'none');return;}
+      if (!result) {
+        $('#loader').css('display', 'none')
+        if (gettingStartedBool) {
+          $('#content').append("<div><h1>Looks like you don't have a Custom Layout!</h1><br>"+
+          "<h1>Click the Builder Icon on the top right to get started!</h1></div>")
+        }
+        ;return;
+      }
       Object.keys(result).forEach(function(currentKey) {
         console.log(currentKey, result[currentKey]);
         switch (currentKey){
@@ -283,11 +311,6 @@ function getMyLayout(){
       $('#loader').css('display', 'none');
     });
 }
-
-
-
-
-
 
 
 
@@ -375,24 +398,37 @@ function clickCustomButton(ele){
 
   $('#CustomBoxesTitle').after(html);
   customGoBackButton();
+
 }
 
 
 function CustomBoxButton(ele){
-    var id;
-    var method;
-    switch ($(ele).text()){
-      case 'Summary Text': id='#summTextBigBoy'; method=getSummaryTextBox(); break;
-      case 'Review Text': id='#revTextBigBoy'; method=getReviewTextBox(); break;
-      case 'My Notes': id='#noteBigBoy'; method='Imma NOTE :P'; break;
-      case 'Video': id='#videoDivBigBoy'; method=getVideoBox(); break;
-      case 'Application': id='#appDivBigBoy'; method=getApplicationBox(); break;
-      case 'Connections': id='#connectBigBoy'; method=getConnectionsBox(); break;
-      case 'Extra Info': id='#extrasBigBoy'; method=getExtraInfoBox(); break;
-      case 'Calculator': id='#calculatorDivBigBoy'; method=getCalculatorBox(); break;
-    }
 
-    addCustomBox(id, method);
+  if (gettingStartedBool) {
+      $('#content').empty();
+      $('#content').append(
+        '<div class="gettingStarted" style="width: 8000px; height: 8000px; z-index: 110; background: lightblue; position: fixed; top: 120px"></div>'+
+        '<h1 class=gettingStarted style="position: relative; z-index: 112; background: lightblue"> All boxes can be moved around and resized to create your own learning enviroment!</h1><br>'+
+        '<h1 class=gettingStarted style="position: relative; z-index: 112; background: lightblue"> Goodluck...</h1><br>'
+        );
+      gettingStartedBool = false;
+      setTimeout(function(){$('.gettingStarted').remove();localStorage.setItem("gettingStartedBool", 'done');}, 5500);
+  }
+
+  var id;
+  var method;
+  switch ($(ele).text()){
+    case 'Summary Text': id='#summTextBigBoy'; method=getSummaryTextBox(); break;
+    case 'Review Text': id='#revTextBigBoy'; method=getReviewTextBox(); break;
+    case 'My Notes': id='#noteBigBoy'; method='Imma NOTE :P'; break;
+    case 'Video': id='#videoDivBigBoy'; method=getVideoBox(); break;
+    case 'Application': id='#appDivBigBoy'; method=getApplicationBox(); break;
+    case 'Connections': id='#connectBigBoy'; method=getConnectionsBox(); break;
+    case 'Extra Info': id='#extrasBigBoy'; method=getExtraInfoBox(); break;
+    case 'Calculator': id='#calculatorDivBigBoy'; method=getCalculatorBox(); break;
+  }
+
+  addCustomBox(id, method);
 }
 
 function addCustomBox(id, method){

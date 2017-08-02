@@ -24,7 +24,7 @@ if (showAllApplication == 1) {
 
 } else {
     //not showing all apps
-    document.getElementById("showAllApps").innerText = "Show all Applications!";
+    document.getElementById("showAllApps").innerText = "Show All Applications!";
     if (localStorage.getItem("savedGraphNoApps") != null) {
         txtRes = localStorage.getItem("savedGraphNoApps");
     } else {
@@ -41,7 +41,7 @@ if (showAllApplication == 1) {
 function refresh() {
     if (showAllApplication == 1) {
         //are showing all Apps and then clicked to Hide all Apps
-        document.getElementById("showAllApps").innerText = "Show all Applications!";
+        document.getElementById("showAllApps").innerText = "Show All Applications!";
         localStorage.setItem("showAllApps", 0);
 
         //console.log(localStorage.getItem("showAllApps"));

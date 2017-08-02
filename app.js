@@ -23,6 +23,11 @@ app.get('/magic', function(req, res) {
     res.sendFile(__dirname + '/all-units/magic/topic.html');
 });
 
+app.get('/secrets', function(req, res) {
+    app.use(express.static('/all-units/secrets'));
+    res.sendFile(__dirname + '/all-units/secrets/topic.html');
+});
+
 app.get('/asciiart', function(req, res) {
 
     app.use(express.static('/all-units/asciiart'));

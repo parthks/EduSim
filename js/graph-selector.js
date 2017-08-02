@@ -26,6 +26,11 @@ function hi(id) {
         localStorage.setItem("appName", 'Digits_Magic');
     }
 
+    if (id == 7){
+        window.top.location = "/secrets";
+        localStorage.setItem("appName", '0');
+    }
+
     if (id == 11) {
         window.top.location = "/asciiart";
         localStorage.setItem("appName", '0');
