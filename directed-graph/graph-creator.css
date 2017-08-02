@@ -54,6 +54,13 @@ path.link {
     cursor: default;
 }
 
+path.green {
+    fill: none;
+    stroke: lightgreen;
+    stroke-width: 6px;
+    cursor: default;
+}
+
 
 /*path.link:hover {
     stroke: black;

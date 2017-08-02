@@ -118,9 +118,6 @@ function Hello_World(){
     $('#customBoxes').hide();
     $('#customBoxesBreak').hide();
     
-    if (localStorage.getItem("gettingStartedBool") == null){
-      gettingStartedBool = true;
-    }
 
     //addTextBoxes($("#all-content"))
     console.log('CHECK FOR LAYOUT!');
@@ -248,6 +245,9 @@ function getMyLayout(){
       console.log('got layout!');
       if (!result) {
         $('#loader').css('display', 'none')
+        if (localStorage.getItem("gettingStartedBool") == null){
+          gettingStartedBool = true;
+        }
         if (gettingStartedBool) {
           $('#content').append("<div><h1>Looks like you don't have a Custom Layout!</h1><br>"+
           "<h1>Click the Builder Icon on the top right to get started!</h1></div>")

@@ -1,6 +1,9 @@
 console.log("HI");
 
 var savedGraph;
+var colorIndexesSource;
+
+var graph;
 
 
 //var defaultNoApps = '{"nodes":[{"id":2,"title":"Life is Linear","x":535.4767456054688,"y":44.850502014160156},{"id":3,"title":"Linear Systems","x":787.8787841796875,"y":151.95350646972656},{"id":4,"title":"Images","x":434.1212463378906,"y":189.48680114746094},{"id":7,"title":"Represent","x":625.3372802734375,"y":212.78761291503906},{"id":10,"title":"Transform","x":363.6809387207031,"y":359.0647277832031},{"id":11,"title":"Scalar Math","x":569.4366149902344,"y":372.5615539550781},{"id":12,"title":"Matrix Math","x":183.78392028808594,"y":269.1148986816406},{"id":13,"title":"Rotation","x":218.08291625976562,"y":484.2952575683594},{"id":19,"title":"Translation","x":16.216278076171875,"y":397.7032775878906}],"edges":[{"source":2,"target":4},{"source":2,"target":3},{"source":4,"target":7},{"source":4,"target":10},{"source":10,"target":11},{"source":10,"target":12},{"source":12,"target":13},{"source":12,"target":19}]}';
@@ -74,7 +77,13 @@ function clickedNode(id) {
     }
 
     console.log("GO TO PAGE!", id);
-    hi(id)
+    if (id == 4 || id == 2 || id == 5) {
+        colorIndexesSource = id;
+         graph.updateGraph();
+    } else {
+        hi(id) 
+    }
+   
 
 
 }
@@ -486,27 +495,35 @@ document.onload = (function(d3, saveAs, Blob, undefined) {
         var paths = thisGraph.paths;
         // update existing paths
         paths.style('marker-end', 'url(#end-arrow)')
-            .classed(consts.selectedClass, function(d) {
-                return d === state.selectedEdge;
-            })
             .attr("d", function(d) {
                 return "M" + d.source.x + "," + d.source.y + "L" + d.target.x + "," + d.target.y;
+            })
+
+            .classed('green', function(d) {
+                return d.source.id == colorIndexesSource;
             });
+            
 
         // add new paths
+        
         paths.enter()
             .append("path")
             .style('marker-end', 'url(#end-arrow)')
-            .classed("link", true)
             .attr("d", function(d) {
                 return "M" + d.source.x + "," + d.source.y + "L" + d.target.x + "," + d.target.y;
             })
+            .classed('link', function(d){
+                return d.source.id != colorIndexesSource;
+            })
+            
             .on("mousedown", function(d) {
                 thisGraph.pathMouseDown.call(thisGraph, d3.select(this), d);
             })
             .on("mouseup", function(d) {
                 state.mouseDownLink = null;
             });
+
+
 
         // remove old links
         paths.exit().remove();
@@ -593,7 +610,7 @@ document.onload = (function(d3, saveAs, Blob, undefined) {
     var svg = d3.select(settings.appendElSpec).append("svg")
         .attr("width", width)
         .attr("height", height);
-    var graph = new GraphCreator(svg, nodes, edges);
+    graph = new GraphCreator(svg, nodes, edges);
     graph.setIdCt(2);
     graph.updateGraph();
 })(window.d3, window.saveAs, window.Blob);

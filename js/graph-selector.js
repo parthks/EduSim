@@ -36,5 +36,11 @@ function hi(id) {
         localStorage.setItem("appName", '0');
     }
 
+    if (id == 14 || id == 19) {
+        alert("Sorry, not ready yet!");
+    }
+
+
+
 
 }

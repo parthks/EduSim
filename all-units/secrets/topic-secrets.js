@@ -1,7 +1,9 @@
 noteFireTitle = "secrets";
 
 summaryText = function () {
-    var html = '<p>TO DO.</p>'
+    var html = '<p>The power of Linear Algebra and its equations lies in its ability to manipulate data!</p>'
+    html += '<p>We can easily transfrom the data in matrices from one form into another, using simple linear equations</p>'
+    html += '<p>The most common form being Ax = b, where A is the transformational matrix, x is the input vector and b is the resultant vector!</p>'
     
     return html;
 }
