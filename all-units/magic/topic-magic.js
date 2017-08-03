@@ -34,13 +34,15 @@ connections = function() {
 }
 
 addAppDetails = function(){
-  var html = '';
-  if (localStorage.getItem("appName") == 'Matrix_Magic') {
+    var html = '';
+    if (localStorage.getItem("appName") == 'Matrix_Magic') {
         html += '<iframe width=100% height=100% src="/all-units/magic/magic3.html"></iframe>';
     } else if (localStorage.getItem("appName") == 'Digits_Magic') {
         html += '<iframe width=100% height=100% src="/all-units/magic/magic2.html"></iframe>';
-    } else {
+    } else if (localStorage.getItem("appName") == 'Linear_Magic') {
         html += '<iframe width=100% height=100% src="/all-units/magic/magic1.html"></iframe>';
+    } else {
+        html += '<iframe width=100% height=100% src="/all-units/magic/magic.html"></iframe>';
     }
     localStorage.setItem("appName", '0');
 
