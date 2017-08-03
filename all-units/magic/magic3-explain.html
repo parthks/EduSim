@@ -5,6 +5,7 @@
 <head>
     <title>Matrix Magic Demystified</title>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <link rel="stylesheet" href="https://getbootstrap.com/dist/css/bootstrap.min.css">
     <script src="/js/trackingcode.js"></script>
     <script src="magic3-explain.js"></script>
 </head>
@@ -13,6 +14,9 @@
     <style type="text/css">
     td {
         padding: 0 15px 0 15px;
+        text-align: center;
+    }
+    th {
         text-align: center;
     }
     </style>
@@ -26,6 +30,7 @@
     <br>
     <table id="magic-table-key">
     </table>
+    <br>
     <p>Can you see the structure in the table, now?</p>
     <p>Notice how there's underlying structure in the matrix. But unless you're told what that structure is and how that structure led to the matrix, it can be hard to see. </p>
     <h4>Linear algebra will enable us to uncover structure and information within matrices. The structure of the matrices are magical, sometimes quite literally! </h4>
@@ -36,7 +41,7 @@
     </div>
     <br>
     <button id="go-again">New Magic Matrix</button>
-    <br>
+    <br><br>
     <p>Do you understand how the trick works?</p>
     <p>Try playing the game again by removing rows and columns from the matrix above and see why adding all the table headers will always be the magical sum!</p>
     <p>You can see that as you select a number and remove the row and corrosponding column you are pairing that row header with that column header to the number you selected, which is simply the sum of the two numbers! By removing the row and column you ensure that those headers will not be chosen again!</p>

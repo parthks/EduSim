@@ -16,9 +16,9 @@ function make_magic_table() {
         html += '<tr>'
         for (var i = 0; i < col; i++) {
             if (count < 81 && count % 9 == 0) {
-                html += '<th>' + count + "|" + magic_sym + '</th>';
+                html += '<th>' + count + "|" + magic_sym + ' &nbsp</th>&nbsp';
             } else {
-                html += '<th>' + count + "|" + all_syms[getRandomInt(0, all_syms.length)] + '</th>';
+                html += '<th>' + count + "|" + all_syms[getRandomInt(0, all_syms.length)] + ' &nbsp</th>&nbsp';
             }
             count += 1;
         }
