@@ -62,6 +62,12 @@ var Hello_World_Details = function(){
 
 
 
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
+}
+
 
 
 
@@ -149,10 +155,10 @@ function setBuilderBoxHeading(){
             '<button class="btn btn-secondary" onclick="clickCustomButton(this);">Video</button>'+
         '</div>'+
         
-        '<div id="CustomAppButton" class="col-md-1 center">'+
+        '<div id="CustomAppButton" class="col-md-2 center">'+
             '<button class="btn btn-secondary" onclick="clickCustomButton(this);">Real World Scenario</button>'+
         '</div>'+
-        '<div id="CustomExtraSpace" class="col-md-6 center"></div>'+
+        '<div id="CustomExtraSpace" class="col-md-5 center"></div>'+
 
         '<div class="col-md-1 center">'+
             
@@ -442,10 +448,10 @@ function customGoBackButton() {
             '<button class="btn btn-secondary" onclick="clickCustomButton(this);">Video</button>' +
         '</div>' +
         
-        '<div id="CustomAppButton" class="col-md-1 center">' +
+        '<div id="CustomAppButton" class="col-md-2 center">' +
             '<button class="btn btn-secondary" onclick="clickCustomButton(this);">Real World Scenario</button>' +
         '</div>' +
-        '<div id="CustomExtraSpace" class="col-md-6 center"></div>';
+        '<div id="CustomExtraSpace" class="col-md-5 center"></div>';
 
     $('#CustomBoxesTitle').after(html);
   });
@@ -525,12 +531,20 @@ function CustomBoxButton(ele){
 }
 
 function addCustomBox(id, method){
+
+  var left = getRandomInt(0, 1100);
+  var top = getRandomInt(0, 350);
+  var width = getRandomInt(300, 500);
+  var height = getRandomInt(300, 500);
+
   if ($(id).length == 0) {
       if (id == '#noteBigBoy') {
           CustomNotesButton(); 
           $(id).css('position','absolute');
-          $(id).css('width','300px');
-          $(id).css('height','300px');
+          $(id).css('width',width+'px');
+          $(id).css('height',height+'px');
+          $(id).css('left',left+'px');
+          $(id).css('top',top+'px');
           $(id).css('z-index',++my_index);
           return;
       } //need to fix this :/
@@ -540,9 +554,13 @@ function addCustomBox(id, method){
       $(id).resizable().draggable();
       
       saveLayoutListiner(id);
+      
+
       $(id).css('position','absolute');
-      $(id).css('width','300px');
-      $(id).css('height','300px');
+      $(id).css('width',width+'px');
+      $(id).css('height',height+'px');
+      $(id).css('left',left+'px');
+      $(id).css('top',top+'px');
       $(id).css('z-index',++my_index);
 
       if (id=='#appDivBigBoy') {
