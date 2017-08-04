@@ -1,0 +1,15 @@
+.google_btn {
+    background-image: url("/external/images/btn_google_signin_dark_normal_web.png"); 
+    width: 190px;
+    height: 45px;
+    margin: 0 auto;
+}
+
+.google_btn:hover {
+    background-image: url("/external/images/btn_google_signin_dark_focus_web.png"); 
+    cursor: pointer;
+}
+
+.google_btn:active {
+    background-image: url("/external/images/btn_google_signin_dark_pressed_web.png"); 
+}

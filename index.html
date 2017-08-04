@@ -4,6 +4,7 @@
 
 <head>
     <link rel="stylesheet" type="text/css" href="styles/main.css">
+    <link rel="stylesheet" type="text/css" href="styles/google_btn.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="/js/trackingcode.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
@@ -17,16 +18,56 @@
     <br>
     
     <div>
-        <h1>Welcome</h1>
+        <h1 id="welcome">Welcome</h1>
         <br>
-        <h2>A linear algebra learning platform</h2>
+        <h2>An immersive linear algebra learning enviroment</h2>
         <br>
+        <br>
+        <div id="getStartedBreak" class="center"></div>
         <div class="center">
-            <!-- <button type="button" class="btn btn-lg btn-primary" onclick="$('html,body').animate({scrollTop:$('#graph').offset().top}, 'slow');">
-    <h3>Get Started</h3>
-</button>   
- -->        
-            <label>Please enter your unique-name, to create your own personalized space - </label>
+        <div class="google_btn"></div>
+        <script type="text/javascript">
+
+            $('.google_btn').hide();
+
+            needToLogin(function(userORtrue){
+                if (userORtrue == 'login') {
+                    $('.google_btn').show();
+                    $('.google_btn').click(function(){
+                        loginWithGoogle(function(data, type){
+                            if (type == 'error') {
+                                alert('Something went wrong! Please try signing in again');
+                            } else {
+                                $('.google_btn').hide();
+                                console.log(data);
+                                getStarted(data);
+                            }
+                        });
+                    });
+                } else {
+                    console.log(userORtrue);
+                    getStarted(userORtrue);
+                }
+            });
+
+            function getStarted(user){
+                var uid = user.uid;
+                var name = user.displayName;
+                console.log(uid);
+                console.log(name);
+                localStorage.setItem('uid', uid);
+                localStorage.setItem('name', name);
+                $('#welcome').text('Welcome, '+name);
+                $('#getStartedBreak').html(
+                    '<button id="start" onclick="window.top.location = '+"'"+"/home"+"'"+';" type="button" class="btn btn-lg btn-primary">'+
+                        '<h3>Get Started</h3>'+
+                    '</button>');
+            }
+                
+        </script>
+        </div>
+
+            <!-- <label>Please enter your unique-name, to create your own personalized space - </label>
             <input type="text" id="uniquename"><br>
             <script type="text/javascript">
                 $('#uniquename').val(localStorage.getItem("uniquename"));
@@ -54,8 +95,7 @@
                         alert('Please enter your unique-name and passcode');
                     }
                 });
-            </script>
-        </div>
+            </script> -->
         <br>
         <br>
         <div style="width:560px; margin:0 auto; ">
