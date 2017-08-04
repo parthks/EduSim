@@ -6,7 +6,11 @@ function hi(id) {
     //     localStorage.setItem("appName", '0')
     // }
 
-    if (id == 6) {
+    if (id == 1) {
+        window.top.location = "/tutorial";
+    }
+
+    else if (id == 6) {
         window.top.location = "/magic";
         localStorage.setItem("appName", '0');
     }

@@ -18,6 +18,11 @@ app.get('/home', function(req, res) {
     res.sendFile(__dirname + '/home.html');
 });
 
+app.get('/tutorial', function(req, res) {
+    app.use(express.static('/tutorial'));
+    res.sendFile(__dirname + '/tutorial/topic.html');
+});
+
 app.get('/magic', function(req, res) {
     app.use(express.static('/all-units/magic'));
     res.sendFile(__dirname + '/all-units/magic/topic.html');

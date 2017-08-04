@@ -49,8 +49,17 @@
   font-weight: bold;
 }
 
+.close-button-right {
+  color: white;
+  background-color: darkred;
+}
+
 #content {
     position: absolute;
+}
+
+button {
+  cursor: pointer;
 }
 
 h3 {
@@ -80,6 +89,18 @@ body {
     background: lightblue;
 }
 
+
+#buildBoxBarButton {
+  cursor: pointer;
+}
+
+#trash-image {
+  cursor: pointer;
+}
+
+#go-back {
+  cursor: pointer;
+}
 
 #videoDivBigBoy {
     height: 550px;

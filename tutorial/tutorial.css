@@ -1,0 +1,12 @@
+.tut{
+    position: fixed;
+    left: calc(50% - 250px);
+    top: 20%;
+    width: 500px;
+    height: 350px;
+    z-index: 1000;
+}
+
+p {
+    text-align: left;
+}}
