@@ -1,4 +1,7 @@
 var noteFireTitle = "";
+var prevUnit = "";
+var nextUnit = "";
+var unitTitle = "Default Name"
 
 var summaryText = function () {
     var html = '<p>Linear Algebra is simply algebra with "linear" terms! It is that simple :P</p>';
@@ -85,30 +88,31 @@ var selectedVideoBox = false;
 var selectedTestBox = false;
 var selectedAppBox = false;
 
-var gettingStartedBool = false
+//var gettingStartedBool = false
 
 
-function startUpStuff(){
-  console.log("run")
-    $("#calc").resizable().draggable();
+// function startUpStuff(){
+//   console.log("run")
+//     $("#calc").resizable().draggable();
 
-    $("#summary-text").resizable().draggable();
-    $("#learnBigBoy").draggable().resizable();
+//     $("#summary-text").resizable().draggable();
+//     $("#learnBigBoy").draggable().resizable();
 
-    $("#sample-prob").resizable().draggable();
-    $("#tough-prob").resizable().draggable();
+//     $("#sample-prob").resizable().draggable();
+//     $("#tough-prob").resizable().draggable();
 
-    $("#connectBigBoy").resizable().draggable();
-    $("#extrasBigBoy").resizable().draggable();
-    $("#wwwBigBoy").resizable().draggable();
+//     $("#connectBigBoy").resizable().draggable();
+//     $("#extrasBigBoy").resizable().draggable();
+//     $("#wwwBigBoy").resizable().draggable();
 
-    $("#topics").selectmenu();
-    $("#noteBigBoy").resizable().draggable();
-}
+//     $("#topics").selectmenu();
+//     $("#noteBigBoy").resizable().draggable();
+// }
 
 function Hello_World(){
   console.log("Hello_World");
-
+    setBuilderBoxHeading();
+    setRowHeading();
     $('#content').empty();
     
     
@@ -127,6 +131,96 @@ function Hello_World(){
     }
     
 }
+
+
+
+
+function setBuilderBoxHeading(){
+  var html = '<br id="customBoxesBreak">'+
+    '<div id="customBoxes" class="row heading">'+
+        '<div id="CustomBoxesTitle" class="col-md-2 center">'+
+            '<h5 style="padding-top: 5px">Boxes to chose from: </h5>'+
+        '</div>'+
+
+         '<div id="CustomTextButton" class="col-md-1 center">'+
+            '<button class="btn btn-secondary" onclick="clickCustomButton(this);">Overview</button>'+
+        '</div>'+
+        '<div id="CustomVideoButton" class="col-md-1 center">'+
+            '<button class="btn btn-secondary" onclick="clickCustomButton(this);">Video</button>'+
+        '</div>'+
+        
+        '<div id="CustomAppButton" class="col-md-1 center">'+
+            '<button class="btn btn-secondary" onclick="clickCustomButton(this);">Real World Scenario</button>'+
+        '</div>'+
+        '<div id="CustomExtraSpace" class="col-md-6 center"></div>'+
+
+        '<div class="col-md-1 center">'+
+            
+            '<img id="trash-image" style="width: 35px; padding-top: 2px;" src="../external/trash-icon.png"  alt="trash layout">'+
+        '</div>'+
+
+    '</div>';
+    $('body').prepend(html);
+}
+
+
+function setRowHeading(){
+  var html = '<div class="row heading">'+
+        '<div class="col-md-1 center">'+
+            '<button id="TextButton" type="button" data-toggle="button" aria-pressed="true" autocomplete="off" class="btn btn-secondary" onclick="clickText();">Overview</button>'+
+        '</div>'+
+        '<div class="col-md-1 center">'+
+            '<button id="VideoButton" type="button" data-toggle="button" aria-pressed="true" autocomplete="off" class="btn btn-secondary" onclick="clickVid();">Video</button>'+
+        '</div>'+
+        
+        '<div class="col-md-2 center">'+
+            '<button id="AppButton" type="button" data-toggle="button" aria-pressed="true" autocomplete="off" class="btn btn-secondary" onclick="clickApp();">Real World Scenario</button>'+
+        '</div>'+
+        '<div class="col-md-3 center">'+
+            '<h3>'+unitTitle+'</h3>'+
+        '</div>';
+
+        var col = 1;
+        if (!(prevUnit && nextUnit)) {col = 2;}
+        
+        if (prevUnit) {
+          html += '<div class="col-md-'+col+' center">'+
+                      '<button onclick="window.top.location = '+"'/"+prevUnit+"'"+'" class="btn btn-primary">Prev Unit</button>'+
+                  '</div>';
+        }
+
+
+        if (nextUnit) {
+          html += '<div class="col-md-'+col+' center">'+
+                    '<button onclick="window.top.location = '+"'/"+nextUnit+"'"+'" class="btn btn-primary">Next Unit</button>'+
+                  '</div>';
+        }
+            
+        
+
+         html += '<div class="col-md-1 center">'+
+            '<div id="feedbackArea">'+
+            '<a target="_blank" href="https://goo.gl/forms/EpSkZEedTfppOK3g1" class="btn btn-info">Give Feedback</a>'+
+        '</div></div>'+
+        
+        '<div class="col-md-2 right">'+
+            '<img id="buildBoxBarButton" style="width: 35px;" src="../external/build-custom-boxes.png"  alt="custom boxes"> &nbsp &nbsp'+
+            '<button onclick="window.top.location = '+"'"+'/home'+"'"+'" class="btn btn-primary">Home</button>'+
+        '</div>'+
+    '</div>';
+
+  $('body').prepend(html);
+
+}
+
+
+
+
+
+
+
+
+
 
 
 
@@ -156,21 +250,21 @@ function customBoxBarListener(){
       $('#customBoxes').hide();
       $('#customBoxesBreak').hide();
 
-      if (gettingStartedBool) {
-        $('#content').empty();
-        $('#content').append("<div><h1>Looks like you don't have a Custom Layout!</h1><br>"+
-        "<h1>Click the Builder Icon on the top right to get started!</h1></div>")
-      }
+      // if (gettingStartedBool) {
+      //   $('#content').empty();
+      //   $('#content').append("<div><h1>Looks like you don't have a Custom Layout!</h1><br>"+
+      //   "<h1>Click the Builder Icon on the top right to get started!</h1></div>")
+      // }
 
     } else {
       console.log('show');
       $('#customBoxes').show();
       $('#customBoxesBreak').show();
 
-      if (gettingStartedBool) {
-        $('#content').empty()
-        $('#content').append("<h1>Select a box from the Builder Box Menu Bar to add it your Layout!</h1>")
-      }
+      // if (gettingStartedBool) {
+      //   $('#content').empty()
+      //   $('#content').append("<h1>Select a box from the Builder Box Menu Bar to add it your Layout!</h1>")
+      // }
 
     }
   });
@@ -243,15 +337,17 @@ function customButtonImageListeners(){
 function getMyLayout(){
   getLayout(function(result){
       console.log('got layout!');
+      //console.log($('#all-content').html());
+      if ($('#all-content').html() != '') {return;}
       if (!result) {
         $('#loader').css('display', 'none')
-        if (localStorage.getItem("gettingStartedBool") == null){
-          gettingStartedBool = true;
-        }
-        if (gettingStartedBool) {
-          $('#content').append("<div><h1>Looks like you don't have a Custom Layout!</h1><br>"+
-          "<h1>Click the Builder Icon on the top right to get started!</h1></div>")
-        }
+        // if (localStorage.getItem("gettingStartedBool") == null){
+        //   gettingStartedBool = true;
+        // }
+        // if (gettingStartedBool) {
+        //   $('#content').append("<div><h1>Looks like you don't have a Custom Layout!</h1><br>"+
+        //   "<h1>Click the Builder Icon on the top right to get started!</h1></div>")
+        // }
         ;return;
       }
       Object.keys(result).forEach(function(currentKey) {
@@ -339,18 +435,17 @@ function customGoBackButton() {
     $('#customOptions').remove();
     $('#goBack').remove();
     var html = '<div id="CustomTextButton" class="col-md-1 center">' +
-            '<button class="btn btn-secondary" onclick="clickCustomButton(this);">Text</button>' +
+            '<button class="btn btn-secondary" onclick="clickCustomButton(this);">Overview</button>' +
         '</div>' +
+
         '<div id="CustomVideoButton" class="col-md-1 center">' +
             '<button class="btn btn-secondary" onclick="clickCustomButton(this);">Video</button>' +
         '</div>' +
-        '<div id="CustomTestButton" class=" col-md-1 center">' +
-            '<button class="btn btn-secondary" onclick="clickCustomButton(this);">Test</button>' +
-        '</div>' +
+        
         '<div id="CustomAppButton" class="col-md-1 center">' +
-            '<button class="btn btn-secondary" onclick="clickCustomButton(this);">Application</button>' +
+            '<button class="btn btn-secondary" onclick="clickCustomButton(this);">Real World Scenario</button>' +
         '</div>' +
-        '<div id="CustomExtraSpace" class="col-md-4 center"></div>';
+        '<div id="CustomExtraSpace" class="col-md-6 center"></div>';
 
     $('#CustomBoxesTitle').after(html);
   });
@@ -361,20 +456,18 @@ function customGoBackButton() {
 
 function clickCustomButton(ele){
 
-  if ($(ele).text() == 'Test') {alert('Coming Soon...'); return;}
-
   var textNames = ['Summary Text', 'Review Text', 'My Notes'];
   var videoNames = ['Video'];
   var appNames = ['Application', 'Calculator', 'Connections', 'Extra Info'];
   var names;
   switch ($(ele).text()) {
-    case 'Text': names = textNames; break;
+    case 'Overview': names = textNames; break;
     case 'Video': names = videoNames; break;
-    case 'Application': names = appNames; break;
+    case 'Real World Scenario': names = appNames; break;
   }
   
 
-  var html = '<div id="customCurrentTitle" class="col-md-2 center">' +
+  var html = '<div id="customCurrentTitle" class="col-md-3 center">' +
             '<h3 style="padding-top: 3px">'+$(ele).text()+': </h3>'+
          '</div>'+
         '<div id="customOptions" class="col-md-5 center">';
@@ -404,16 +497,16 @@ function clickCustomButton(ele){
 
 function CustomBoxButton(ele){
 
-  if (gettingStartedBool) {
-      $('#content').empty();
-      $('#content').append(
-        '<div class="gettingStarted" style="width: 8000px; height: 8000px; z-index: 110; background: lightblue; position: fixed; top: 120px"></div>'+
-        '<h1 class=gettingStarted style="position: relative; z-index: 112; background: lightblue"> All boxes can be moved around and resized to create your own learning enviroment!</h1><br>'+
-        '<h1 class=gettingStarted style="position: relative; z-index: 112; background: lightblue"> Goodluck...</h1><br>'
-        );
-      gettingStartedBool = false;
-      setTimeout(function(){$('.gettingStarted').remove();localStorage.setItem("gettingStartedBool", 'done');}, 5500);
-  }
+  // if (gettingStartedBool) {
+  //     $('#content').empty();
+  //     $('#content').append(
+  //       '<div class="gettingStarted" style="width: 8000px; height: 8000px; z-index: 110; background: lightblue; position: fixed; top: 120px"></div>'+
+  //       '<h1 class=gettingStarted style="position: relative; z-index: 112; background: lightblue"> All boxes can be moved around and resized to create your own learning enviroment!</h1><br>'+
+  //       '<h1 class=gettingStarted style="position: relative; z-index: 112; background: lightblue"> Goodluck...</h1><br>'
+  //       );
+  //     gettingStartedBool = false;
+  //     setTimeout(function(){$('.gettingStarted').remove();localStorage.setItem("gettingStartedBool", 'done');}, 5500);
+  // }
 
   var id;
   var method;
@@ -583,8 +676,8 @@ function addAppBoxes(obj) {
     appDiv = $("#APP")
     appDiv.empty()
     addAppBox(appDiv)
-    $("#connectBigBoy").resizable().draggable();
-    $("#extrasBigBoy").resizable().draggable();
+    //$("#connectBigBoy").resizable().draggable();
+    //$("#extrasBigBoy").resizable().draggable();
     $("#appDivBigBoy").resizable().draggable();
 
     if(addCalculatorInApplication){
@@ -636,16 +729,19 @@ function getApplicationBox(){
 }
 
 function addAppBox(obj) {
-    var html = '<div class = "col-md-3">' +
-        getConnectionsBox()+
-        '<br>' +
-        getExtraInfoBox()+
-        '</div>';
+    // var html = '<div class = "col-md-3">' +
+    //     getConnectionsBox()+
+    //     '<br>' +
+    //     getExtraInfoBox()+
+    //     '</div>';
+    var html = '';
+    addNotesAppBox(obj);
+
 
         if (addCalculatorInApplication){
           html += '<div class = "col-md-6">';
         } else {
-          html += '<div class = "col-md-9">'
+          html += '<div class = "col-md-8">'
         }
 
     html += getApplicationBox();
@@ -657,8 +753,36 @@ function addAppBox(obj) {
 
   
     obj.append(html);
+    
 
 }
+
+function addNotesAppBox(obj){
+      var html;
+      if (addCalculatorInApplication) {
+          html = '<div class = "col-md-3">';
+      } else {
+          html = '<div class = "col-md-4">';
+      }
+        
+      html += '<div id = "noteVidBigBoy" onclick = "sendontop(this);" class = "ui-widget-content big-boy">' +
+        '<div id = "note" class="box">'+
+        '<h3 class = "ui-widget-header" > My Notes </h3>' +
+        '<div style="height: calc(100% - 28px);">'+
+        '<textarea class="text_edit" id="my_app_text">'+
+        'Loading your saved text...\nPlease wait!' +
+        '</textarea>' +
+        '</div>'+
+        '</div>' +
+        '</div>' +
+        '</div>';
+
+      obj.append(html);
+      getNoteData('my_app_text');
+
+      
+}
+
 
 
 function getCalculatorBox(){
@@ -808,7 +932,7 @@ function addNotesVideotBox(obj){
         '<div id = "note" class="box">'+
         '<h3 class = "ui-widget-header" > My Notes </h3>' +
         '<div style="height: calc(100% - 28px);">'+
-        '<textarea class="text_edit" id="my_text">'+
+        '<textarea class="text_edit" id="my_vid_text">'+
         'Loading your saved text...\nPlease wait!' +
         '</textarea>' +
         '</div>'+
@@ -817,7 +941,7 @@ function addNotesVideotBox(obj){
         '</div>'
     );
 
-    getNoteData();   
+    getNoteData('my_vid_text');   
 }
 
 
@@ -892,16 +1016,17 @@ function addNotesTextBox(obj, type){
       );
     }
 
-    getNoteData();   
+    getNoteData('my_text');   
 }
 
-function getNoteData(){
+function getNoteData(id){
   getSaveNote(noteFireTitle, function(result){
-        $('#my_text').val(result);
+        if ($('#'+id).length == 0) {return;} //this is prolly not needed lol
+        $('#'+id).val(result);
         
-        $('#my_text').bind('input propertychange', function() {
+        $('#'+id).bind('input propertychange', function() {
             console.log('saved!');
-            saveNote($('#my_text').val(), noteFireTitle);
+            saveNote($('#'+id).val(), noteFireTitle);
         });
     });
 }

@@ -1,4 +1,7 @@
 noteFireTitle = "magic";
+prevUnit = false;
+nextUnit = "secrets";
+unitTitle = "Linear Algebra Magic";
 
 summaryText = function () {
     var html = '<p>Linear Algebra is simply algebra with "linear" terms! It is that simple :P</p>';

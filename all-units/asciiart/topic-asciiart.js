@@ -1,4 +1,8 @@
 noteFireTitle = "asciiart";
+prevUnit = "secrets";
+nextUnit = false;
+unitTitle = "ASCII Art";
+
 
 summaryText = function () {
     var html = '<p>Using the power of submatrices, we can swap manipulate parts of a large Matrix to form a new Matrix!</p>';

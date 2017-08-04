@@ -1,4 +1,8 @@
 noteFireTitle = "secrets";
+prevUnit = "magic";
+nextUnit = "asciiart";
+unitTitle = "Secret Messages";
+
 
 summaryText = function () {
     var html = '<p>The power of Linear Algebra and its equations lies in its ability to manipulate data!</p>'

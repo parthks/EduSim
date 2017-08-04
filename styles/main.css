@@ -45,6 +45,10 @@
     /*position: absolute;*/
 }
 
+.btn.active {
+  font-weight: bold;
+}
+
 #content {
     position: absolute;
 }
