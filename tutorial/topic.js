@@ -1,64 +1,50 @@
-var noteFireTitle = "";
-var prevUnit = "";
-var nextUnit = "";
-var unitTitle = "Default Name"
+var noteFireTitle = "tutorial";
+var prevUnit = "tutorial";
+var nextUnit = "tutorial";
+var unitTitle = "Getting Started";
+
 
 var summaryText = function () {
-    var html = '<p>Linear Algebra is simply algebra with "linear" terms! It is that simple :P</p>';
-    html += '<p>When thinking of linear terms, think line. Constant terms and single variables to the first power</p>';
-    html += '<p>Bascially, no funny business! Just simple terms and with simple operations!</p>'
+    var html = '<p>These boxes will contain a brief summary of the unit</p>'
+    
     return html;
 }
 
 var reviewText = function () {
-    var html = '<p> Nothing to review for now! </p>';
-    html += '<p>Congratulations on starting your Linear Algebra Journey!!';
+    var html = '<p>These boxes will contain a brief review of all the units till now</p>';
     return html;
 }
 
 var addVideoDetails = function(){
-  var html = "<p>No Video for this section. ¯\\_(ツ)_/¯</p>";
+  var html = "<p>These boxes will contain a short animated video of the unit</p>";
+
   return html;
 }
 
 var extraInfo = function() {
-    var html = '<p>In linear algebra, the variables in the linear equations are often matrices and other powerful structures!</p>';
-    html += '<br><p>Try to make your own linear equation and convert it to magic!</p>'
-
+    var html = '<p>These boxes will provide some extra information about the unit</p>';
+    
     return html;
 }
 
 var connections = function() {
-    var html = '<p>Linear equations is the start to linear systems!</p>'
-    html += '<p>The process of solving mutiple linear equations is what linear algebra is all about!</p>'
-    html += '<p>We use Matrices to solve these linear equations and that is why they are so important and are used everywhere!</p>'
-
+    var html = '<p>These boxes will provide some information on how this unit connects to other units</p>';
+    
     return html;
 }
 
 var addAppDetails = function(){
-  var html = '';
-  if (localStorage.getItem("appName") == 'Matrix_Magic') {
-        html += '<iframe width=100% height=100% src="magic3.html"></iframe>';
-    } else if (localStorage.getItem("appName") == 'Digits_Magic') {
-        html += '<iframe width=100% height=100% src="magic2.html"></iframe>';
-    } else {
-        html += '<iframe width=100% height=100% src="magic1.html"></iframe>';
-    }
-    localStorage.setItem("appName", '0');
+  var html = '<p>These boxes will contain a Real World scenario where this unit is used.</p>';
+  html += '<p>It will explain how the material in the unit is used in the scenario.</p>';
+  html += '<p>You will also get a chance to play around and experiment with different variables affecting that scenario!</p>';
 
-    return html;
+  return html;
 }
 
-var addCalculatorInApplication = true;
+var addCalculatorInApplication = false;
 
-var Hello_World_Details = function(){
-  if (localStorage.getItem("appName") == 'Linear_Magic' ||
-        localStorage.getItem("appName") == 'Digits_Magic' ||
-        localStorage.getItem("appName") == 'Matrix_Magic') {
-        $('#AppButton').click();
-    }
-}
+var Hello_World_Details = function(){return true}
+
 
 
 
@@ -125,13 +111,13 @@ function tutorialContent(){
 
   if (tutorialStep == 4) {
     html = '<br><p>You can build your layouts for every unit and they will automatically be saved!</p>';
-    html += '<p>To move between units click the "Prev Unit" and "Next Unit" buttons.';
-    html += 'You can also click on the title, which in this case is "Getting Started", to reveal a dropdown of all the units</p>';
+    html += '<p>To move between units click the "Prev Unit" and "Next Unit" buttons.</p><br>';
     html += '<button class="btn btn-primary" onclick="tutorialStep=42;tutorial();">Finish</button>';
   }
 
   if (tutorialStep == 42) {
-    html = '<br><p>Now you know how to use this Site!</p>';
+    html = '<br><p>Now you know how to use this platform!</p>';
+    html += '<p>This project is a work in progress. Any and all Feedback is valuable! Simply click the "Give Feedback" button on the top right. Thanks!</p>';
     html += '<p>Continue on here to build your default layout that will be used as a start for all the units! and explore all the different boxes!</p>';
     html += '<p>Or click the Home button and start learning!</p><br>';
     html += '<button class="btn btn-primary" onclick="tutorialStep=420;tutorial();">Close Tutorial</button>';
@@ -211,6 +197,7 @@ function Hello_World(){
   console.log("Hello_World");
     setBuilderBoxHeading();
     setRowHeading();
+    setFeedbackModal();
     $('#content').empty();
     
     
@@ -230,6 +217,8 @@ function Hello_World(){
 
     
 }
+
+
 
 
 
@@ -298,9 +287,10 @@ function setRowHeading(){
         
 
          html += '<div class="col-md-1 center">'+
-            '<div id="feedbackArea">'+
-            '<a target="_blank" href="https://goo.gl/forms/EpSkZEedTfppOK3g1" class="btn btn-info">Give Feedback</a>'+
-        '</div></div>'+
+            '<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myFeedbackModal">'+
+                'Give Feedback'+
+            '</button>'+
+              '</div>'+
         
         '<div class="col-md-2 right">'+
             '<img id="buildBoxBarButton" style="width: 35px;" src="../external/build-custom-boxes.png"  alt="custom boxes"> &nbsp &nbsp'+
@@ -316,7 +306,37 @@ function setRowHeading(){
 
 
 
+function setFeedbackModal(){
+  var html = '<div class="modal fade" id="myFeedbackModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">'+
+        '<div class="modal-dialog" role="document">'+
+            '<div class="modal-content">'+
+              '<div class="modal-header">'+
+                '<h5 class="modal-title" id="exampleModalLabel">Give Feedback</h5>'+
+                '<button type="button" class="close" data-dismiss="modal" aria-label="Close">'+
+                  '<span aria-hidden="true">&times;</span>'+
+                '</button>'+
+              '</div>'+
+              '<div class="modal-body">'+
+                '<textarea id="feebackBox" style="height: 300px;"></textarea>'+
+                '<p>If you could also fill out this <a target="_blank" href="https://goo.gl/forms/EpSkZEedTfppOK3g1">short survey</a> that would be awesome!</p>'+
+              '</div>'+
+              '<div class="modal-footer">'+
+                '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>'+
+                '<button type="button" onclick="giveFeddback'+
+                     "($('#feebackBox').val(), "+
+                     "function(){"+
+                     "$('#feebackBox').val('');"+
+                      "$('#myFeedbackModal').modal('hide');"+
+                    "});" +
+                  '" class="btn btn-primary">Submit</button>'+
+              '</div>'+
+            '</div>'+
+        '</div>'+
+    '</div>';
 
+    $('body').prepend(html);
+
+}
 
 
 

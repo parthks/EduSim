@@ -119,6 +119,7 @@ function Hello_World(){
   console.log("Hello_World");
     setBuilderBoxHeading();
     setRowHeading();
+    setFeedbackModal();
     $('#content').empty();
     
     
@@ -205,9 +206,10 @@ function setRowHeading(){
         
 
          html += '<div class="col-md-1 center">'+
-            '<div id="feedbackArea">'+
-            '<a target="_blank" href="https://goo.gl/forms/EpSkZEedTfppOK3g1" class="btn btn-info">Give Feedback</a>'+
-        '</div></div>'+
+            '<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myFeedbackModal">'+
+                'Give Feedback'+
+            '</button>'+
+              '</div>'+
         
         '<div class="col-md-2 right">'+
             '<img id="buildBoxBarButton" style="width: 35px;" src="../external/build-custom-boxes.png"  alt="custom boxes"> &nbsp &nbsp'+
@@ -219,6 +221,38 @@ function setRowHeading(){
 
 }
 
+
+function setFeedbackModal(){
+  var html = '<div class="modal fade" id="myFeedbackModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">'+
+        '<div class="modal-dialog" role="document">'+
+            '<div class="modal-content">'+
+              '<div class="modal-header">'+
+                '<h5 class="modal-title" id="exampleModalLabel">Give Feedback</h5>'+
+                '<button type="button" class="close" data-dismiss="modal" aria-label="Close">'+
+                  '<span aria-hidden="true">&times;</span>'+
+                '</button>'+
+              '</div>'+
+              '<div class="modal-body">'+
+                '<textarea id="feebackBox" style="height: 300px;"></textarea>'+
+                '<p>If you could also fill out this <a target="_blank" href="https://goo.gl/forms/EpSkZEedTfppOK3g1">short survey</a> that would be awesome!</p>'+
+              '</div>'+
+              '<div class="modal-footer">'+
+                '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>'+
+                '<button type="button" onclick="giveFeddback'+
+                     "($('#feebackBox').val(), "+
+                     "function(){"+
+                     "$('#feebackBox').val('');"+
+                      "$('#myFeedbackModal').modal('hide');"+
+                    "});" +
+                  '" class="btn btn-primary">Submit</button>'+
+              '</div>'+
+            '</div>'+
+        '</div>'+
+    '</div>';
+
+    $('body').prepend(html);
+
+}
 
 
 
