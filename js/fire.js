@@ -11,6 +11,8 @@ var config = {
   messagingSenderId: "826200897633"
 };
 
+var provider = new firebase.auth.GoogleAuthProvider();
+
 
 firebase.initializeApp(config);
 
@@ -18,11 +20,10 @@ var database = firebase.database();
 
 
 function loginWithGoogle(callback){
-  var provider = new firebase.auth.GoogleAuthProvider();
   firebase.auth().signInWithPopup(provider).then(function(result) {
       var token = result.credential.accessToken;
       var user = result.user;
-      //console.log(user, 'user');
+      console.log(user, 'user');
       callback(user, 'user');
       database.ref('users/'+user.uid+'/name').set(user.displayName);
   }).catch(function(error) {
@@ -38,14 +39,48 @@ function needToLogin(callback){
   firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
       console.log('SOMETHIN HAPPENED!');
-      //console.log(user);
+      console.log(user);
       callback(user);
       database.ref('users/'+user.uid+'/name').set(user.displayName);
   } else {
+    console.log('need to login in');
     callback('login');  
   }
       
   });
+}
+
+
+function checkFirstTime(){
+  var uid = localStorage.getItem("uid");
+  if(uid != ''){
+    database.ref('users/'+uid+'/FirstTime').once('value').then(function(snapshot) {
+      if (!snapshot.val()) {
+        database.ref('users/'+uid+'/FirstTime').set('YES');
+        window.top.location = '/tutorial';
+
+      } else if (snapshot.val() == 'YES') {
+        window.top.location = '/tutorial';
+
+      } else {
+        window.top.location = '/home';
+      }
+    });
+
+  } else {
+    alert('ERROR - Unknown user! Please Login again!');
+  }
+  
+}
+
+function notFirstTime(){
+  var uid = localStorage.getItem("uid");
+  if(uid != ''){
+    database.ref('users/'+uid+'/FirstTime').set('NO');
+
+  } else {
+    alert('ERROR - Unknown user! Please Login again!');
+  }
 }
 
 
@@ -79,7 +114,7 @@ function giveFeddback(info, callback){
     callback();
   } 
   else {
-    alert('ERROR - Unknown user!');
+    alert('ERROR - Unknown user! Please Login again!');
   }
 }
 
@@ -94,7 +129,7 @@ function saveGraph(graph, type){
       database.ref('users/'+uid+'/graphNoApps').set(graph);
     }
   } else {
-    alert('ERROR - Unknown user!');
+    alert('ERROR - Unknown user! Please Login again!');
   }
    
 }
@@ -104,7 +139,7 @@ function saveNote(note, topic){
   if(uid != ''){
     database.ref('users/'+uid+'/notes/'+topic).set(note);
   } else {
-    alert('ERROR - Unknown user!');
+    alert('ERROR - Unknown user! Please Login again!');
   }
 }
 
@@ -116,7 +151,7 @@ function getSaveNote(topic, callback){
       callback(snapshot.val());
     });
   } else {
-    alert('ERROR - Unknown user!');
+    alert('ERROR - Unknown user! Please Login again!');
   }
 }
 
@@ -142,7 +177,7 @@ function saveLayout(id, style){
       [id]: style
     });
   } else {
-    alert('ERROR - Unknown user!');
+    alert('ERROR - Unknown user! Please Login again!');
   }
 }
 
@@ -154,7 +189,7 @@ function getLayout(callback){
       callback(snapshot.val());
     });
   } else {
-    alert('ERROR - Unknown user!');
+    alert('ERROR - Unknown user! Please Login again!');
   }
 }
 
@@ -163,7 +198,7 @@ function deleteLayout(id){
   if(uid != ''){
     database.ref('users/'+uid+'/layout/'+id).remove();
   } else {
-    alert('ERROR - Unknown user!');
+    alert('ERROR - Unknown user! Please Login again!');
   } 
 }
 
@@ -172,7 +207,7 @@ function deleteAllLayout(){
   if(uid != ''){
     database.ref('users/'+uid+'/layout').remove();
   } else {
-    alert('ERROR - Unknown user!');
+    alert('ERROR - Unknown user! Please Login again!');
   } 
 }
 

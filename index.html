@@ -18,27 +18,28 @@
     <br>
     
     <div>
-        <h1 id="welcome">Welcome</h1>
+        <h1 id="welcome">EduVIL</h1>
         <br>
-        <h2>An immersive linear algebra learning enviroment</h2>
+        <h2 id="subtitle">An Immersive Linear Algebra Learning Enviroment</h2>
         <br>
         <br>
         <div id="getStartedBreak" class="center"></div>
         <div class="center">
-        <div class="google_btn"></div>
+        
+        </div>
         <script type="text/javascript">
 
-            $('.google_btn').hide();
 
             needToLogin(function(userORtrue){
                 if (userORtrue == 'login') {
-                    $('.google_btn').show();
+                    $('#getStartedBreak').html('<div class="google_btn"></div>');
                     $('.google_btn').click(function(){
                         loginWithGoogle(function(data, type){
                             if (type == 'error') {
-                                alert('Something went wrong! Please try signing in again');
+                                //alert('Something went wrong! Please try signing in again');
+                                console.log(data);
                             } else {
-                                $('.google_btn').hide();
+                                $('.google_btn').remove();
                                 console.log(data);
                                 getStarted(data);
                             }
@@ -58,14 +59,15 @@
                 localStorage.setItem('uid', uid);
                 localStorage.setItem('name', name);
                 $('#welcome').text('Welcome, '+name);
+                $('#subtitle').text('to your immersive Linear Algebra learning enviroment')
                 $('#getStartedBreak').html(
-                    '<button id="start" onclick="window.top.location = '+"'"+"/home"+"'"+';" type="button" class="btn btn-lg btn-primary">'+
+                    '<button id="start" onclick="checkFirstTime();" type="button" class="btn btn-lg btn-primary">'+
                         '<h3>Get Started</h3>'+
                     '</button>');
             }
                 
         </script>
-        </div>
+        
 
             <!-- <label>Please enter your unique-name, to create your own personalized space - </label>
             <input type="text" id="uniquename"><br>

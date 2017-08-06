@@ -67,7 +67,9 @@ function tutorialContent(){
   var html = '';
 
   if (tutorialStep == 0) {
-    html = '<br><p>This is your personalized landing page for every unit';
+    html = '<br><p>Hi! Welcome to EduVIL!</p>';
+     html += '<p>This tutorial will guide you on getting started.</p>';
+    html += '<p>For every unit, you will have a personalized landing page like this';
     html += ' and its where all the learning happens!</p><br><br>';
     html += '<button class="btn btn-primary" onclick="tutorialStep=1;tutorial();">Next</button>';
   }
@@ -110,6 +112,7 @@ function tutorialContent(){
   }
 
   if (tutorialStep == 4) {
+    notFirstTime();
     html = '<br><p>You can build your layouts for every unit and they will automatically be saved!</p>';
     html += '<p>To move between units click the "Prev Unit" and "Next Unit" buttons.</p><br>';
     html += '<button class="btn btn-primary" onclick="tutorialStep=42;tutorial();">Finish</button>';

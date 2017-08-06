@@ -13,8 +13,9 @@ summaryText = function () {
 }
 
 reviewText = function () {
-    var html = '<p>Images are nothing but Matrices! </p>';
-    html += '<p>The pixels are stored as red, green, blue and alpha numeric values that can easily be manipulated.';
+    var html = '<p>Images are nothing but Matrices, which are just columns of vectors</p>';
+    html += '<p>The pixels of the images are stored as a matrix of red, green, blue and alpha numeric values.';
+    html += '<p>Vectors can be easily trasnformed by matrices through Ax = b</p>';
     return html;
 }
 

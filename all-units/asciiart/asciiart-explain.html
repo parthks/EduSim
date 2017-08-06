@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>ASCII Art Depicted</title>
+    <script src="/js/trackingcode.js"></script>
+    <link rel="stylesheet" href="https://getbootstrap.com/dist/css/bootstrap.min.css">
+</head>
+
+<body>
+    <h1>ASCII Art Depicted</h1>
+    <br>
+    <br>
+    <p>It is actually really easy to make ASCII Art, once you know that every image is simply a matrix of its pixel values!</p>
+    <p>We read each pixel value, and based on if it is a dark, medium, or a light color we simply put a specific character in its spot! </p>
+    <br>
+    <p>Few things to note:</p>
+    <p>For color images, each pixel value is actually four values - red, green, blue and alpha numbers - so we take the average of the numbers as the pixel value</p>
+    <p>Having a text character for every pixel value may not produce the right image, as a character is actually a rectange while a pixel is a tiny square. We want to group pixels into a single character!</p>
+    <p>We can do this by setting the height and width of each character to represent multiple pixel values! We form sub-matrices of dimensions height X width and the average pixel value of this sub-matrix will form one character!</p>
+    
+    <br>
+    <br>
+    <h4>Get to know more!</h4>
+    <button onclick="location.href='asciiart-play.html'">Make Cool Art!</button>
+</body>
+
+</html>
