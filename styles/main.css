@@ -89,6 +89,9 @@ body {
     background: lightblue;
 }
 
+#customOptions {
+  overflow-x: auto;
+}
 
 #buildBoxBarButton {
   cursor: pointer;

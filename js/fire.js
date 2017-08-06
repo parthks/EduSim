@@ -19,6 +19,31 @@ firebase.initializeApp(config);
 var database = firebase.database();
 
 
+function canContinueWithID(){
+  //var user = firebase.auth().currentUser; I LIKE THIS BETTER LOL
+//   if (user) {
+//   // User is signed in.
+// } else {
+//   // No user is signed in.
+// }
+//OR USE THIS AS A FUNCTION JUST AS IS
+// firebase.auth().onAuthStateChanged(function(user) {
+//   if (user) {
+//     // User is signed in.
+//   } else {
+//     // No user is signed in.
+//   }
+// });
+  var uid = localStorage.getItem("uid");
+  if(uid != ''){
+    return uid;
+  } else {
+    alert('ERROR - Unknown user! Please Login again!');
+    return false;
+  }
+}
+
+
 function loginWithGoogle(callback){
   firebase.auth().signInWithPopup(provider).then(function(result) {
       var token = result.credential.accessToken;
@@ -52,108 +77,90 @@ function needToLogin(callback){
 
 
 function checkFirstTime(){
-  var uid = localStorage.getItem("uid");
-  if(uid != ''){
-    database.ref('users/'+uid+'/FirstTime').once('value').then(function(snapshot) {
-      if (!snapshot.val()) {
-        database.ref('users/'+uid+'/FirstTime').set('YES');
-        window.top.location = '/tutorial';
+  var uid = canContinueWithID();
+  if(!uid){return;}
 
-      } else if (snapshot.val() == 'YES') {
-        window.top.location = '/tutorial';
+  database.ref('users/'+uid+'/FirstTime').once('value').then(function(snapshot) {
+    if (!snapshot.val()) {
+      database.ref('users/'+uid+'/FirstTime').set('YES');
+      window.top.location = '/tutorial';
 
-      } else {
-        window.top.location = '/home';
-      }
-    });
+    } else if (snapshot.val() == 'YES') {
+      window.top.location = '/tutorial';
 
-  } else {
-    alert('ERROR - Unknown user! Please Login again!');
-  }
+    } else {
+      window.top.location = '/home';
+    }
+  });
+
+   
   
 }
 
 function notFirstTime(){
-  var uid = localStorage.getItem("uid");
-  if(uid != ''){
-    database.ref('users/'+uid+'/FirstTime').set('NO');
+  var uid = canContinueWithID();
+  if(!uid){return;}
 
-  } else {
-    alert('ERROR - Unknown user! Please Login again!');
-  }
+  database.ref('users/'+uid+'/FirstTime').set('NO');
 }
 
 
-
-// function fireLogin(uid, passcode, callback) {
-//   database.ref('users/'+uid+'/passcode').once('value').then(function(snapshot) {
-//     if (!(snapshot.val()) || passcode == snapshot.val()) {
-//       database.ref('users/'+uid+'/passcode').set(passcode);
-//       var d = new Date();
-//       var sd = d.getUTCHours() + ':' +  d.getUTCMinutes() + ' ' + d.getUTCDay() + '-' + (parseInt(d.getUTCMonth())+1) + '-' + d.getUTCFullYear();
-//       database.ref('users/'+uid+'/active').set(sd);
-//       console.log('success login!');
-//       callback();
-//     } else {
-//       alert('Incorrect passcode for unique-uid: '+uid+
-//         '\nPlease contact parthks@umich.edu for passcode recovery');
-//     }
-//   });
-  
-// }
-
-
 function giveFeddback(info, callback){
-  var uid = localStorage.getItem("uid");
-  if(uid != ''){
-    var go = database.ref().child('Feedback').push().key;
-    database.ref('Feedback/'+go).set({
-      uid: uid,
-      feeback: info
-    });
-    callback();
-  } 
-  else {
-    alert('ERROR - Unknown user! Please Login again!');
-  }
+ var uid = canContinueWithID();
+  if(!uid){return;}
+
+  var go = database.ref().child('Feedback').push().key;
+  database.ref('Feedback/'+go).set({
+    uid: uid,
+    feeback: info
+  });
+  callback();
+  
 }
 
 
 function saveGraph(graph, type){
-  var uid = localStorage.getItem("uid");
-  if(uid != ''){
-    if (type == 'Apps'){
-      console.log(graph);
-      database.ref('users/'+uid+'/graphWithApps').set(graph);
-    } else {
-      database.ref('users/'+uid+'/graphNoApps').set(graph);
-    }
+  var uid = canContinueWithID();
+  if(!uid){return;}
+
+  if (type == 'Apps'){
+    console.log(graph);
+    database.ref('users/'+uid+'/graphWithApps').set(graph);
   } else {
-    alert('ERROR - Unknown user! Please Login again!');
+    database.ref('users/'+uid+'/graphNoApps').set(graph);
   }
+ 
    
 }
 
 function saveNote(note, topic){
-  var uid = localStorage.getItem("uid");
-  if(uid != ''){
-    database.ref('users/'+uid+'/notes/'+topic).set(note);
-  } else {
-    alert('ERROR - Unknown user! Please Login again!');
-  }
+ var uid = canContinueWithID();
+  if(!uid){return;}
+
+  database.ref('users/'+uid+'/notes/'+topic).set(note);
+  
 }
 
 
 function getSaveNote(topic, callback){
-  var uid = localStorage.getItem("uid");
-  if(uid != ''){
-    database.ref('users/'+uid+'/notes/'+topic).once('value').then(function(snapshot) {
-      callback(snapshot.val());
-    });
-  } else {
-    alert('ERROR - Unknown user! Please Login again!');
-  }
+  var uid = canContinueWithID();
+  if(!uid){return;}
+
+  database.ref('users/'+uid+'/notes/'+topic).once('value').then(function(snapshot) {
+    callback(snapshot.val());
+  });
+  
 }
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -280,7 +280,10 @@ function CustomCloseBox(ele) {
     bigBoy.attrchange('remove');
     console.log('deleteee  '+bigBoy.attr('id'));
     deleteLayout(bigBoy.attr('id'));
+    console.log('#'+bigBoy.attr('id')+'CustomButton');
+    $('#'+bigBoy.attr('id')+'CustomButton').removeClass("active");
     bigBoy.remove();
+
 }
 
 function customBoxBarListener(){
@@ -289,23 +292,10 @@ function customBoxBarListener(){
       console.log('hide');
       $('#customBoxes').hide();
       $('#customBoxesBreak').hide();
-
-      // if (gettingStartedBool) {
-      //   $('#content').empty();
-      //   $('#content').append("<div><h1>Looks like you don't have a Custom Layout!</h1><br>"+
-      //   "<h1>Click the Builder Icon on the top right to get started!</h1></div>")
-      // }
-
     } else {
       console.log('show');
       $('#customBoxes').show();
       $('#customBoxesBreak').show();
-
-      // if (gettingStartedBool) {
-      //   $('#content').empty()
-      //   $('#content').append("<h1>Select a box from the Builder Box Menu Bar to add it your Layout!</h1>")
-      // }
-
     }
   });
 }
@@ -472,7 +462,7 @@ function getMyLayout(){
 function customGoBackButton() {
   $('#go-back').click(function(){
     $('#customCurrentTitle').remove();
-    $('#customOptions').remove();
+    $('#allOptions').remove();
     $('#goBack').remove();
     var html = '<div id="CustomTextButton" class="col-md-1 center">' +
             '<button class="btn btn-secondary" onclick="clickCustomButton(this);">Overview</button>' +
@@ -498,7 +488,7 @@ function clickCustomButton(ele){
 
   var textNames = ['Summary Text', 'Review Text', 'My Notes'];
   var videoNames = ['Video'];
-  var appNames = ['Application', 'Calculator', 'Connections', 'Extra Info'];
+  var appNames = ['Application', 'Calculator', 'Connections', 'Extra Info', 'BLAH', "blah", 'jdsfsofa'];
   var names;
   switch ($(ele).text()) {
     case 'Overview': names = textNames; break;
@@ -510,14 +500,15 @@ function clickCustomButton(ele){
   var html = '<div id="customCurrentTitle" class="col-md-3 center">' +
             '<h3 style="padding-top: 3px">'+$(ele).text()+': </h3>'+
          '</div>'+
-        '<div id="customOptions" class="col-md-5 center">';
+         '<div id="allOptions" class="col-md-5 center">'+
+        '<div id="customOptions">';
 
   for (var i = 0; i < names.length; i++) {
-    html += '<button onclick="CustomBoxButton(this);" class="btn btn-secondary">'+names[i]+'</button>'+
+    html += '<button onclick="CustomBoxButton(this);" class="btn btn-secondary custom">'+names[i]+'</button>'+
             '&nbsp';
   }
 
-  html += '</div>'+
+  html += '</div></div>'+
         '<div id="goBack" class="col-md-1 center">'+
             '<img id="go-back" style="width: 32px; padding-top: 3px" src="../external/go-back-icon.png"  alt="go back">'+
         '</div>';
@@ -531,6 +522,16 @@ function clickCustomButton(ele){
 
   $('#CustomBoxesTitle').after(html);
   customGoBackButton();
+
+  //make it scroll
+  $("#customOptions").wrapInner("<table cellspacing='30'><tr>");
+  $(".custom").wrap("<td></td>");
+  $("customOptions").mousewheel(function(event, delta) {
+      this.scrollLeft -= (delta * 30);
+      event.preventDefault();
+  });
+
+  
 
 }
 
@@ -548,20 +549,24 @@ function CustomBoxButton(ele){
   //     setTimeout(function(){$('.gettingStarted').remove();localStorage.setItem("gettingStartedBool", 'done');}, 5500);
   // }
 
+  if ($(ele).hasClass("active")) {return;}
+  else {$(ele).addClass("active");}
+
   var id;
   var method;
   switch ($(ele).text()){
-    case 'Summary Text': id='#summTextBigBoy'; method=getSummaryTextBox(); break;
-    case 'Review Text': id='#revTextBigBoy'; method=getReviewTextBox(); break;
-    case 'My Notes': id='#noteBigBoy'; method='Imma NOTE :P'; break;
-    case 'Video': id='#videoDivBigBoy'; method=getVideoBox(); break;
-    case 'Application': id='#appDivBigBoy'; method=getApplicationBox(); break;
-    case 'Connections': id='#connectBigBoy'; method=getConnectionsBox(); break;
-    case 'Extra Info': id='#extrasBigBoy'; method=getExtraInfoBox(); break;
-    case 'Calculator': id='#calculatorDivBigBoy'; method=getCalculatorBox(); break;
+    case 'Summary Text': id='summTextBigBoy'; method=getSummaryTextBox(); break;
+    case 'Review Text': id='revTextBigBoy'; method=getReviewTextBox(); break;
+    case 'My Notes': id='noteBigBoy'; method='Imma NOTE :P'; break;
+    case 'Video': id='videoDivBigBoy'; method=getVideoBox(); break;
+    case 'Application': id='appDivBigBoy'; method=getApplicationBox(); break;
+    case 'Connections': id='connectBigBoy'; method=getConnectionsBox(); break;
+    case 'Extra Info': id='extrasBigBoy'; method=getExtraInfoBox(); break;
+    case 'Calculator': id='calculatorDivBigBoy'; method=getCalculatorBox(); break;
   }
-
-  addCustomBox(id, method);
+  var buttonID = id+"CustomButton";
+  $(ele).attr("id",buttonID);
+  addCustomBox('#'+id, method);
 }
 
 function addCustomBox(id, method){
@@ -1251,6 +1256,98 @@ function calculator() {
     // clearing the input on press of clear
     clear.addEventListener("click", function() {
         input.innerHTML = "";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(function($) {
+
+var types = ['DOMMouseScroll', 'mousewheel'];
+
+if ($.event.fixHooks) {
+    for ( var i=types.length; i; ) {
+        $.event.fixHooks[ types[--i] ] = $.event.mouseHooks;
+    }
+}
+
+$.event.special.mousewheel = {
+    setup: function() {
+        if ( this.addEventListener ) {
+            for ( var i=types.length; i; ) {
+                this.addEventListener( types[--i], handler, false );
+            }
+        } else {
+            this.onmousewheel = handler;
+        }
+    },
+    
+    teardown: function() {
+        if ( this.removeEventListener ) {
+            for ( var i=types.length; i; ) {
+                this.removeEventListener( types[--i], handler, false );
+            }
+        } else {
+            this.onmousewheel = null;
+        }
+    }
+};
+
+$.fn.extend({
+    mousewheel: function(fn) {
+        return fn ? this.bind("mousewheel", fn) : this.trigger("mousewheel");
+    },
+    
+    unmousewheel: function(fn) {
+        return this.unbind("mousewheel", fn);
+    }
+});
+
+
+function handler(event) {
+    var orgEvent = event || window.event, args = [].slice.call( arguments, 1 ), delta = 0, returnValue = true, deltaX = 0, deltaY = 0;
+    event = $.event.fix(orgEvent);
+    event.type = "mousewheel";
+    
+    // Old school scrollwheel delta
+    if ( orgEvent.wheelDelta ) { delta = orgEvent.wheelDelta/120; }
+    if ( orgEvent.detail     ) { delta = -orgEvent.detail/3; }
+    
+    // New school multidimensional scroll (touchpads) deltas
+    deltaY = delta;
+    
+    // Gecko
+    if ( orgEvent.axis !== undefined && orgEvent.axis === orgEvent.HORIZONTAL_AXIS ) {
+        deltaY = 0;
+        deltaX = -1*delta;
+    }
+    
+    // Webkit
+    if ( orgEvent.wheelDeltaY !== undefined ) { deltaY = orgEvent.wheelDeltaY/120; }
+    if ( orgEvent.wheelDeltaX !== undefined ) { deltaX = -1*orgEvent.wheelDeltaX/120; }
+    
+    // Add event and delta to the front of the arguments
+    args.unshift(event, delta, deltaX, deltaY);
+    
+    return ($.event.dispatch || $.event.handle).apply(this, args);
+}
+
+})(jQuery);
+
     });
 }
 
