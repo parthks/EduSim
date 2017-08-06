@@ -146,7 +146,7 @@ function setBuilderBoxHeading(){
   var html = '<br id="customBoxesBreak">'+
     '<div id="customBoxes" class="row heading">'+
         '<div id="CustomBoxesTitle" class="col-md-2 center">'+
-            '<h5 style="padding-top: 5px">Boxes to chose from: </h5>'+
+            '<h5 id="CBTitle" style="padding-top: 5px">Box Categories: </h5>'+
         '</div>'+
 
          '<div id="CustomTextButton" class="col-md-1 center">'+
@@ -155,16 +155,32 @@ function setBuilderBoxHeading(){
         '<div id="CustomVideoButton" class="col-md-1 center">'+
             '<button class="btn btn-secondary" onclick="clickCustomButton(this);">Video</button>'+
         '</div>'+
-        
-        '<div id="CustomAppButton" class="col-md-2 center">'+
-            '<button class="btn btn-secondary" onclick="clickCustomButton(this);">Real World Scenario</button>'+
-        '</div>'+
-        '<div id="CustomExtraSpace" class="col-md-5 center"></div>'+
 
-        '<div class="col-md-1 center">'+
+         '<div id="CustomAppButton" class="col-md-2 center">' +
+            '<button class="btn btn-secondary" onclick="clickCustomButton(this);">Real World Scenario</button>' +
+        '</div>' +
+        
+        '<div id="CustomSocialButton" class="col-md-1 center">' +
+            '<button class="btn btn-secondary" onclick="clickCustomButton(this);">Social</button>' +
+        '</div>' +
+
+        '<div id="CustomMyBoxesButton" class="col-md-1 center">' +
+            '<button class="btn btn-secondary" onclick="clickCustomButton(this);">My Boxes</button>' +
+        '</div>' +
+
+        '<div id="CustomDownloadedButton" class="col-md-1 center">' +
+            '<button class="btn btn-secondary" onclick="clickCustomButton(this);">Downloaded</button>' +
+        '</div>' +
+
+
+        '<div id="CustomExtraSpace" class="col-md-1 center"></div>'+
+
             
-            '<img id="trash-image" style="width: 35px; padding-top: 2px;" src="../external/trash-icon.png"  alt="trash layout">'+
-        '</div>'+
+
+        '<div class="col-md-2 right">'+
+            '<img id="add-image" class="pointer" style="width: 25px; padding-top: 2px;" src="../external/images/add.png"  alt="add box">'+
+            '&nbsp &nbsp &nbsp<img id="trash-image" class="pointer" style="width: 35px; padding-top: 2px;" src="../external/trash-icon.png"  alt="trash layout">'+
+        '&nbsp </div>'+
 
     '</div>';
     $('body').prepend(html);
@@ -212,7 +228,7 @@ function setRowHeading(){
               '</div>'+
         
         '<div class="col-md-2 right">'+
-            '<img id="buildBoxBarButton" style="width: 35px;" src="../external/build-custom-boxes.png"  alt="custom boxes"> &nbsp &nbsp'+
+            '<img id="buildBoxBarButton" class="pointer" style="width: 35px;" src="../external/build-custom-boxes.png"  alt="custom boxes"> &nbsp &nbsp'+
             '<button onclick="window.top.location = '+"'"+'/home'+"'"+'" class="btn btn-primary">Home</button>'+
         '</div>'+
     '</div>';
@@ -279,7 +295,7 @@ function CustomCloseBox(ele) {
     var bigBoy = $(ele).parent().parent().parent();
     bigBoy.attrchange('remove');
     console.log('deleteee  '+bigBoy.attr('id'));
-    deleteLayout(bigBoy.attr('id'));
+    deleteBox(unitTitle, bigBoy.attr('id'));
     console.log('#'+bigBoy.attr('id')+'CustomButton');
     $('#'+bigBoy.attr('id')+'CustomButton').removeClass("active");
     bigBoy.remove();
@@ -349,7 +365,7 @@ function saveLayoutListiner(id){
   if (event.attributeName == "style"){
         console.log(event.target.id);
         console.log(event.newValue);
-        saveLayout(event.target.id, event.newValue);
+        saveLayout(unitTitle, event.target.id, event.newValue);
     }
   }
 });
@@ -359,13 +375,13 @@ function saveLayoutListiner(id){
 function customButtonImageListeners(){
   $('#trash-image').click(function(){
     $('#content').empty();
-    deleteAllLayout();
+    deleteFullLayout(unitTitle);
     //location.reload();
   });
 }
 
 function getMyLayout(){
-  getLayout(function(result){
+  getLayout(unitTitle, function(result){
       console.log('got layout!');
       //console.log($('#all-content').html());
       if ($('#all-content').html() != '') {return;}
@@ -475,9 +491,25 @@ function customGoBackButton() {
         '<div id="CustomAppButton" class="col-md-2 center">' +
             '<button class="btn btn-secondary" onclick="clickCustomButton(this);">Real World Scenario</button>' +
         '</div>' +
-        '<div id="CustomExtraSpace" class="col-md-5 center"></div>';
+
+        '<div id="CustomSocialButton" class="col-md-1 center">' +
+            '<button class="btn btn-secondary" onclick="clickCustomButton(this);">Social</button>' +
+        '</div>' +
+
+        '<div id="CustomMyBoxesButton" class="col-md-1 center">' +
+            '<button class="btn btn-secondary" onclick="clickCustomButton(this);">My Boxes</button>' +
+        '</div>' +
+
+        '<div id="CustomDownloadedButton" class="col-md-1 center">' +
+            '<button class="btn btn-secondary" onclick="clickCustomButton(this);">Downloaded</button>' +
+        '</div>' +
+
+
+        '<div id="CustomExtraSpace" class="col-md-1 center"></div>';
 
     $('#CustomBoxesTitle').after(html);
+    $('#CBTitle').text('Box Categories: ');
+   
   });
 }
 
@@ -485,11 +517,23 @@ function customGoBackButton() {
 
 
 function clickCustomButton(ele){
+  
+  var NameToID = {
+    'Summary Text': 'summTextBigBoy',
+    'Review Text': 'revTextBigBoy',
+    'My Notes' : 'noteBigBoy',
+    'Video': 'videoDivBigBoy',
+    'Application': 'appDivBigBoy',
+    "Calculator": 'calculatorDivBigBoy',
+    'Connections': 'connectBigBoy',
+    'Extra Info': 'extrasBigBoy'
+  };
 
   var textNames = ['Summary Text', 'Review Text', 'My Notes'];
   var videoNames = ['Video'];
-  var appNames = ['Application', 'Calculator', 'Connections', 'Extra Info', 'BLAH', "blah", 'jdsfsofa'];
+  var appNames = ['Application', 'Calculator', 'Connections', 'Extra Info'];
   var names;
+
   switch ($(ele).text()) {
     case 'Overview': names = textNames; break;
     case 'Video': names = videoNames; break;
@@ -497,30 +541,44 @@ function clickCustomButton(ele){
   }
   
 
-  var html = '<div id="customCurrentTitle" class="col-md-3 center">' +
+  var html = '<div id="customCurrentTitle" class="col-md-3 left">' +
             '<h3 style="padding-top: 3px">'+$(ele).text()+': </h3>'+
          '</div>'+
-         '<div id="allOptions" class="col-md-5 center">'+
+         '<div id="allOptions" class="col-md-4 center">'+
         '<div id="customOptions">';
 
+ 
   for (var i = 0; i < names.length; i++) {
-    html += '<button onclick="CustomBoxButton(this);" class="btn btn-secondary custom">'+names[i]+'</button>'+
+    var id = NameToID[names[i]];
+    var buttonID = id+"CustomButton";
+    var active = '';
+    if ($('#'+id).length != 0) {active = 'active';}
+    html += '<button id="'+buttonID+'" onclick="CustomBoxButton(this);" class="btn btn-secondary custom '+active+'">'+names[i]+'</button>'+
             '&nbsp';
   }
 
   html += '</div></div>'+
         '<div id="goBack" class="col-md-1 center">'+
-            '<img id="go-back" style="width: 32px; padding-top: 3px" src="../external/go-back-icon.png"  alt="go back">'+
+            '<img id="go-back" class="pointer" style="width: 32px; padding-top: 3px" src="../external/go-back-icon.png"  alt="go back">'+
         '</div>';
 
 
   $('#CustomTextButton').remove();
   $('#CustomVideoButton').remove();
-  $('#CustomTestButton').remove();
   $('#CustomAppButton').remove();
+  $('#CustomSocialButton').remove();
+  $('#CustomMyBoxesButton').remove();
+  $('#CustomDownloadedButton').remove();
+
   $('#CustomExtraSpace').remove();
 
   $('#CustomBoxesTitle').after(html);
+
+  for (var i = 0; i < names.length; i++) {
+    var buttonID = NameToID[names[i]]+"CustomButton";
+    $(ele).attr("id",buttonID);
+  }
+  $('#CBTitle').text('Boxes to choose from: ');
   customGoBackButton();
 
   //make it scroll
@@ -538,19 +596,7 @@ function clickCustomButton(ele){
 
 function CustomBoxButton(ele){
 
-  // if (gettingStartedBool) {
-  //     $('#content').empty();
-  //     $('#content').append(
-  //       '<div class="gettingStarted" style="width: 8000px; height: 8000px; z-index: 110; background: lightblue; position: fixed; top: 120px"></div>'+
-  //       '<h1 class=gettingStarted style="position: relative; z-index: 112; background: lightblue"> All boxes can be moved around and resized to create your own learning enviroment!</h1><br>'+
-  //       '<h1 class=gettingStarted style="position: relative; z-index: 112; background: lightblue"> Goodluck...</h1><br>'
-  //       );
-  //     gettingStartedBool = false;
-  //     setTimeout(function(){$('.gettingStarted').remove();localStorage.setItem("gettingStartedBool", 'done');}, 5500);
-  // }
-
-  if ($(ele).hasClass("active")) {return;}
-  else {$(ele).addClass("active");}
+  //if ($(ele).hasClass("active")) {return;}
 
   var id;
   var method;
@@ -564,10 +610,10 @@ function CustomBoxButton(ele){
     case 'Extra Info': id='extrasBigBoy'; method=getExtraInfoBox(); break;
     case 'Calculator': id='calculatorDivBigBoy'; method=getCalculatorBox(); break;
   }
-  var buttonID = id+"CustomButton";
-  $(ele).attr("id",buttonID);
+  
   addCustomBox('#'+id, method);
 }
+
 
 function addCustomBox(id, method){
 
@@ -577,6 +623,8 @@ function addCustomBox(id, method){
   var height = getRandomInt(300, 500);
 
   if ($(id).length == 0) {
+  $(id+'CustomButton').addClass('active');
+
       if (id == '#noteBigBoy') {
           CustomNotesButton(); 
           $(id).css('position','absolute');
@@ -591,9 +639,8 @@ function addCustomBox(id, method){
     
       $('#content').prepend(method);
       $(id).resizable().draggable();
-      
+
       saveLayoutListiner(id);
-      
 
       $(id).css('position','absolute');
       $(id).css('width',width+'px');
@@ -612,6 +659,7 @@ function addCustomBox(id, method){
         $(id).css('height','471px');
         calculator();
       }
+
 
   }
 }

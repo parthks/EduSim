@@ -177,45 +177,56 @@ function saveDefaultLayout(layout){
 
 
 
-function saveLayout(id, style){
-  var uid = localStorage.getItem("uid");
-  if(uid != ''){
-    database.ref('users/'+uid+'/layout').update({
-      [id]: style
-    });
-  } else {
-    alert('ERROR - Unknown user! Please Login again!');
-  }
+
+function saveLayout(layoutID, boxID, style){
+  var uid = canContinueWithID();
+  if(!uid){return;}
+
+  database.ref('users/'+uid+'/layouts/'+layoutID).update({
+    [boxID]: style
+  });
+  
 }
 
-function getLayout(callback){
-  var uid = localStorage.getItem("uid");
-  if(uid != ''){
-    database.ref('users/'+uid+'/layout').once('value').then(function(snapshot) {
-      console.log('layout fire');
-      callback(snapshot.val());
-    });
-  } else {
-    alert('ERROR - Unknown user! Please Login again!');
-  }
+function getLayout(layoutID, callback){
+  var uid = canContinueWithID();
+  if(!uid){return;}
+
+  database.ref('users/'+uid+'/layouts/'+layoutID).once('value').then(function(snapshot) {
+    console.log('layout fire');
+    callback(snapshot.val());
+  });
+  
 }
 
-function deleteLayout(id){
-  var uid = localStorage.getItem("uid");
-  if(uid != ''){
-    database.ref('users/'+uid+'/layout/'+id).remove();
-  } else {
-    alert('ERROR - Unknown user! Please Login again!');
-  } 
+function deleteBox(layoutID, boxID){
+  var uid = canContinueWithID();
+  if(!uid){return;}
+
+  database.ref('users/'+uid+'/layouts/'+layoutID+'/'+boxID).remove();
+ 
 }
 
-function deleteAllLayout(){
-  var uid = localStorage.getItem("uid");
-  if(uid != ''){
-    database.ref('users/'+uid+'/layout').remove();
-  } else {
-    alert('ERROR - Unknown user! Please Login again!');
-  } 
+function addBox(layoutID, tit, cat, cunt){
+  var uid = canContinueWithID();
+  if(!uid){return;}
+
+  var id = database.ref().child('Feedback').push().key;
+  database.ref('users/'+uid+'/boxes/'+layoutID+'/'+id).set({
+    title: tit,
+    category: cat,
+    content: cunt,
+    key: id
+  });
+}
+
+
+function deleteFullLayout(layoutID){
+  var uid = canContinueWithID();
+  if(!uid){return;}
+
+  database.ref('users/'+uid+'/layouts/'+layoutID).remove();
+  
 }
 
 

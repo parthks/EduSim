@@ -32,6 +32,10 @@
     text-align: right;
 }
 
+.left {
+  text-align: left;
+}
+
 .box {
     /*outline: 1px solid red;*/
     height: 100%;
@@ -85,6 +89,10 @@ body {
     background: white;
 }
 
+.pointer {
+  cursor: pointer;
+}
+
 #all-content {
     background: lightblue;
 }
@@ -93,17 +101,6 @@ body {
   overflow-x: auto;
 }
 
-#buildBoxBarButton {
-  cursor: pointer;
-}
-
-#trash-image {
-  cursor: pointer;
-}
-
-#go-back {
-  cursor: pointer;
-}
 
 #videoDivBigBoy {
     height: 550px;
