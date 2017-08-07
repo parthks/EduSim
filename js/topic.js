@@ -152,9 +152,9 @@ function setBuilderBoxHeading(){
          '<div id="CustomTextButton" class="col-md-1 center">'+
             '<button class="btn btn-secondary" onclick="clickCustomButton(this);">Overview</button>'+
         '</div>'+
-        '<div id="CustomVideoButton" class="col-md-1 center">'+
-            '<button class="btn btn-secondary" onclick="clickCustomButton(this);">Video</button>'+
-        '</div>'+
+        // '<div id="CustomVideoButton" class="col-md-1 center">'+
+        //     '<button class="btn btn-secondary" onclick="clickCustomButton(this);">Video</button>'+
+        // '</div>'+
 
          '<div id="CustomAppButton" class="col-md-2 center">' +
             '<button class="btn btn-secondary" onclick="clickCustomButton(this);">Real World Scenario</button>' +
@@ -173,7 +173,7 @@ function setBuilderBoxHeading(){
         '</div>' +
 
 
-        '<div id="CustomExtraSpace" class="col-md-1 center"></div>'+
+        '<div id="CustomExtraSpace" class="col-md-2 center"></div>'+
 
             
 
@@ -295,7 +295,7 @@ function CustomCloseBox(ele) {
     var bigBoy = $(ele).parent().parent().parent();
     bigBoy.attrchange('remove');
     console.log('deleteee  '+bigBoy.attr('id'));
-    deleteBox(unitTitle, bigBoy.attr('id'));
+    deleteLayoutBox(unitTitle, bigBoy.attr('id'));
     console.log('#'+bigBoy.attr('id')+'CustomButton');
     $('#'+bigBoy.attr('id')+'CustomButton').removeClass("active");
     bigBoy.remove();
@@ -390,11 +390,12 @@ function customButtonImageListeners(){
 
 function addNewBox(){
   var id = addBox(unitTitle);
-  makeBigBoy(id);
+  makeNewBigBoy(id);
+  makeBoxEditable(id);
   
 }
 
-function makeBigBoy(id){
+function makeNewBigBoy(id){
   var html = '<div id="'+id+'" onclick="sendontop(this);" class="big-boy ui-widget-content">'+
   '<div class="box">' +
   '<div class = "ui-widget-header">'+
@@ -413,17 +414,20 @@ function makeBigBoy(id){
  
   saveLayoutListiner('#'+id);
 
+  var left = getRandomInt(0, 1100);
+  var top = getRandomInt(0, 350);
+  var width = getRandomInt(500, 600);
+  var height = getRandomInt(300, 500);
+
   $("#"+id).css('position','absolute');
-  $("#"+id).css('width',500+'px');
-  $("#"+id).css('height',300+'px');
-  $("#"+id).css('left',400+'px');
-  $("#"+id).css('top',100+'px');
+  $("#"+id).css('width',width+'px');
+  $("#"+id).css('height',height+'px');
+  $("#"+id).css('left',left+'px');
+  $("#"+id).css('top',top+'px');
   $("#"+id).css('z-index',++my_index);
 
   $("#"+id).resizable().draggable();
 
-
-  makeBoxEditable(id);
 
   $('#'+id+'TrashBox').click(function(ele){
     ele = ele.target;
@@ -516,6 +520,31 @@ function makeBoxEditable(id){
 
 
 
+function PutCustomBox(id, style=false){
+  if ($('#'+id).length != 0) {return;}
+
+  getMyBox(unitTitle, id, function(result){
+    var title = result['title'];
+    var content = result['content'];
+    var link = result['link'];
+    makeNewBigBoy(id);
+    $('#'+id+'Title').text(title);
+    $('#'+id+'Content').text(content);
+
+    if (link != '0') {
+      $('#'+id+'Content').append('<iframe id="'+id+'VideoIFrame" width="560" height="315" src="'+link+'" frameborder="0" allowfullscreen></iframe>');
+      $('#'+id+'Content').after('<p>'+link+'</p>');
+    }
+
+    $('#'+id+'CustomButton').addClass('active');
+
+    if (style) {
+       $('#'+id).attr('style',style);
+    }
+
+  });
+}
+
 
 
 
@@ -590,7 +619,9 @@ function getMyLayout(){
             $('#'+currentKey).attr('style',result[currentKey]);
             break;
 
-         
+         default: 
+            PutCustomBox(currentKey, result[currentKey]); 
+            break;
           
 
           }
@@ -627,6 +658,7 @@ function getMyLayout(){
 
 function customGoBackButton() {
   $('#go-back').click(function(){
+    stopGetting(unitTitle);
     $('#customCurrentTitle').remove();
     $('#allOptions').remove();
     $('#goBack').remove();
@@ -634,9 +666,9 @@ function customGoBackButton() {
             '<button class="btn btn-secondary" onclick="clickCustomButton(this);">Overview</button>' +
         '</div>' +
 
-        '<div id="CustomVideoButton" class="col-md-1 center">' +
-            '<button class="btn btn-secondary" onclick="clickCustomButton(this);">Video</button>' +
-        '</div>' +
+        // '<div id="CustomVideoButton" class="col-md-1 center">' +
+        //     '<button class="btn btn-secondary" onclick="clickCustomButton(this);">Video</button>' +
+        // '</div>' +
         
         '<div id="CustomAppButton" class="col-md-2 center">' +
             '<button class="btn btn-secondary" onclick="clickCustomButton(this);">Real World Scenario</button>' +
@@ -655,7 +687,7 @@ function customGoBackButton() {
         '</div>' +
 
 
-        '<div id="CustomExtraSpace" class="col-md-1 center"></div>';
+        '<div id="CustomExtraSpace" class="col-md-2 center"></div>';
 
     $('#CustomBoxesTitle').after(html);
     $('#CBTitle').text('Box Categories: ');
@@ -682,13 +714,18 @@ function clickCustomButton(ele){
   var textNames = ['Summary Text', 'Review Text', 'My Notes'];
   var videoNames = ['Video'];
   var appNames = ['Application', 'Calculator', 'Connections', 'Extra Info'];
+  var myBoxes = 'Getting';
+  
   var names;
-
+  var go = false;
   switch ($(ele).text()) {
     case 'Overview': names = textNames; break;
-    case 'Video': names = videoNames; break;
+    //case 'Video': names = videoNames; break;
     case 'Real World Scenario': names = appNames; break;
+    default: go = true;
   }
+  
+ 
   
 
   var html = '<div id="customCurrentTitle" class="col-md-3 left">' +
@@ -696,16 +733,6 @@ function clickCustomButton(ele){
          '</div>'+
          '<div id="allOptions" class="col-md-4 center">'+
         '<div id="customOptions">';
-
- 
-  for (var i = 0; i < names.length; i++) {
-    var id = NameToID[names[i]];
-    var buttonID = id+"CustomButton";
-    var active = '';
-    if ($('#'+id).length != 0) {active = 'active';}
-    html += '<button id="'+buttonID+'" onclick="CustomBoxButton(this);" class="btn btn-secondary custom '+active+'">'+names[i]+'</button>'+
-            '&nbsp';
-  }
 
   html += '</div></div>'+
         '<div id="goBack" class="col-md-1 center">'+
@@ -724,12 +751,31 @@ function clickCustomButton(ele){
 
   $('#CustomBoxesTitle').after(html);
 
-  for (var i = 0; i < names.length; i++) {
-    var buttonID = NameToID[names[i]]+"CustomButton";
-    $(ele).attr("id",buttonID);
-  }
+  
   $('#CBTitle').text('Boxes to choose from: ');
   customGoBackButton();
+
+
+
+  if (go) {populateCustomBarWith($(ele).text()); return;}
+  
+
+
+  var html = '';
+  for (var i = 0; i < names.length; i++) {
+    var id = NameToID[names[i]];
+    var buttonID = id+"CustomButton";
+    var active = '';
+    if ($('#'+id).length != 0) {active = 'active';}
+    html += '<button id="'+buttonID+'" onclick="CustomBoxButton(this);" class="btn btn-secondary custom '+active+'">'+names[i]+'</button>'+
+            '&nbsp';
+  }
+  $('#customOptions').append(html);
+
+  // for (var i = 0; i < names.length; i++) {
+  //   var buttonID = NameToID[names[i]]+"CustomButton";
+  //   $(ele).attr("id",buttonID);
+  // }
 
   //make it scroll
   $("#customOptions").wrapInner("<table cellspacing='30'><tr>");
@@ -822,6 +868,50 @@ function CustomNotesButton(){
     saveLayoutListiner('#noteBigBoy')
   }
 }
+
+
+
+
+
+
+function populateCustomBarWith(text){
+
+  if (text == "My Boxes") {
+    getMyBoxes(unitTitle, function(result){
+      if (!result) {$('#customOptions').empty();return;}
+      if ($('#customCurrentTitle').find("h3").text() != "My Boxes: ") {console.log('Oh dear!'); return;}
+      $('#customOptions').empty();
+      var html = '';
+      Object.keys(result).forEach(function(currentKey) {
+        var active = '';
+        console.log(currentKey);
+        if ($('#'+currentKey).length != 0) {active = 'active';}
+        html += '<button id="'+currentKey+'CustomButton" onclick="PutCustomBox('+"'"+currentKey+"'"+');" class="btn btn-secondary custom '+active+'">'+result[currentKey]['title']+'</button>'+
+            '&nbsp';
+      });
+      $('#customOptions').append(html);
+      doStuff()
+  
+    });
+  }
+    
+
+
+
+  function doStuff(){
+    //make it scroll
+    $("#customOptions").wrapInner("<table cellspacing='30'><tr>");
+    $(".custom").wrap("<td></td>");
+    $("customOptions").mousewheel(function(event, delta) {
+      this.scrollLeft -= (delta * 30);
+      event.preventDefault();
+    });
+  }
+    
+}
+ 
+
+
 
 
 
@@ -1454,20 +1544,8 @@ function calculator() {
     // clearing the input on press of clear
     clear.addEventListener("click", function() {
         input.innerHTML = "";
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    });
+}
 
 
 
@@ -1545,8 +1623,4 @@ function handler(event) {
 }
 
 })(jQuery);
-
-    });
-}
-
 

@@ -208,6 +208,14 @@ function deleteBox(layoutID, boxID){
  
 }
 
+function deleteLayoutBox(layoutID, boxID){
+  var uid = canContinueWithID();
+  if(!uid){return;}
+
+  database.ref('users/'+uid+'/layouts/'+layoutID+'/'+boxID).remove();
+ 
+}
+
 function addBox(layoutID){
   var uid = canContinueWithID();
   if(!uid){return;}
@@ -215,7 +223,9 @@ function addBox(layoutID){
   var id = database.ref().child('Feedback').push().key;
   database.ref('users/'+uid+'/boxes/'+layoutID+'/'+id).set({
     title: 'A New Box',
-    key: id
+    key: id,
+    link: '0',
+    content: 'A new box! Edit it!'
   });
   return id;
 
@@ -229,6 +239,31 @@ function setInfoOfBox(layoutID, boxID, title, content, link){
   database.ref('users/'+uid+'/boxes/'+layoutID+'/'+boxID+'/content').set(content);
   database.ref('users/'+uid+'/boxes/'+layoutID+'/'+boxID+'/link').set(link);
 
+}
+
+function getMyBoxes(layoutID, callback){
+  var uid = canContinueWithID();
+  if(!uid){return;}
+
+  database.ref('users/'+uid+'/boxes/'+layoutID).on('value', function(snapshot) {
+    callback(snapshot.val());
+  });
+}
+
+function stopGetting(layoutID) {
+  var uid = canContinueWithID();
+  if(!uid){return;}
+
+  database.ref('users/'+uid+'/boxes/'+layoutID).off();
+}
+
+function getMyBox(layoutID, boxID, callback){
+  var uid = canContinueWithID();
+  if(!uid){return;}
+
+  database.ref('users/'+uid+'/boxes/'+layoutID + '/' + boxID).once('value').then(function(snapshot) {
+    callback(snapshot.val());
+  });
 }
 
 
