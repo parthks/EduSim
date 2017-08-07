@@ -411,6 +411,7 @@ function makeBigBoy(id){
   $('#content').append(html);
 
  
+  saveLayoutListiner('#'+id);
 
   $("#"+id).css('position','absolute');
   $("#"+id).css('width',500+'px');
@@ -420,6 +421,7 @@ function makeBigBoy(id){
   $("#"+id).css('z-index',++my_index);
 
   $("#"+id).resizable().draggable();
+
 
   makeBoxEditable(id);
 
@@ -443,22 +445,70 @@ function makeBoxEditable(id){
   if (document.getElementById(id+"Title").contentEditable == 'true') {return;}
 
   $("#"+id).resizable("disable").draggable("disable");
+  $('#'+id).attrchange('disconnect');
   document.getElementById(id+"Title").contentEditable = "true";
   document.getElementById(id+"Content").contentEditable = "true";
+
+
   $('#'+id+'Content').parent().append('<div class="center">'+
-    '<button id="'+id+'SaveEditBox" class="btn btn-primary">Save</button>'+
+    '<button id="'+id+'InsertLink" class="btn btn-secondary">Put a Video in this box!</button>'+
+    '&nbsp&nbsp&nbsp<button id="'+id+'SaveEditBox" class="btn btn-primary">Save</button>'+
     '</div>');
+
+
+  if ($('#'+id+'VideoLink').length != 0) {
+    $('#'+id+'InsertLink').text('Delete Video');
+  }
+
+
+  $('#'+id+'InsertLink').click(function(ele) {
+    console.log('hiiiiii');
+    ele = ele.target;
+    ele = $(ele).parent().parent().parent();
+    var id = ele.attr('id');
+    if ($('#'+id+'InsertLink').text() == 'Put a Video in this box!'){
+      $('#'+id+'SaveEditBox').parent().prepend('<input id="VideoLinkByUser" style="width: 80%;" placeholder="Insert Youtube embeded link here"><br class="tempBreak"><br class="tempBreak">');
+      $('#'+id+'InsertLink').text("Done Inserting Link");
+
+    } else if ($('#'+id+'InsertLink').text() == 'Done Inserting Link'){
+      var link = $('#VideoLinkByUser').val();
+      link = link.replace('watch?v=', 'embed/');
+      //$('#'+id+'Content').append('<span>'+link+'</span>');
+      $('#'+id+'SaveEditBox').parent().before('<p id='+id+"VideoLink"+'>'+link+'</p>');
+      $('#'+id+'Content').append('<iframe id="'+id+'VideoIFrame" width="560" height="315" src="'+link+'" frameborder="0" allowfullscreen></iframe>');
+      $('#'+id+'InsertLink').text("Delete Video");
+      $('#VideoLinkByUser').remove();
+      $('.tempBreak').remove();
+
+    } else if ($('#'+id+'InsertLink').text() == 'Delete Video') {
+      $('#'+id+'VideoIFrame').remove();
+      $('#'+id+'VideoLink').remove();
+      $('#'+id+'InsertLink').text("Put a Video in this box!");
+
+    }
+  
+    
+  });
+
+
   $('#'+id+'SaveEditBox').click(function(ele){
     console.log(ele.target);
     ele = ele.target;
+    var link = '0';
     //console.log($(ele).parent().parent().parent().attr('id'));
     ele = $(ele).parent().parent().parent();
     var id = ele.attr('id');
-    setInfoOfBox(unitTitle, id, $('#'+id+"Title").text(), $('#'+id+"Content").text());
+
+    if ($('#'+id+'VideoLink').length != 0) {
+      link = $('#'+id+'VideoLink').text();
+    }
+
+    setInfoOfBox(unitTitle, id, $('#'+id+"Title").text(), $('#'+id+"Content").text(), link);
     document.getElementById(id+"Title").contentEditable = "false";
     document.getElementById(id+"Content").contentEditable = "false";
     $('#'+id+'SaveEditBox').parent().remove();
     $("#"+id).resizable("enable").draggable("enable");
+    $('#'+id).attrchange('reconnect');
 
   });
 

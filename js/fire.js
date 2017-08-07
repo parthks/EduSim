@@ -202,8 +202,9 @@ function getLayout(layoutID, callback){
 function deleteBox(layoutID, boxID){
   var uid = canContinueWithID();
   if(!uid){return;}
-  
+
   database.ref('users/'+uid+'/boxes/'+layoutID+'/'+boxID).remove();
+  database.ref('users/'+uid+'/layouts/'+layoutID+'/'+boxID).remove();
  
 }
 
@@ -220,12 +221,13 @@ function addBox(layoutID){
 
 }
 
-function setInfoOfBox(layoutID, boxID, title, content){
+function setInfoOfBox(layoutID, boxID, title, content, link){
   var uid = canContinueWithID();
   if(!uid){return;}
 
   database.ref('users/'+uid+'/boxes/'+layoutID+'/'+boxID+'/title').set(title);
   database.ref('users/'+uid+'/boxes/'+layoutID+'/'+boxID+'/content').set(content);
+  database.ref('users/'+uid+'/boxes/'+layoutID+'/'+boxID+'/link').set(link);
 
 }
 
