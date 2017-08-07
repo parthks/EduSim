@@ -178,7 +178,8 @@ function setBuilderBoxHeading(){
             
 
         '<div class="col-md-2 right">'+
-            '<img id="add-image" class="pointer" style="width: 25px; padding-top: 2px;" src="../external/images/add.png"  alt="add box">'+
+            '<img id="world-image" class="pointer" style="width: 25px; padding-top: 2px;" src="../external/images/world-image.png"  alt="to store">'+
+            '&nbsp &nbsp &nbsp<img id="add-image" class="pointer" style="width: 25px; padding-top: 2px;" src="../external/images/add.png"  alt="add box">'+
             '&nbsp &nbsp &nbsp<img id="trash-image" class="pointer" style="width: 35px; padding-top: 2px;" src="../external/trash-icon.png"  alt="trash layout">'+
         '&nbsp </div>'+
 
@@ -372,6 +373,7 @@ function saveLayoutListiner(id){
 
 }
 
+
 function customButtonImageListeners(){
   $('#trash-image').click(function(){
     $('#content').empty();
@@ -381,6 +383,13 @@ function customButtonImageListeners(){
 
   $('#add-image').click(function(){
     addNewBox();
+  });
+
+  $('#world-image').click(function(){
+    localStorage.setItem('storeLocation', unitTitle);
+    console.log(localStorage.getItem('storeLocation'));
+    alert('store!');
+    window.top.location = '/store';
   });
 }
 
@@ -402,16 +411,17 @@ function makeNewBigBoy(id){
   '<h3 id="'+id+'Title"> Click here to edit Title! </h3>' +
   '<button onclick="CustomCloseBox(this)" class="close-button-right">X</button>'+
   '<button onclick="makeBoxEditable('+"'"+id+"'"+')" class="edit-button">E</button>'+
-  '<button onclick="shareBox('+"'"+id+"'"+')" class="share-button">S</button>'+
+  '<button onclick="shareToStore('+"'"+unitTitle+"'"+", '"+id+"'"+')" class="share-button">S</button>'+
   '<img id="'+id+'TrashBox" class="pointer trashBox" src="../external/trash-icon.png"  alt="trash box">'+
   '</div>'+
-  '<div id="'+id+'Content">' +
-  '<br><p>Click here to edit the text!</p><br>'+
-  '</div><br>'+
+  '<textarea id="'+id+'Content">' +
+  'Click here to edit the text!'+
+  '</textarea><br>'+
   '</div></div>';
   $('#content').append(html);
 
- 
+ $("#"+id+'Content').prop('disabled', true);
+
   saveLayoutListiner('#'+id);
 
   var left = getRandomInt(0, 1100);
@@ -451,7 +461,8 @@ function makeBoxEditable(id){
   $("#"+id).resizable("disable").draggable("disable");
   $('#'+id).attrchange('disconnect');
   document.getElementById(id+"Title").contentEditable = "true";
-  document.getElementById(id+"Content").contentEditable = "true";
+  //document.getElementById(id+"Content").contentEditable = "true";
+  $("#"+id+'Content').prop('disabled', false);
 
 
   $('#'+id+'Content').parent().append('<div class="center">'+
@@ -479,7 +490,7 @@ function makeBoxEditable(id){
       link = link.replace('watch?v=', 'embed/');
       //$('#'+id+'Content').append('<span>'+link+'</span>');
       $('#'+id+'SaveEditBox').parent().before('<p id='+id+"VideoLink"+'>'+link+'</p>');
-      $('#'+id+'Content').append('<iframe id="'+id+'VideoIFrame" width="560" height="315" src="'+link+'" frameborder="0" allowfullscreen></iframe>');
+      $('#'+id+'Content').after('<iframe id="'+id+'VideoIFrame" width="560" height="315" src="'+link+'" frameborder="0" allowfullscreen></iframe>');
       $('#'+id+'InsertLink').text("Delete Video");
       $('#VideoLinkByUser').remove();
       $('.tempBreak').remove();
@@ -507,9 +518,10 @@ function makeBoxEditable(id){
       link = $('#'+id+'VideoLink').text();
     }
 
-    setInfoOfBox(unitTitle, id, $('#'+id+"Title").text(), $('#'+id+"Content").text(), link);
+    setInfoOfBox('boxes', unitTitle, id, $('#'+id+"Title").text(), $('#'+id+"Content").val(), link);
     document.getElementById(id+"Title").contentEditable = "false";
-    document.getElementById(id+"Content").contentEditable = "false";
+    //document.getElementById(id+"Content").contentEditable = "false";
+    $("#"+id+'Content').prop('disabled', true);
     $('#'+id+'SaveEditBox').parent().remove();
     $("#"+id).resizable("enable").draggable("enable");
     $('#'+id).attrchange('reconnect');
@@ -523,7 +535,7 @@ function makeBoxEditable(id){
 function PutCustomBox(id, style=false){
   if ($('#'+id).length != 0) {return;}
 
-  getMyBox(unitTitle, id, function(result){
+  getMyBox('boxes', unitTitle, id, function(result){
     var title = result['title'];
     var content = result['content'];
     var link = result['link'];
@@ -532,14 +544,18 @@ function PutCustomBox(id, style=false){
     $('#'+id+'Content').text(content);
 
     if (link != '0') {
-      $('#'+id+'Content').append('<iframe id="'+id+'VideoIFrame" width="560" height="315" src="'+link+'" frameborder="0" allowfullscreen></iframe>');
-      $('#'+id+'Content').after('<p>'+link+'</p>');
+      $('#'+id+'Content').after('<iframe id="'+id+'VideoIFrame" width="560" height="315" src="'+link+'" frameborder="0" allowfullscreen></iframe>');
+      $('#'+id+'VideoIFrame').after('<p id="'+id+'VideoLink">'+link+'</p>');
     }
 
     $('#'+id+'CustomButton').addClass('active');
 
     if (style) {
        $('#'+id).attr('style',style);
+    }
+
+    if(parseInt($('#'+id).css("z-index")) >= my_index){
+          my_index = parseInt($('#'+id).css("z-index"));
     }
 
   });
@@ -711,8 +727,7 @@ function clickCustomButton(ele){
     'Extra Info': 'extrasBigBoy'
   };
 
-  var textNames = ['Summary Text', 'Review Text', 'My Notes'];
-  var videoNames = ['Video'];
+  var textNames = ['Summary Text', 'Review Text', 'My Notes', 'Video'];
   var appNames = ['Application', 'Calculator', 'Connections', 'Extra Info'];
   var myBoxes = 'Getting';
   
@@ -720,7 +735,6 @@ function clickCustomButton(ele){
   var go = false;
   switch ($(ele).text()) {
     case 'Overview': names = textNames; break;
-    //case 'Video': names = videoNames; break;
     case 'Real World Scenario': names = appNames; break;
     default: go = true;
   }
@@ -877,7 +891,7 @@ function CustomNotesButton(){
 function populateCustomBarWith(text){
 
   if (text == "My Boxes") {
-    getMyBoxes(unitTitle, function(result){
+    getMyBoxes('boxes', unitTitle, function(result){
       if (!result) {$('#customOptions').empty();return;}
       if ($('#customCurrentTitle').find("h3").text() != "My Boxes: ") {console.log('Oh dear!'); return;}
       $('#customOptions').empty();

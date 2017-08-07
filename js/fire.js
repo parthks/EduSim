@@ -231,21 +231,21 @@ function addBox(layoutID){
 
 }
 
-function setInfoOfBox(layoutID, boxID, title, content, link){
+function setInfoOfBox(cat, layoutID, boxID, title, content, link){
   var uid = canContinueWithID();
   if(!uid){return;}
 
-  database.ref('users/'+uid+'/boxes/'+layoutID+'/'+boxID+'/title').set(title);
-  database.ref('users/'+uid+'/boxes/'+layoutID+'/'+boxID+'/content').set(content);
-  database.ref('users/'+uid+'/boxes/'+layoutID+'/'+boxID+'/link').set(link);
+  database.ref('users/'+uid+'/'+cat+'/'+layoutID+'/'+boxID+'/title').set(title);
+  database.ref('users/'+uid+'/'+cat+'/'+layoutID+'/'+boxID+'/content').set(content);
+  database.ref('users/'+uid+'/'+cat+'/'+layoutID+'/'+boxID+'/link').set(link);
 
 }
 
-function getMyBoxes(layoutID, callback){
+function getMyBoxes(cat, layoutID, callback){
   var uid = canContinueWithID();
   if(!uid){return;}
 
-  database.ref('users/'+uid+'/boxes/'+layoutID).on('value', function(snapshot) {
+  database.ref('users/'+uid+'/'+cat+'/'+layoutID).on('value', function(snapshot) {
     callback(snapshot.val());
   });
 }
@@ -255,13 +255,14 @@ function stopGetting(layoutID) {
   if(!uid){return;}
 
   database.ref('users/'+uid+'/boxes/'+layoutID).off();
+  database.ref('users/'+uid+'/downloaded/'+layoutID).off();
 }
 
-function getMyBox(layoutID, boxID, callback){
+function getMyBox(cat, layoutID, boxID, callback){
   var uid = canContinueWithID();
   if(!uid){return;}
 
-  database.ref('users/'+uid+'/boxes/'+layoutID + '/' + boxID).once('value').then(function(snapshot) {
+  database.ref('users/'+uid+'/'+cat+'/'+layoutID + '/' + boxID).once('value').then(function(snapshot) {
     callback(snapshot.val());
   });
 }
@@ -274,6 +275,31 @@ function deleteFullLayout(layoutID){
   database.ref('users/'+uid+'/layouts/'+layoutID).remove();
   
 }
+
+
+
+
+
+
+
+
+function shareToStore(layoutID, boxID){
+  var uid = canContinueWithID();
+  if(!uid){return;}
+
+  database.ref('users/'+uid+'/boxes/'+layoutID+'/'+boxID).once('value', function(snapshot)  {
+    if (!snapshot.val()) {return;}
+    var id = database.ref('Store/'+'/boxes/'+layoutID).push().key;
+    database.ref('Store/'+'/boxes/'+layoutID+'/'+id).set(snapshot.val());
+    database.ref('Store/'+'/boxes/'+layoutID+'/'+id+'/key').remove();
+    database.ref('Store/'+'/boxes/'+layoutID+'/'+id+'/uid').set(uid);
+    
+  });
+
+}
+
+
+
 
 
 
