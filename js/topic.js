@@ -378,7 +378,107 @@ function customButtonImageListeners(){
     deleteFullLayout(unitTitle);
     //location.reload();
   });
+
+  $('#add-image').click(function(){
+    addNewBox();
+  });
 }
+
+
+
+
+
+function addNewBox(){
+  var id = addBox(unitTitle);
+  makeBigBoy(id);
+  
+}
+
+function makeBigBoy(id){
+  var html = '<div id="'+id+'" onclick="sendontop(this);" class="big-boy ui-widget-content">'+
+  '<div class="box">' +
+  '<div class = "ui-widget-header">'+
+  '<h3 id="'+id+'Title"> Click here to edit Title! </h3>' +
+  '<button onclick="CustomCloseBox(this)" class="close-button-right">X</button>'+
+  '<button onclick="makeBoxEditable('+"'"+id+"'"+')" class="edit-button">E</button>'+
+  '<button onclick="shareBox('+"'"+id+"'"+')" class="share-button">S</button>'+
+  '<img id="'+id+'TrashBox" class="pointer trashBox" src="../external/trash-icon.png"  alt="trash box">'+
+  '</div>'+
+  '<div id="'+id+'Content">' +
+  '<br><p>Click here to edit the text!</p><br>'+
+  '</div><br>'+
+  '</div></div>';
+  $('#content').append(html);
+
+ 
+
+  $("#"+id).css('position','absolute');
+  $("#"+id).css('width',500+'px');
+  $("#"+id).css('height',300+'px');
+  $("#"+id).css('left',400+'px');
+  $("#"+id).css('top',100+'px');
+  $("#"+id).css('z-index',++my_index);
+
+  $("#"+id).resizable().draggable();
+
+  makeBoxEditable(id);
+
+  $('#'+id+'TrashBox').click(function(ele){
+    ele = ele.target;
+    ele = $(ele).parent().parent().parent();
+    var id = ele.attr('id');
+    console.log('boomm what -- '+id);
+    deleteBox(unitTitle, id);
+    ele.remove();
+
+
+  });
+
+
+
+}
+
+function makeBoxEditable(id){
+
+  if (document.getElementById(id+"Title").contentEditable == 'true') {return;}
+
+  $("#"+id).resizable("disable").draggable("disable");
+  document.getElementById(id+"Title").contentEditable = "true";
+  document.getElementById(id+"Content").contentEditable = "true";
+  $('#'+id+'Content').parent().append('<div class="center">'+
+    '<button id="'+id+'SaveEditBox" class="btn btn-primary">Save</button>'+
+    '</div>');
+  $('#'+id+'SaveEditBox').click(function(ele){
+    console.log(ele.target);
+    ele = ele.target;
+    //console.log($(ele).parent().parent().parent().attr('id'));
+    ele = $(ele).parent().parent().parent();
+    var id = ele.attr('id');
+    setInfoOfBox(unitTitle, id, $('#'+id+"Title").text(), $('#'+id+"Content").text());
+    document.getElementById(id+"Title").contentEditable = "false";
+    document.getElementById(id+"Content").contentEditable = "false";
+    $('#'+id+'SaveEditBox').parent().remove();
+    $("#"+id).resizable("enable").draggable("enable");
+
+  });
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function getMyLayout(){
   getLayout(unitTitle, function(result){

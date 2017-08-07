@@ -202,22 +202,31 @@ function getLayout(layoutID, callback){
 function deleteBox(layoutID, boxID){
   var uid = canContinueWithID();
   if(!uid){return;}
-
-  database.ref('users/'+uid+'/layouts/'+layoutID+'/'+boxID).remove();
+  
+  database.ref('users/'+uid+'/boxes/'+layoutID+'/'+boxID).remove();
  
 }
 
-function addBox(layoutID, tit, cat, cunt){
+function addBox(layoutID){
   var uid = canContinueWithID();
   if(!uid){return;}
 
   var id = database.ref().child('Feedback').push().key;
   database.ref('users/'+uid+'/boxes/'+layoutID+'/'+id).set({
-    title: tit,
-    category: cat,
-    content: cunt,
+    title: 'A New Box',
     key: id
   });
+  return id;
+
+}
+
+function setInfoOfBox(layoutID, boxID, title, content){
+  var uid = canContinueWithID();
+  if(!uid){return;}
+
+  database.ref('users/'+uid+'/boxes/'+layoutID+'/'+boxID+'/title').set(title);
+  database.ref('users/'+uid+'/boxes/'+layoutID+'/'+boxID+'/content').set(content);
+
 }
 
 

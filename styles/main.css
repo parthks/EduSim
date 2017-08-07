@@ -22,12 +22,6 @@
     text-align: center;
 }
 
-.close-button-right {
-    text-align: right;
-    position: absolute;
-    right: 0;
-}
-
 .right {
     text-align: right;
 }
@@ -56,10 +50,38 @@
 .close-button-right {
   color: white;
   background-color: darkred;
+  position: absolute;
+  left: 0;
+}
+
+.edit-button {
+  width: 28px; 
+  height: 33px; 
+  padding-top: 3px;
+  position: absolute;
+  background-color: yellow;
+  left: 29px;
+}
+
+.share-button {
+  width: 28px; 
+  height: 33px; 
+  padding-top: 3px;
+  position: absolute;
+  background-color: green;
+  left: 60px;
 }
 
 #content {
     position: absolute;
+}
+
+.trashBox {
+  width: 28px; 
+  height: 35px; 
+  top: -2px;
+  position: absolute;
+  right: -2px;
 }
 
 button {
