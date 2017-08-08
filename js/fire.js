@@ -20,6 +20,8 @@ var database = firebase.database();
 
 
 function canContinueWithID(){
+  //USE THIS ->> firebase.auth().currentUser.uid;
+
   //var user = firebase.auth().currentUser; I LIKE THIS BETTER LOL
 //   if (user) {
 //   // User is signed in.
@@ -292,11 +294,159 @@ function shareToStore(layoutID, boxID){
     var id = database.ref('Store/'+'/boxes/'+layoutID).push().key;
     database.ref('Store/'+'/boxes/'+layoutID+'/'+id).set(snapshot.val());
     database.ref('Store/'+'/boxes/'+layoutID+'/'+id+'/key').remove();
-    database.ref('Store/'+'/boxes/'+layoutID+'/'+id+'/uid').set(uid);
+    database.ref('Store/'+'/boxes/'+layoutID+'/'+id).update({
+      uid: uid,
+      points: 0,
+      downed: 0
+    });
+    //database.ref('Store/hasVotedOn/'+layoutID+'/'+boxID+'/'+uid).set('no');
     
   });
 
 }
+
+function getStoreBoxes(layoutID, callback) {
+  var uid = canContinueWithID();
+  if(!uid){return;}
+
+  var ref = firebase.database().ref('Store/boxes/'+layoutID).orderByChild('points');
+
+  //database.ref('Store/boxes/'+layoutID).
+  ref.on('child_added', function(snapshot)  {
+    console.log(snapshot.val());
+    callback(snapshot.key, snapshot.val());
+  });
+}
+
+function reportStoreBox(layoutID, boxID) {
+  var uid = canContinueWithID();
+  if(!uid){return;}
+
+  database.ref('Store/'+'/report/'+layoutID+'/'+boxID).update({
+    [uid]: '<- this guy reported it!' 
+  });
+
+}
+
+
+function voteStoreButton(layoutID, boxID, type) {
+  var uid = canContinueWithID();
+  if(!uid){return;}
+
+
+  database.ref('Store/hasVotedOn/'+layoutID+'/'+boxID+'/'+uid).once('value', function(snapshot) {
+    var isType = snapshot.val();
+    var change = 0;
+
+    if (type == 'up') {
+      if (isType == 'down') {type='normal'}
+      change = 1;
+    }
+    else if (type == 'down') {
+      if (isType == 'up') {type='normal'}
+      change = -1;
+    }
+
+    database.ref('Store/boxes/'+layoutID+'/'+boxID+'/'+'points').once('value', function(snapshot) {
+      var num = snapshot.val();
+      num += change;
+      database.ref('Store/boxes/'+layoutID+'/'+boxID+'/'+'points').set(num);
+    });
+
+
+    database.ref('Store/hasVotedOn/'+layoutID+'/'+boxID+'/'+uid).set(type);
+
+  });
+  
+  
+}
+
+
+
+function getVoteStatus(layoutID, boxID, callback) {
+  var uid = canContinueWithID();
+  if(!uid){return;}
+
+  database.ref('Store/hasVotedOn/'+layoutID+'/'+boxID+'/'+uid).on('value', function(snapshot) {
+    callback(snapshot.val());
+  });
+}
+
+
+
+function saveTheBoxFromStore(layoutID, boxID) {
+  var uid = canContinueWithID();
+  if(!uid){return;}
+
+  //save box for user
+  database.ref('Store/boxes/'+layoutID+'/'+boxID).once('value', function(snapshot)  {
+    if (!snapshot.val()) {return;}
+    var id = database.ref('users/downed/'+layoutID).push().key;
+    database.ref('users/'+uid+'/downed/'+layoutID+'/'+id).set(snapshot.val());
+    database.ref('users/'+uid+'/downed/'+layoutID+'/'+id+'/uid').remove();
+    database.ref('users/'+uid+'/downed/'+layoutID+'/'+id+'/downed').remove();
+    database.ref('users/'+uid+'/downed/'+layoutID+'/'+id+'/points').remove();
+    database.ref('users/'+uid+'/downed/'+layoutID+'/'+id+'/key').set(id);
+
+  });
+
+  //user got box
+  database.ref('Store/downedBoxesByUser/'+layoutID+'/'+boxID+'/'+uid).set('bamm!, what'); 
+
+  //increment download counter
+  database.ref('Store/boxes/'+layoutID+'/'+boxID+'/'+'downed').once('value', function(snapshot) {
+    var num = snapshot.val();
+    num += 1;
+    database.ref('Store/boxes/'+layoutID+'/'+boxID+'/'+'downed').set(num);
+  });
+
+}
+
+
+function personalDownedStoreBox(layoutID, boxID, callback) {
+  var uid = canContinueWithID();
+  if(!uid){return;}
+
+  database.ref('Store/downedBoxesByUser/'+layoutID+'/'+boxID+'/'+uid).on('value', function(snapshot) {
+    if (!snapshot.val()) {return}
+    if (snapshot.val() == 'bamm!, what') {
+      callback(true);
+    } else {
+      callback(false);
+    }
+    
+  });
+}
+
+
+
+function getNameOfID(id, callback) {
+  var uid = canContinueWithID();
+  if(!uid){return;}
+
+  database.ref('users/'+id+'/name').once('value', function(snapshot) {
+    callback(snapshot.val());
+  });
+}
+
+function pointsStoreBoxListener(layoutID, boxID, callback) {
+  var uid = canContinueWithID();
+  if(!uid){return;}
+
+  database.ref('Store/boxes/'+layoutID+'/'+boxID+'/points').on('value', function(snapshot) {
+    callback(snapshot.val());
+  });
+}
+
+function downedStoreBoxListener(layoutID, boxID, callback) {
+  var uid = canContinueWithID();
+  if(!uid){return;}
+
+  database.ref('Store/boxes/'+layoutID+'/'+boxID+'/downed').on('value', function(snapshot) {
+    callback(snapshot.val());
+  });
+}
+
 
 
 

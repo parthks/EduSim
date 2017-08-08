@@ -387,7 +387,7 @@ function customButtonImageListeners(){
 
   $('#world-image').click(function(){
     localStorage.setItem('storeLocation', unitTitle);
-    console.log(localStorage.getItem('storeLocation'));
+    console.log(localStorage.getItem('storeLocation')); //so u cn com bk
     alert('store!');
     window.top.location = '/store';
   });

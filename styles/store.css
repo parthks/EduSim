@@ -1,0 +1,47 @@
+.outer-social-div{
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+}
+
+.box-info{
+    padding-top: 50px;
+    padding-left: 250px; 
+
+}
+
+.big-boy{
+    ouline: 1px solid blue;
+    position: relative;
+    width: 500px;
+    height: 300px;
+    left: 100px;
+}
+
+.points {
+    position: relative;
+    left: -95px;
+    top: -70px;
+}
+
+.upvote {
+    left: -100px;
+    position: relative;
+    top: -155px;
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg);
+}
+
+.downvote {
+    position: relative;
+    left: -125px;
+    top: -75px;
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg);
+}
+
+.disable {
+    cursor: not-allowed;
+}
+
+
