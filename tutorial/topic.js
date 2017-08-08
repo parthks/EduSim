@@ -115,15 +115,16 @@ function tutorialContent(){
     notFirstTime();
     html = '<br><p>You can build your layouts for every unit and they will automatically be saved!</p>';
     html += '<p>To move between units click the "Prev Unit" and "Next Unit" buttons.</p><br>';
-    html += '<button class="btn btn-primary" onclick="tutorialStep=42;tutorial();">Finish</button>';
+    html += '<button class="btn btn-primary" onclick="tutorialStep=42;tutorial();">What Next?</button>';
   }
 
   if (tutorialStep == 42) {
     html = '<br><p>Now you know how to use this platform!</p>';
     html += '<p>This project is a work in progress. Any and all Feedback is valuable! Simply click the "Give Feedback" button on the top right. Thanks!</p>';
-    html += '<p>Continue on here to build your default layout that will be used as a start for all the units! and explore all the different boxes!</p>';
-    html += '<p>Or click the Home button and start learning!</p><br>';
-    html += '<button class="btn btn-primary" onclick="tutorialStep=420;tutorial();">Close Tutorial</button>';
+    html += '<p>Start you Linear Algebra journey now! and explore the possibilities!</p>';
+    html += '<button class="btn btn-primary" onclick="tutorialStep=420;'+
+    "window.top.location = '/home';"+
+    '">Finish Tutorial</button>';
   }
 
 
@@ -368,7 +369,7 @@ function CustomCloseBox(ele) {
     var bigBoy = $(ele).parent().parent().parent();
     bigBoy.attrchange('remove');
     console.log('deleteee  '+bigBoy.attr('id'));
-    deleteLayout(bigBoy.attr('id'));
+    //deleteLayout(bigBoy.attr('id'));
     bigBoy.remove();
 }
 
@@ -470,7 +471,7 @@ function saveLayoutListiner(id){
         }
         
 
-        saveLayout(event.target.id, event.newValue);
+        //saveLayout(event.target.id, event.newValue);
     }
   }
 });
@@ -480,7 +481,7 @@ function saveLayoutListiner(id){
 function customButtonImageListeners(){
   $('#trash-image').click(function(){
     $('#content').empty();
-    deleteAllLayout();
+    //deleteAllLayout();
     //location.reload();
   });
 }
