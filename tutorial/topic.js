@@ -196,8 +196,15 @@ var selectedAppBox = false;
 //     $("#noteBigBoy").resizable().draggable();
 // }
 
-function Hello_World(){
-  console.log("Hello_World");
+
+function Hello_World() {
+  StartMeUp(function(){
+    Hello_World_Fire();
+  });
+}
+
+function Hello_World_Fire(){
+    console.log("Hello_World");
     setBuilderBoxHeading();
     setRowHeading();
     setFeedbackModal();
@@ -479,7 +486,7 @@ function customButtonImageListeners(){
 }
 
 function getMyLayout(){
-  getLayout(function(result){
+  getLayout('default', function(result){
       console.log('got layout!');
       //console.log($('#all-content').html());
       if ($('#all-content').html() != '') {return;}

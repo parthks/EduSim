@@ -65,11 +65,11 @@ function clickedNode(id) {
         if (showAllApplication == 1) {
             localStorage.setItem("savedGraphAllApps", savedGraph);
 
-            saveGraph($('#graph')[0].innerHTML, 'Apps');
+            //saveGraph($('#graph')[0].innerHTML, 'Apps');
         } else {
             localStorage.setItem("savedGraphNoApps", savedGraph);
 
-            saveGraph($('#graph')[0].innerHTML, 'NoApps');
+            //saveGraph($('#graph')[0].innerHTML, 'NoApps');
         }
         //console.log("saved!");
 

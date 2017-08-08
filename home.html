@@ -38,12 +38,16 @@
     </div>
     
     <script type="text/javascript">
-    function putFeedbackButton(){
-        $('#feedbackArea').empty();
-        $('#feedbackArea').append(
-            '<button class="btn" onclick="feedbackClick()" id="feedbackButton" >FEEDBACK!</button>'
-        );            
-    }
+        function putFeedbackButton(){
+            $('#feedbackArea').empty();
+            $('#feedbackArea').append(
+                '<button class="btn" onclick="feedbackClick()" id="feedbackButton" >FEEDBACK!</button>'
+            );            
+        }
+
+        StartMeUp(function(){
+            console.log('GOT USER IN HOME PAGE');
+        });
 
         function feedbackClick(){
             

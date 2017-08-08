@@ -117,8 +117,15 @@ var modalAccept = '';
 //     $("#noteBigBoy").resizable().draggable();
 // }
 
-function Hello_World(){
-  console.log("Hello_World");
+
+function Hello_World() {
+  StartMeUp(function(){
+    Hello_World_Fire();
+  });
+}
+
+function Hello_World_Fire(){
+    console.log("Hello_World");
     TrackAction('Welcome to unit ' + unitTitle);
     setBuilderBoxHeading();
     setRowHeading();

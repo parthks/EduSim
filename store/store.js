@@ -42,8 +42,13 @@ function GoPrevUnit() {
 
 
 
-
 function Hello_World() {
+    StartMeUp(function(){
+        Hello_World_Fire();
+    });
+}
+
+function Hello_World_Fire() {
 
     $('#all-boxes').append('<div id="loader"></div>');
     storeName = localStorage.getItem('storeLocation');

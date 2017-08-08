@@ -18,31 +18,33 @@ firebase.initializeApp(config);
 
 var database = firebase.database();
 
+var uidOfCurrentUser = '';
+
+
+function StartMeUp(callback){
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      // User is signed in.
+      console.log('GOT USER!!!!!!!!');
+      uidOfCurrentUser = user.uid;
+      callback();
+    } else {
+      // No user is signed in.
+      alert('ERROR - Unknown user! Please Login again!');
+      window.top.location = '/';
+      uidOfCurrentUser = '';
+    }
+  });
+}
+
 
 function canContinueWithID(){
-  //USE THIS ->> firebase.auth().currentUser.uid;
-
-  //var user = firebase.auth().currentUser; I LIKE THIS BETTER LOL
-//   if (user) {
-//   // User is signed in.
-// } else {
-//   // No user is signed in.
-// }
-//OR USE THIS AS A FUNCTION JUST AS IS
-// firebase.auth().onAuthStateChanged(function(user) {
-//   if (user) {
-//     // User is signed in.
-//   } else {
-//     // No user is signed in.
-//   }
-// });
-  var uid = localStorage.getItem("uid");
-  if(uid != ''){
-    return uid;
-  } else {
+  if (uidOfCurrentUser == '') {
     alert('ERROR - Unknown user! Please Login again!');
-    return false;
+  } else {
+    return uidOfCurrentUser;
   }
+  
 }
 
 
@@ -51,6 +53,7 @@ function loginWithGoogle(callback){
       var token = result.credential.accessToken;
       var user = result.user;
       console.log(user, 'user');
+      uidOfCurrentUser = user.uid;
       callback(user, 'user');
       database.ref('users/'+user.uid+'/name').set(user.displayName);
   }).catch(function(error) {
@@ -67,6 +70,7 @@ function needToLogin(callback){
   if (user) {
       console.log('SOMETHIN HAPPENED!');
       console.log(user);
+      uidOfCurrentUser = user.uid;
       callback(user);
       database.ref('users/'+user.uid+'/name').set(user.displayName);
   } else {
@@ -196,13 +200,13 @@ function saveLayout(layoutID, boxID, style){
   
 }
 
-function getLayout(layoutID, callback){
+function getLayout(layoutID, callbackk){
   var uid = canContinueWithID();
   if(!uid){return;}
 
   database.ref('users/'+uid+'/layouts/'+layoutID).once('value').then(function(snapshot) {
     console.log('layout fire');
-    callback(snapshot.val());
+    callbackk(snapshot.val());
   });
   
 }
