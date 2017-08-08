@@ -117,6 +117,7 @@ var selectedAppBox = false;
 
 function Hello_World(){
   console.log("Hello_World");
+    TrackAction('Welcome to unit ' + unitTitle);
     setBuilderBoxHeading();
     setRowHeading();
     setFeedbackModal();
@@ -230,7 +231,7 @@ function setRowHeading(){
         
         '<div class="col-md-2 right">'+
             '<img id="buildBoxBarButton" class="pointer" style="width: 35px;" src="../external/build-custom-boxes.png"  alt="custom boxes"> &nbsp &nbsp'+
-            '<button onclick="window.top.location = '+"'"+'/home'+"'"+'" class="btn btn-primary">Home</button>'+
+            '<button onclick="TrackAction('+"'"+'Go Home'+"'"+'); window.top.location = '+"'"+'/home'+"'"+'" class="btn btn-primary">Home</button>'+
         '</div>'+
     '</div>';
 
@@ -290,15 +291,19 @@ function setFeedbackModal(){
 function sendontop(div_id) {
     ele = document.getElementById(div_id.id);
     ele.style.zIndex = ++my_index;
+    TrackAction('Sent box with id '+div_id.id+' on top');
 }
 
 function CustomCloseBox(ele) {
+
     var bigBoy = $(ele).parent().parent().parent();
     bigBoy.attrchange('remove');
-    console.log('deleteee  '+bigBoy.attr('id'));
-    deleteLayoutBox(unitTitle, bigBoy.attr('id'));
-    console.log('#'+bigBoy.attr('id')+'CustomButton');
-    $('#'+bigBoy.attr('id')+'CustomButton').removeClass("active");
+    var id = bigBoy.attr('id');
+    //console.log('deleteee  '+id);
+    TrackAction('Closed box with id '+id);
+    deleteLayoutBox(unitTitle, id);
+    //console.log('#'+id+'CustomButton');
+    $('#'+id+'CustomButton').removeClass("active");
     bigBoy.remove();
 
 }
@@ -309,10 +314,12 @@ function customBoxBarListener(){
       console.log('hide');
       $('#customBoxes').hide();
       $('#customBoxesBreak').hide();
+      TrackAction('Hide builder bar');
     } else {
       console.log('show');
       $('#customBoxes').show();
       $('#customBoxesBreak').show();
+      TrackAction('Show builder bar');
     }
   });
 }
@@ -378,6 +385,7 @@ function customButtonImageListeners(){
   $('#trash-image').click(function(){
     $('#content').empty();
     deleteFullLayout(unitTitle);
+    
     //location.reload();
   });
 
@@ -389,6 +397,7 @@ function customButtonImageListeners(){
     localStorage.setItem('storeLocation', unitTitle);
     console.log(localStorage.getItem('storeLocation')); //so u cn com bk
     //alert('store!');
+    TrackAction('Going to Store');
     window.top.location = '/store';
   });
 }
@@ -399,6 +408,8 @@ function customButtonImageListeners(){
 
 function addNewBox(){
   var id = addBox(unitTitle);
+  TrackAction('Added new box with id '+id);
+
   makeNewBigBoy('boxes', id);
   makeBoxEditable('boxes', id);
   $("#"+id).css('position','absolute');
@@ -463,6 +474,8 @@ function makeBoxEditable(getType, id){
 
   if (document.getElementById(id+"Title").contentEditable == 'true') {return;}
 
+  TrackAction('Editing box with id '+id);
+
   $("#"+id).resizable("disable").draggable("disable");
   $('#'+id).attrchange('disconnect');
   document.getElementById(id+"Title").contentEditable = "true";
@@ -512,12 +525,14 @@ function makeBoxEditable(getType, id){
 
 
   $('#'+id+'SaveEditBox').click(function(ele){
+
     console.log(ele.target);
     ele = ele.target;
     var link = '0';
     //console.log($(ele).parent().parent().parent().attr('id'));
     ele = $(ele).parent().parent().parent();
     var id = ele.attr('id');
+    TrackAction('Saved edit box with id '+id);
 
     if ($('#'+id+'VideoLink').length != 0) {
       link = $('#'+id+'VideoLink').text();
@@ -538,8 +553,10 @@ function makeBoxEditable(getType, id){
 
 
 function PutCustomBox(getType, id, style=false){
+  
   if ($('#'+id).length != 0) {return;}
 
+  TrackAction('Added box with id '+id+' to layout');
 
   if (getType == 'both') {
     doTheWork('boxes', id);
@@ -595,20 +612,21 @@ function PutCustomBox(getType, id, style=false){
 
 function getMyLayout(){
   getLayout(unitTitle, function(result){
+      TrackAction('Getting all saved layout boxes!');
       console.log('got layout!');
       //console.log($('#all-content').html());
       if ($('#all-content').html() != '') {return;}
       if (!result) {
+        TrackAction('No saved layout boxes :(');
         $('#loader').css('display', 'none')
-        // if (localStorage.getItem("gettingStartedBool") == null){
-        //   gettingStartedBool = true;
-        // }
-        // if (gettingStartedBool) {
-        //   $('#content').append("<div><h1>Looks like you don't have a Custom Layout!</h1><br>"+
-        //   "<h1>Click the Builder Icon on the top right to get started!</h1></div>")
-        // }
+        $('#customBoxes').show();
+        $('#customBoxesBreak').show();
+        $('#all-content').append('<h1 id="AddSomeYo">Add Some Boxes!</h1>');
         ;return;
       }
+      $('#AddSomeYo').remove();
+      
+
       Object.keys(result).forEach(function(currentKey) {
         console.log(currentKey, result[currentKey]);
         switch (currentKey){
@@ -666,6 +684,7 @@ function getMyLayout(){
       });
 
       $('#loader').css('display', 'none');
+      TrackAction('Got all saved layout boxes :)');
     });
 }
 
@@ -692,6 +711,7 @@ function getMyLayout(){
 
 function customGoBackButton() {
   $('#go-back').click(function(){
+    TrackAction('Go back on builder bar - to Box Categories');
     stopGetting(unitTitle);
     $('#customCurrentTitle').remove();
     $('#allOptions').remove();
@@ -733,7 +753,9 @@ function customGoBackButton() {
 
 
 function clickCustomButton(ele){
-  
+  $('#AddSomeYo').remove();
+  TrackAction('Clicked '+ $(ele).text() +' box categorie');
+
   var NameToID = {
     'Summary Text': 'summTextBigBoy',
     'Review Text': 'revTextBigBoy',
@@ -754,6 +776,7 @@ function clickCustomButton(ele){
   switch ($(ele).text()) {
     case 'Overview': names = textNames; break;
     case 'Real World Scenario': names = appNames; break;
+    case 'Social': names = ['Would you like a way to chat with your classmates? - Give Feedback']; break;
     default: go = true;
   }
   
@@ -825,6 +848,7 @@ function clickCustomButton(ele){
 function CustomBoxButton(ele){
 
   //if ($(ele).hasClass("active")) {return;}
+  $('#AddSomeYo').remove();
 
   var id;
   var method;
@@ -844,6 +868,8 @@ function CustomBoxButton(ele){
 
 
 function addCustomBox(id, method){
+
+  TrackAction('Added box with id '+id+' to layout');
 
   var left = getRandomInt(0, 1100);
   var top = getRandomInt(0, 350);
@@ -984,7 +1010,9 @@ function clickText() {
       selectedTextBox = false;
       deleteTextBoxes();
       goForCustomLayout();
+      TrackAction('Gone from Overview preset layout to custom layout');
     } else {
+      TrackAction('Go to Overview preset layout');
       hideCustomLayout();
       deselectAllBoxes();
       addTextBoxes($("#all-content"))
@@ -998,7 +1026,9 @@ function clickVid() {
       selectedVideoBox = false;
       deleteVideoBoxes();
       goForCustomLayout();
+      TrackAction('Gone from Video preset layout to custom layout');
     } else {
+      TrackAction('Go to Video preset layout');
       hideCustomLayout();
       deselectAllBoxes();
       addVideoBoxes($("#all-content"));
@@ -1027,7 +1057,9 @@ function clickApp() {
       selectedAppBox = false;
       deleteAppBoxes();
       goForCustomLayout();
+      TrackAction('Gone from Apps preset layout to custom layout');
     } else {
+      TrackAction('Go to Apps preset layout');
       hideCustomLayout();
       deselectAllBoxes();
       addAppBoxes($("#all-content"))

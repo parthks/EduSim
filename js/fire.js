@@ -82,12 +82,15 @@ function checkFirstTime(){
   var uid = canContinueWithID();
   if(!uid){return;}
 
+  TrackAction('Logged In!');
+
   database.ref('users/'+uid+'/FirstTime').once('value').then(function(snapshot) {
     if (!snapshot.val()) {
       database.ref('users/'+uid+'/FirstTime').set('YES');
       window.top.location = '/tutorial';
 
     } else if (snapshot.val() == 'YES') {
+      TrackAction('Still not done with tutorial :(!');
       window.top.location = '/tutorial';
 
     } else {
@@ -104,12 +107,15 @@ function notFirstTime(){
   if(!uid){return;}
 
   database.ref('users/'+uid+'/FirstTime').set('NO');
+  TrackAction('Finished tutorial!');
 }
 
 
 function giveFeddback(info, callback){
  var uid = canContinueWithID();
   if(!uid){return;}
+
+  TrackAction('Gave Feedback!');
 
   var go = database.ref().child('Feedback').push().key;
   database.ref('Feedback/'+go).set({
@@ -205,9 +211,12 @@ function deleteBox(layoutID, boxID){
   var uid = canContinueWithID();
   if(!uid){return;}
 
+  TrackAction('Deleted (forever) box with id '+boxID);
+
   database.ref('users/'+uid+'/boxes/'+layoutID+'/'+boxID).remove();
   database.ref('users/'+uid+'/downed/'+layoutID+'/'+boxID).remove();
   database.ref('users/'+uid+'/layouts/'+layoutID+'/'+boxID).remove();
+  database.ref('Store/downedBoxesByUser/'+layoutID+'/'+boxID+'/'+uid).set('open to get'); 
  
 }
 
@@ -277,6 +286,7 @@ function deleteFullLayout(layoutID){
   if(!uid){return;}
 
   database.ref('users/'+uid+'/layouts/'+layoutID).remove();
+  TrackAction('Removed all boxes in current layout');
   
 }
 
@@ -290,6 +300,8 @@ function deleteFullLayout(layoutID){
 function shareToStore(getType, layoutID, boxID){
   var uid = canContinueWithID();
   if(!uid){return;}
+
+  TrackAction('Shared box with id '+boxID+' to Store!');
 
   database.ref('users/'+uid+'/'+getType+'/'+layoutID+'/'+boxID).once('value', function(snapshot)  {
     if (!snapshot.val()) {return;}
@@ -324,6 +336,7 @@ function reportStoreBox(layoutID, boxID) {
   var uid = canContinueWithID();
   if(!uid){return;}
 
+  TrackAction('Reported box with id '+boxID);
   database.ref('Store/'+'/report/'+layoutID+'/'+boxID).update({
     [uid]: '<- this guy reported it!' 
   });
@@ -341,10 +354,12 @@ function voteStoreButton(layoutID, boxID, type) {
     var change = 0;
 
     if (type == 'up') {
+      TrackAction('Upvoted box with id '+boxID);
       if (isType == 'down') {type='normal'}
       change = 1;
     }
     else if (type == 'down') {
+      TrackAction('DownVoted box with id '+boxID);
       if (isType == 'up') {type='normal'}
       change = -1;
     }
@@ -394,6 +409,7 @@ function saveTheBoxFromStore(layoutID, boxID) {
 
   //user got box
   database.ref('Store/downedBoxesByUser/'+layoutID+'/'+boxID+'/'+uid).set('bamm!, what'); 
+  TrackAction('Downloaded box with id '+boxID);
 
   //increment download counter
   database.ref('Store/boxes/'+layoutID+'/'+boxID+'/'+'downed').once('value', function(snapshot) {
@@ -448,6 +464,28 @@ function downedStoreBoxListener(layoutID, boxID, callback) {
     callback(snapshot.val());
   });
 }
+
+
+
+
+function TrackAction(action) {
+  var uid = canContinueWithID();
+  if(!uid){return;}
+
+  var d = new Date();
+  var date = d.getUTCDate() + '-' + (parseInt(d.getUTCMonth())+1) + '- ' + d.getUTCFullYear();
+  var keyu = database.ref('Analytics/users/'+uid+'/'+date).push().key;
+  var keyd = database.ref('Analytics/date/'+date+'/'+uid).push().key;
+
+  database.ref('Analytics/users/'+uid+'/'+date+'/'+keyu).set(action);
+  database.ref('Analytics/date/'+date+'/'+uid+'/'+keyd).set(action);
+
+
+}
+
+
+
+
 
 
 

@@ -14,7 +14,7 @@ function manageNextPrevButtons() {
     index = allStoreNames.indexOf(storeName);
     $('#PrevButton').show();
     $('#NextButton').show();
-    
+
     if (index == 0) {
         $('#PrevButton').hide();
     }
@@ -44,8 +44,12 @@ function GoPrevUnit() {
 
 
 function Hello_World() {
+
     $('#all-boxes').append('<div id="loader"></div>');
     storeName = localStorage.getItem('storeLocation');
+
+    TrackAction('Welcome to the Store section of '+storeName);
+
     manageNextPrevButtons();
     $('#StoreName').text(storeName + ' Store');
     getStoreBoxes(storeName, function(id, result) {
