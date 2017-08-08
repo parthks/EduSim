@@ -397,21 +397,21 @@ function customButtonImageListeners(){
 
 
 
-function addNewBox(){
+function addNewBox(getType){
   var id = addBox(unitTitle);
-  makeNewBigBoy(id);
-  makeBoxEditable(id);
+  makeNewBigBoy(getType, id);
+  makeBoxEditable(getType, id);
   
 }
 
-function makeNewBigBoy(id){
+function makeNewBigBoy(getType, id){
   var html = '<div id="'+id+'" onclick="sendontop(this);" class="big-boy ui-widget-content">'+
   '<div class="box">' +
   '<div class = "ui-widget-header">'+
   '<h3 id="'+id+'Title"> Click here to edit Title! </h3>' +
   '<button onclick="CustomCloseBox(this)" class="close-button-right">X</button>'+
-  '<button onclick="makeBoxEditable('+"'"+id+"'"+')" class="edit-button">E</button>'+
-  '<button onclick="shareToStore('+"'"+unitTitle+"'"+", '"+id+"'"+')" class="share-button">S</button>'+
+  '<button onclick="makeBoxEditable('+"'"+getType+"'"+", '"+id+"'"+')" class="edit-button">E</button>'+
+  '<button onclick="shareToStore('+"'"+getType+"'"+", '"+unitTitle+"'"+", '"+id+"'"+')" class="share-button">S</button>'+
   '<img id="'+id+'TrashBox" class="pointer trashBox" src="../external/trash-icon.png"  alt="trash box">'+
   '</div>'+
   '<textarea id="'+id+'Content">' +
@@ -454,7 +454,7 @@ function makeNewBigBoy(id){
 
 }
 
-function makeBoxEditable(id){
+function makeBoxEditable(getType, id){
 
   if (document.getElementById(id+"Title").contentEditable == 'true') {return;}
 
@@ -518,7 +518,7 @@ function makeBoxEditable(id){
       link = $('#'+id+'VideoLink').text();
     }
 
-    setInfoOfBox('boxes', unitTitle, id, $('#'+id+"Title").text(), $('#'+id+"Content").val(), link);
+    setInfoOfBox(getType, unitTitle, id, $('#'+id+"Title").text(), $('#'+id+"Content").val(), link);
     document.getElementById(id+"Title").contentEditable = "false";
     //document.getElementById(id+"Content").contentEditable = "false";
     $("#"+id+'Content').prop('disabled', true);
@@ -532,33 +532,46 @@ function makeBoxEditable(id){
 
 
 
-function PutCustomBox(id, style=false){
+function PutCustomBox(getType, id, style=false){
   if ($('#'+id).length != 0) {return;}
 
-  getMyBox('boxes', unitTitle, id, function(result){
-    var title = result['title'];
-    var content = result['content'];
-    var link = result['link'];
-    makeNewBigBoy(id);
-    $('#'+id+'Title').text(title);
-    $('#'+id+'Content').text(content);
 
-    if (link != '0') {
-      $('#'+id+'Content').after('<iframe id="'+id+'VideoIFrame" width="560" height="315" src="'+link+'" frameborder="0" allowfullscreen></iframe>');
-      $('#'+id+'VideoIFrame').after('<p id="'+id+'VideoLink">'+link+'</p>');
-    }
+  if (getType == 'both') {
+    doTheWork('boxes', id);
+    doTheWork('downed', id);
+  } else {
+    doTheWork(getType, id);
+  }
 
-    $('#'+id+'CustomButton').addClass('active');
 
-    if (style) {
-       $('#'+id).attr('style',style);
-    }
 
-    if(parseInt($('#'+id).css("z-index")) >= my_index){
-          my_index = parseInt($('#'+id).css("z-index"));
-    }
+  function doTheWork(getType, id){
+    getMyBox(getType, unitTitle, id, function(result){
+      var title = result['title'];
+      var content = result['content'];
+      var link = result['link'];
+      makeNewBigBoy(getType, id);
+      $('#'+id+'Title').text(title);
+      $('#'+id+'Content').text(content);
+
+      if (link != '0') {
+        $('#'+id+'Content').after('<iframe id="'+id+'VideoIFrame" width="560" height="315" src="'+link+'" frameborder="0" allowfullscreen></iframe>');
+        $('#'+id+'VideoIFrame').after('<p id="'+id+'VideoLink">'+link+'</p>');
+      }
+
+      $('#'+id+'CustomButton').addClass('active');
+
+      if (style) {
+         $('#'+id).attr('style',style);
+      }
+
+      if(parseInt($('#'+id).css("z-index")) >= my_index){
+            my_index = parseInt($('#'+id).css("z-index"));
+      }
 
   });
+  }
+  
 }
 
 
@@ -636,7 +649,7 @@ function getMyLayout(){
             break;
 
          default: 
-            PutCustomBox(currentKey, result[currentKey]); 
+            PutCustomBox('both', currentKey, result[currentKey]); 
             break;
           
 
@@ -900,7 +913,25 @@ function populateCustomBarWith(text){
         var active = '';
         console.log(currentKey);
         if ($('#'+currentKey).length != 0) {active = 'active';}
-        html += '<button id="'+currentKey+'CustomButton" onclick="PutCustomBox('+"'"+currentKey+"'"+');" class="btn btn-secondary custom '+active+'">'+result[currentKey]['title']+'</button>'+
+        html += '<button id="'+currentKey+'CustomButton" onclick="PutCustomBox('+"'boxes', '"+currentKey+"'"+');" class="btn btn-secondary custom '+active+'">'+result[currentKey]['title']+'</button>'+
+            '&nbsp';
+      });
+      $('#customOptions').append(html);
+      doStuff()
+  
+    });
+  }
+  else if (text == "Downloaded") {
+    getMyBoxes('downed', unitTitle, function(result){
+      if (!result) {$('#customOptions').empty();return;}
+      if ($('#customCurrentTitle').find("h3").text() != "Downloaded: ") {console.log('Oh dear!'); return;}
+      $('#customOptions').empty();
+      var html = '';
+      Object.keys(result).forEach(function(currentKey) {
+        var active = '';
+        console.log(currentKey);
+        if ($('#'+currentKey).length != 0) {active = 'active';}
+        html += '<button id="'+currentKey+'CustomButton" onclick="PutCustomBox('+"'downed', '"+currentKey+"'"+');" class="btn btn-secondary custom '+active+'">'+result[currentKey]['title']+'</button>'+
             '&nbsp';
       });
       $('#customOptions').append(html);

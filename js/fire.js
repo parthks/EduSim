@@ -206,6 +206,7 @@ function deleteBox(layoutID, boxID){
   if(!uid){return;}
 
   database.ref('users/'+uid+'/boxes/'+layoutID+'/'+boxID).remove();
+  database.ref('users/'+uid+'/downed/'+layoutID+'/'+boxID).remove();
   database.ref('users/'+uid+'/layouts/'+layoutID+'/'+boxID).remove();
  
 }
@@ -265,6 +266,7 @@ function getMyBox(cat, layoutID, boxID, callback){
   if(!uid){return;}
 
   database.ref('users/'+uid+'/'+cat+'/'+layoutID + '/' + boxID).once('value').then(function(snapshot) {
+    if (!snapshot.val()) {return;}
     callback(snapshot.val());
   });
 }
@@ -285,11 +287,11 @@ function deleteFullLayout(layoutID){
 
 
 
-function shareToStore(layoutID, boxID){
+function shareToStore(getType, layoutID, boxID){
   var uid = canContinueWithID();
   if(!uid){return;}
 
-  database.ref('users/'+uid+'/boxes/'+layoutID+'/'+boxID).once('value', function(snapshot)  {
+  database.ref('users/'+uid+'/'+getType+'/'+layoutID+'/'+boxID).once('value', function(snapshot)  {
     if (!snapshot.val()) {return;}
     var id = database.ref('Store/'+'/boxes/'+layoutID).push().key;
     database.ref('Store/'+'/boxes/'+layoutID+'/'+id).set(snapshot.val());
