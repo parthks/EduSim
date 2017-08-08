@@ -216,7 +216,7 @@ function deleteBox(layoutID, boxID){
   database.ref('users/'+uid+'/boxes/'+layoutID+'/'+boxID).remove();
   database.ref('users/'+uid+'/downed/'+layoutID+'/'+boxID).remove();
   database.ref('users/'+uid+'/layouts/'+layoutID+'/'+boxID).remove();
-  database.ref('Store/downedBoxesByUser/'+layoutID+'/'+boxID+'/'+uid).set('open to get'); 
+  //database.ref('Store/downedBoxesByUser/'+layoutID+'/'+boxID+'/'+uid).set('open to get'); 
  
 }
 
@@ -408,7 +408,7 @@ function saveTheBoxFromStore(layoutID, boxID) {
   });
 
   //user got box
-  database.ref('Store/downedBoxesByUser/'+layoutID+'/'+boxID+'/'+uid).set('bamm!, what'); 
+  //database.ref('Store/downedBoxesByUser/'+layoutID+'/'+boxID+'/'+uid).set('bamm!, what'); 
   TrackAction('Downloaded box with id '+boxID);
 
   //increment download counter
@@ -421,20 +421,20 @@ function saveTheBoxFromStore(layoutID, boxID) {
 }
 
 
-function personalDownedStoreBox(layoutID, boxID, callback) {
-  var uid = canContinueWithID();
-  if(!uid){return;}
+// function personalDownedStoreBox(layoutID, boxID, callback) {
+//   var uid = canContinueWithID();
+//   if(!uid){return;}
 
-  database.ref('Store/downedBoxesByUser/'+layoutID+'/'+boxID+'/'+uid).on('value', function(snapshot) {
-    if (!snapshot.val()) {return}
-    if (snapshot.val() == 'bamm!, what') {
-      callback(true);
-    } else {
-      callback(false);
-    }
+//   database.ref('Store/downedBoxesByUser/'+layoutID+'/'+boxID+'/'+uid).on('value', function(snapshot) {
+//     if (!snapshot.val()) {return}
+//     if (snapshot.val() == 'bamm!, what') {
+//       callback(true);
+//     } else {
+//       callback(false);
+//     }
     
-  });
-}
+//   });
+// }
 
 
 
@@ -473,7 +473,7 @@ function TrackAction(action) {
   if(!uid){return;}
 
   var d = new Date();
-  var date = d.getUTCDate() + '-' + (parseInt(d.getUTCMonth())+1) + '- ' + d.getUTCFullYear();
+  var date = d.getUTCDate() + '-' + (parseInt(d.getUTCMonth())+1) + '-' + d.getUTCFullYear();
   var keyu = database.ref('Analytics/users/'+uid+'/'+date).push().key;
   var keyd = database.ref('Analytics/date/'+date+'/'+uid).push().key;
 

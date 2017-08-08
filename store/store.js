@@ -98,9 +98,9 @@ function makeNewBigBoy(id, byID){
   '</div></div>'+
   '<div id="'+id+'BoxInfo" class="box-info">'+
   '<p id="'+id+'ByID">Getting Uploader'+"'s "+'Name</p>'+
-  '<p id="'+id+'Downed">Downloaded xx times</p>'+
-  '<button id="'+id+'SaveBox" onclick="saveTheBoxFromStore('+"'"+storeName+"', "+ "'"+id+"'"+ ');" class="btn btn-success">Get this box!</button>&nbsp&nbsp'+
-  '<button onclick="reportStoreBox('+"'"+storeName+"', "+ "'"+id+"'"+ ');" class="btn btn-danger">Report</button><br>'+
+  //'<p id="'+id+'Downed">Downloaded xx times</p>'+
+  '<button id="'+id+'SaveBox" onclick="saveTheBoxFromStore('+"'"+storeName+"', "+ "'"+id+"'"+ '); alert('+"'Congratulations! You got this box!'"+');" class="btn btn-success">Get this box!</button>&nbsp&nbsp'+
+  '<button onclick="reportStoreBox('+"'"+storeName+"', "+ "'"+id+"'"+ '); alert('+"'Thanks for reporting!'"+');" class="btn btn-danger">Report</button><br>'+
   '<p id="'+id+'Points" class="points">-</p>'+
   '<button id="'+id+'UpVoteBut" onclick="voteStoreButton('+"'"+storeName+"', "+ "'"+id+"'"+", 'up'"+');" class="upvote"><</button>'+
   '<button id="'+id+'DownVoteBut" onclick="voteStoreButton('+"'"+storeName+"', "+ "'"+id+"'"+", 'down'"+');" class="downvote">></button>'+
@@ -116,22 +116,22 @@ function makeNewBigBoy(id, byID){
     $('#'+id+'Points').text(result);
   });
 
-  downedStoreBoxListener(storeName, id, function(result) {
-    $('#'+id+'Downed').text('Downloaded '+result+' times');
-  });
+  // downedStoreBoxListener(storeName, id, function(result) {
+  //   $('#'+id+'Downed').text('Downloaded '+result+' times');
+  // });
 
   voteButtonListeners(id);
 
-  personalDownedStoreBox(storeName, id, function(result) {
-    if (result) {
-        $('#'+id+'SaveBox').addClass('disabled');
-        $('#'+id+'SaveBox').prop("disabled",true);
-    } else {
-        $('#'+id+'SaveBox').removeClass('disabled');
-        $('#'+id+'SaveBox').prop("disabled",false);
-    }
+  // personalDownedStoreBox(storeName, id, function(result) {
+  //   if (result) {
+  //       $('#'+id+'SaveBox').addClass('disabled');
+  //       $('#'+id+'SaveBox').prop("disabled",true);
+  //   } else {
+  //       $('#'+id+'SaveBox').removeClass('disabled');
+  //       $('#'+id+'SaveBox').prop("disabled",false);
+  //   }
     
-  });
+  // });
 
 
 }

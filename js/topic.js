@@ -94,6 +94,8 @@ var selectedVideoBox = false;
 var selectedTestBox = false;
 var selectedAppBox = false;
 
+var modalAccept = '';
+
 //var gettingStartedBool = false
 
 
@@ -121,6 +123,8 @@ function Hello_World(){
     setBuilderBoxHeading();
     setRowHeading();
     setFeedbackModal();
+    setTrashButtonModal();
+    setSocialButtonModal();
     $('#content').empty();
     
     
@@ -241,11 +245,11 @@ function setRowHeading(){
 
 
 function setFeedbackModal(){
-  var html = '<div class="modal fade" id="myFeedbackModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">'+
+  var html = '<div class="modal fade" id="myFeedbackModal" tabindex="-1" role="dialog" aria-labelledby="feedbackModalLabel" aria-hidden="true">'+
         '<div class="modal-dialog" role="document">'+
             '<div class="modal-content">'+
               '<div class="modal-header">'+
-                '<h5 class="modal-title" id="exampleModalLabel">Give Feedback</h5>'+
+                '<h5 class="modal-title" id="feedbackModalLabel">Give Feedback</h5>'+
                 '<button type="button" class="close" data-dismiss="modal" aria-label="Close">'+
                   '<span aria-hidden="true">&times;</span>'+
                 '</button>'+
@@ -273,6 +277,59 @@ function setFeedbackModal(){
 }
 
 
+function setTrashButtonModal(){
+  var html = '<div class="modal fade" id="myTrashModal" tabindex="-1" role="dialog" aria-labelledby="trashModalLabel" aria-hidden="true">'+
+        '<div class="modal-dialog" role="document">'+
+            '<div class="modal-content">'+
+              '<div class="modal-header">'+
+                '<h5 class="modal-title" id="trashModalLabel">Are you sure you want to delete this Box?</h5>'+
+                '<button type="button" class="close" data-dismiss="modal" aria-label="Close">'+
+                  '<span aria-hidden="true">&times;</span>'+
+                '</button>'+
+              '</div>'+
+              '<div class="modal-body">'+
+                '<p>Deleting the box, will delete all its content forever!</p>'+
+              '</div>'+
+              '<div class="modal-footer">'+
+                '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>'+
+                '<button type="button" data-dismiss="modal" onclick=" modalAccept(); modalAccept = 0;"'+
+                  '" class="btn btn-danger">Delete</button>'+
+              '</div>'+
+            '</div>'+
+        '</div>'+
+    '</div>';
+
+    $('body').prepend(html);
+
+}
+
+
+function setSocialButtonModal(){
+  var html = '<div class="modal fade" id="mySocialModal" tabindex="-1" role="dialog" aria-labelledby="socialModalLabel" aria-hidden="true">'+
+        '<div class="modal-dialog" role="document">'+
+            '<div class="modal-content">'+
+              '<div class="modal-header">'+
+                '<h5 class="modal-title" id="socialModalLabel">Are you sure you want to Share this?</h5>'+
+                '<button type="button" class="close" data-dismiss="modal" aria-label="Close">'+
+                  '<span aria-hidden="true">&times;</span>'+
+                '</button>'+
+              '</div>'+
+              '<div class="modal-body">'+
+                '<p>Everyone in class will be able to download this content and learn from it!</p>'+
+                '<b>Please do not spam or share duplicate content! You have been warned!</b>'+
+              '</div>'+
+              '<div class="modal-footer">'+
+                '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>'+
+                '<button type="button" data-dismiss="modal" onclick=" modalAccept(); modalAccept = 0;"'+
+                  '" class="btn btn-success">Share</button>'+
+              '</div>'+
+            '</div>'+
+        '</div>'+
+    '</div>';
+
+    $('body').prepend(html);
+
+}
 
 
 
@@ -427,7 +484,7 @@ function makeNewBigBoy(getType, id){
   '<h3 id="'+id+'Title"> Click here to edit Title! </h3>' +
   '<button onclick="CustomCloseBox(this)" class="close-button-right">X</button>'+
   '<button onclick="makeBoxEditable('+"'"+getType+"'"+", '"+id+"'"+')" class="edit-button">E</button>'+
-  '<button onclick="shareToStore('+"'"+getType+"'"+", '"+unitTitle+"'"+", '"+id+"'"+')" class="share-button">S</button>'+
+  '<button onclick="modalAccept = function() {shareToStore('+"'"+getType+"'"+", '"+unitTitle+"'"+", '"+id+"'"+');};" data-toggle="modal" data-target="#mySocialModal" class="share-button">S</button>'+
   '<img id="'+id+'TrashBox" class="pointer trashBox" src="../external/trash-icon.png"  alt="trash box">'+
   '</div>'+
   '<textarea id="'+id+'Content">' +
@@ -460,8 +517,9 @@ function makeNewBigBoy(getType, id){
     ele = $(ele).parent().parent().parent();
     var id = ele.attr('id');
     console.log('boomm what -- '+id);
-    deleteBox(unitTitle, id);
-    ele.remove();
+    $('#myTrashModal').modal('show')
+    modalAccept = function() { deleteBox(unitTitle, id); ele.remove();};
+    
 
 
   });
@@ -482,6 +540,7 @@ function makeBoxEditable(getType, id){
   //document.getElementById(id+"Content").contentEditable = "true";
   $("#"+id+'Content').prop('disabled', false);
 
+  $('#'+id+'Content').parent().prepend('<div id="'+id+'EditingMessage"><b>You can now edit the content and title in this box! When you are done, click the Save button at the bottom of this box.</b><br><br></div>');
 
   $('#'+id+'Content').parent().append('<div class="center">'+
     '<button id="'+id+'InsertLink" class="btn btn-secondary">Put a Video in this box!</button>'+
@@ -543,6 +602,8 @@ function makeBoxEditable(getType, id){
     //document.getElementById(id+"Content").contentEditable = "false";
     $("#"+id+'Content').prop('disabled', true);
     $('#'+id+'SaveEditBox').parent().remove();
+    $('#'+id+'EditingMessage').remove();
+    
     $("#"+id).resizable("enable").draggable("enable");
     $('#'+id).attrchange('reconnect');
 
