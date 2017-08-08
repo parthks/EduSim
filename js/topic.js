@@ -388,7 +388,7 @@ function customButtonImageListeners(){
   $('#world-image').click(function(){
     localStorage.setItem('storeLocation', unitTitle);
     console.log(localStorage.getItem('storeLocation')); //so u cn com bk
-    alert('store!');
+    //alert('store!');
     window.top.location = '/store';
   });
 }
@@ -397,10 +397,15 @@ function customButtonImageListeners(){
 
 
 
-function addNewBox(getType){
+function addNewBox(){
   var id = addBox(unitTitle);
-  makeNewBigBoy(getType, id);
-  makeBoxEditable(getType, id);
+  makeNewBigBoy('boxes', id);
+  makeBoxEditable('boxes', id);
+  $("#"+id).css('position','absolute');
+  $("#"+id).css('width',500+'px');
+  $("#"+id).css('height',300+'px');
+  $("#"+id).css('left',450+'px');
+  $("#"+id).css('top',100+'px');
   
 }
 

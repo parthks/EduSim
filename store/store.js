@@ -1,12 +1,52 @@
 var storeName = '';
 
 var storeNameToEnvName = {
-    'Linear Algebra Magic': '/magic'
+    'Linear Algebra Magic': '/magic',
+    'Secret Messages': '/secrets',
+    'ASCII Art': '/asciiart'
+};
+
+var allStoreNames = ['Linear Algebra Magic', 'Secret Messages', 'ASCII Art'];
+var index = 0;
+
+
+function manageNextPrevButtons() {
+    index = allStoreNames.indexOf(storeName);
+    $('#PrevButton').show();
+    $('#NextButton').show();
+    
+    if (index == 0) {
+        $('#PrevButton').hide();
+    }
+
+    if (index == allStoreNames.length - 1) {
+        $('#NextButton').hide();
+    }
 }
+
+function GoNextUnit() {
+    index += 1;
+    storeName = allStoreNames[index];
+    localStorage.setItem('storeLocation', storeName);
+    $('#all-boxes').empty();
+    Hello_World();
+}
+
+function GoPrevUnit() {
+    index -= 1;
+    storeName = allStoreNames[index];
+    localStorage.setItem('storeLocation', storeName);
+    $('#all-boxes').empty();
+    Hello_World();
+}
+
+
+
 
 function Hello_World() {
     $('#all-boxes').append('<div id="loader"></div>');
     storeName = localStorage.getItem('storeLocation');
+    manageNextPrevButtons();
     $('#StoreName').text(storeName + ' Store');
     getStoreBoxes(storeName, function(id, result) {
         if (!result) {$('#loader').css('display', 'none'); return;}
