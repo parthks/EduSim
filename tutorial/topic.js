@@ -100,7 +100,14 @@ function tutorialContent(){
   if (tutorialStep == 2 && builderBoxShown) {
     html = '<br>';
     html += '<p>Using the builder bar, you can create your own personalized learning enviroment!</p><br>';
-    html += '<p>Click on one of the categories and then click on the box you want!</p><br>';
+    html += '<p>There are various categories of boxes available: </p><br>';
+    html += '<p><b>Overview</b> - Boxes to learn the content</p>';
+    html += '<p><b>Real World Scenario</b> - Boxes associated with the real world scenario</p>';
+    html += '<p><b>Social</b> - To be released Chat Box, give Feedback if you wantt it ;)</p>';
+    html += '<p><b>My Boxes</b> - Boxes that you make (Empty in Tutorial)</p>';
+    html += '<p><b>Downloaded</b> - Boxes you download from the store (Empty in Tutorial)</p><br>';
+
+     html += '<p>Click on one of the categories and then click on the box you want!</p><br>';
     html += '<p>Try this Now!</p>';
   }
 
@@ -112,13 +119,35 @@ function tutorialContent(){
   }
 
   if (tutorialStep == 4) {
-    notFirstTime();
     html = '<br><p>You can build your layouts for every unit and they will automatically be saved!</p>';
-    html += '<p>To move between units click the "Prev Unit" and "Next Unit" buttons.</p><br>';
-    html += '<button class="btn btn-primary" onclick="tutorialStep=42;tutorial();">What Next?</button>';
+    html += '<p>The buttons on the right of the builder bar are also important!</p><br><br>';
+    
+    html += '<p><img id="world-image" class="pointer" style="width: 25px; padding-top: 2px;" src="../external/images/world-image.png"  alt="to store">';
+    html += '<span> - Take you the store for that unit! (Does not work in Tutorial)</span><br>';
+    
+    html += '<img id="add-image" class="pointer" style="width: 25px; padding-top: 2px;" src="../external/images/add.png"  alt="add box">';
+    html += '<span> - Can make new boxes! (Does not work in Tutorial)</span><br>';
+    
+    html += '<img id="trash-image" class="pointer" style="width: 35px; padding-top: 2px;" src="../external/trash-icon.png"  alt="trash layout">';
+    html += '<span> - Remove all boxes in current layout!</span></p><br><br>';
+
+    html += '<button class="btn btn-primary" onclick="tutorialStep=5;tutorial();">Next</button>';
   }
 
+
+  if (tutorialStep == 5) {
+    html = '<br><p>Furthermore, for the boxes you create and download, the title bar of the boxes have special buttons!</p><br>';
+    html += '<p><button style="width: 35px; background-color: yellow; padding-top: 2px;">E</button>'+'<span> - Can edit the contents of the current box</span><br>'+
+            '<button style="width: 35px; background-color: lightgreen; padding-top: 2px;">S</button>'+'<span> - Can share current the box, with everyone!</span><br>'+
+            '<img src="../external/trash-icon.png" class="pointer" style="width: 35px; padding-top: 2px;" alt="trash box">'+'<span> - Can delete current box</span></p><br><br>';
+
+    html += '<button class="btn btn-primary" onclick="tutorialStep=42;tutorial();">Next</button>';
+  }
+
+
   if (tutorialStep == 42) {
+    TrackAction('Finished Tutorial!');
+    notFirstTime();
     html = '<br><p>Now you know how to use this platform!</p>';
     html += '<p>This project is a work in progress. Any and all Feedback is valuable! Simply click the "Give Feedback" button on the top right. Thanks!</p>';
     html += '<p>Start you Linear Algebra journey now! and explore the possibilities!</p>';
@@ -238,25 +267,42 @@ function setBuilderBoxHeading(){
   var html = '<br id="customBoxesBreak">'+
     '<div id="customBoxes" class="row heading">'+
         '<div id="CustomBoxesTitle" class="col-md-2 center">'+
-            '<h5 style="padding-top: 5px">Boxes to chose from: </h5>'+
+            '<h5 id="CBTitle" style="padding-top: 5px">Box Categories: </h5>'+
         '</div>'+
 
          '<div id="CustomTextButton" class="col-md-1 center">'+
             '<button class="btn btn-secondary" onclick="clickCustomButton(this);">Overview</button>'+
         '</div>'+
-        '<div id="CustomVideoButton" class="col-md-1 center">'+
-            '<button class="btn btn-secondary" onclick="clickCustomButton(this);">Video</button>'+
-        '</div>'+
-        
-        '<div id="CustomAppButton" class="col-md-2 center">'+
-            '<button class="btn btn-secondary" onclick="clickCustomButton(this);">Real World Scenario</button>'+
-        '</div>'+
-        '<div id="CustomExtraSpace" class="col-md-5 center"></div>'+
+        // '<div id="CustomVideoButton" class="col-md-1 center">'+
+        //     '<button class="btn btn-secondary" onclick="clickCustomButton(this);">Video</button>'+
+        // '</div>'+
 
-        '<div class="col-md-1 center">'+
+         '<div id="CustomAppButton" class="col-md-2 center">' +
+            '<button class="btn btn-secondary" onclick="clickCustomButton(this);">Real World Scenario</button>' +
+        '</div>' +
+        
+        '<div id="CustomSocialButton" class="col-md-1 center">' +
+            '<button class="btn btn-secondary" onclick="clickCustomButton(this);">Social</button>' +
+        '</div>' +
+
+        '<div id="CustomMyBoxesButton" class="col-md-1 center">' +
+            '<button class="btn btn-secondary" onclick="clickCustomButton(this);">My Boxes</button>' +
+        '</div>' +
+
+        '<div id="CustomDownloadedButton" class="col-md-1 center">' +
+            '<button class="btn btn-secondary" onclick="clickCustomButton(this);">Downloaded</button>' +
+        '</div>' +
+
+
+        '<div id="CustomExtraSpace" class="col-md-2 center"></div>'+
+
             
-            '<img id="trash-image" style="width: 35px; padding-top: 2px;" src="../external/trash-icon.png"  alt="trash layout">'+
-        '</div>'+
+
+        '<div class="col-md-2 right">'+
+            '<img id="world-image" class="pointer" style="width: 25px; padding-top: 2px;" src="../external/images/world-image.png"  alt="to store">'+
+            '&nbsp &nbsp &nbsp<img id="add-image" class="pointer" style="width: 25px; padding-top: 2px;" src="../external/images/add.png"  alt="add box">'+
+            '&nbsp &nbsp &nbsp<img id="trash-image" class="pointer" style="width: 35px; padding-top: 2px;" src="../external/trash-icon.png"  alt="trash layout">'+
+        '&nbsp </div>'+
 
     '</div>';
     $('body').prepend(html);
@@ -463,10 +509,23 @@ function saveLayoutListiner(id){
           top = '15px';
           width = '420px';
           height = '350px';
+
+          if (id == '#calculatorDivBigBoy') {
+
+            width = '329px';
+            height = '471px';
+          }
+
+          if (id == '#appDivBigBoy') {
+
+            width = '500px';
+            height = '500px';
+          }
+
           console.log(w,h,l,t);
           if (w != width && h != height && l != left && t != top) { 
-            tutorialStep = 4; 
-            tutorial();
+            if (tutorialStep == 3) {tutorialStep = 4;tutorial();}
+            
           }
         }
         
@@ -481,6 +540,7 @@ function saveLayoutListiner(id){
 function customButtonImageListeners(){
   $('#trash-image').click(function(){
     $('#content').empty();
+    tutorial();
     //deleteAllLayout();
     //location.reload();
   });
@@ -593,14 +653,28 @@ function customGoBackButton() {
             '<button class="btn btn-secondary" onclick="clickCustomButton(this);">Overview</button>' +
         '</div>' +
 
-        '<div id="CustomVideoButton" class="col-md-1 center">' +
-            '<button class="btn btn-secondary" onclick="clickCustomButton(this);">Video</button>' +
-        '</div>' +
+        // '<div id="CustomVideoButton" class="col-md-1 center">' +
+        //     '<button class="btn btn-secondary" onclick="clickCustomButton(this);">Video</button>' +
+        // '</div>' +
         
         '<div id="CustomAppButton" class="col-md-2 center">' +
             '<button class="btn btn-secondary" onclick="clickCustomButton(this);">Real World Scenario</button>' +
         '</div>' +
-        '<div id="CustomExtraSpace" class="col-md-5 center"></div>';
+
+        '<div id="CustomSocialButton" class="col-md-1 center">' +
+            '<button class="btn btn-secondary">Social</button>' +
+        '</div>' +
+
+        '<div id="CustomMyBoxesButton" class="col-md-1 center">' +
+            '<button class="btn btn-secondary">My Boxes</button>' +
+        '</div>' +
+
+        '<div id="CustomDownloadedButton" class="col-md-1 center">' +
+            '<button class="btn btn-secondary">Downloaded</button>' +
+        '</div>' +
+
+
+        '<div id="CustomExtraSpace" class="col-md-2 center"></div>';
 
     $('#CustomBoxesTitle').after(html);
   });
@@ -611,13 +685,11 @@ function customGoBackButton() {
 
 function clickCustomButton(ele){
 
-  var textNames = ['Summary Text', 'Review Text', 'My Notes'];
-  var videoNames = ['Video'];
+  var textNames = ['Summary Text', 'Review Text', 'My Notes', 'Video'];
   var appNames = ['Application', 'Calculator', 'Connections', 'Extra Info'];
   var names;
   switch ($(ele).text()) {
     case 'Overview': names = textNames; break;
-    case 'Video': names = videoNames; break;
     case 'Real World Scenario': names = appNames; break;
   }
   
@@ -625,14 +697,10 @@ function clickCustomButton(ele){
   var html = '<div id="customCurrentTitle" class="col-md-3 center">' +
             '<h3 style="padding-top: 3px">'+$(ele).text()+': </h3>'+
          '</div>'+
-        '<div id="customOptions" class="col-md-5 center">';
+        '<div id="allOptions" class="col-md-4 center">'+
+        '<div id="customOptions">';
 
-  for (var i = 0; i < names.length; i++) {
-    html += '<button onclick="CustomBoxButton(this);" class="btn btn-secondary">'+names[i]+'</button>'+
-            '&nbsp';
-  }
-
-  html += '</div>'+
+  html += '</div></div>'+
         '<div id="goBack" class="col-md-1 center">'+
             '<img id="go-back" style="width: 32px; padding-top: 3px" src="../external/go-back-icon.png"  alt="go back">'+
         '</div>';
@@ -640,12 +708,30 @@ function clickCustomButton(ele){
 
   $('#CustomTextButton').remove();
   $('#CustomVideoButton').remove();
-  $('#CustomTestButton').remove();
   $('#CustomAppButton').remove();
+  $('#CustomSocialButton').remove();
+  $('#CustomMyBoxesButton').remove();
+  $('#CustomDownloadedButton').remove();
+
   $('#CustomExtraSpace').remove();
 
   $('#CustomBoxesTitle').after(html);
   customGoBackButton();
+
+  var html = '';
+  for (var i = 0; i < names.length; i++) {
+    html += '<button onclick="CustomBoxButton(this);" class="btn btn-secondary custom">'+names[i]+'</button>'+
+            '&nbsp';
+  }
+  $('#customOptions').append(html);
+
+  //make it scroll
+  $("#customOptions").wrapInner("<table cellspacing='30'><tr>");
+  $(".custom").wrap("<td></td>");
+  $("customOptions").mousewheel(function(event, delta) {
+      this.scrollLeft -= (delta * 30);
+      event.preventDefault();
+  });
 
 }
 
@@ -1386,5 +1472,82 @@ function calculator() {
         input.innerHTML = "";
     });
 }
+
+
+
+
+(function($) {
+
+var types = ['DOMMouseScroll', 'mousewheel'];
+
+if ($.event.fixHooks) {
+    for ( var i=types.length; i; ) {
+        $.event.fixHooks[ types[--i] ] = $.event.mouseHooks;
+    }
+}
+
+$.event.special.mousewheel = {
+    setup: function() {
+        if ( this.addEventListener ) {
+            for ( var i=types.length; i; ) {
+                this.addEventListener( types[--i], handler, false );
+            }
+        } else {
+            this.onmousewheel = handler;
+        }
+    },
+    
+    teardown: function() {
+        if ( this.removeEventListener ) {
+            for ( var i=types.length; i; ) {
+                this.removeEventListener( types[--i], handler, false );
+            }
+        } else {
+            this.onmousewheel = null;
+        }
+    }
+};
+
+$.fn.extend({
+    mousewheel: function(fn) {
+        return fn ? this.bind("mousewheel", fn) : this.trigger("mousewheel");
+    },
+    
+    unmousewheel: function(fn) {
+        return this.unbind("mousewheel", fn);
+    }
+});
+
+
+function handler(event) {
+    var orgEvent = event || window.event, args = [].slice.call( arguments, 1 ), delta = 0, returnValue = true, deltaX = 0, deltaY = 0;
+    event = $.event.fix(orgEvent);
+    event.type = "mousewheel";
+    
+    // Old school scrollwheel delta
+    if ( orgEvent.wheelDelta ) { delta = orgEvent.wheelDelta/120; }
+    if ( orgEvent.detail     ) { delta = -orgEvent.detail/3; }
+    
+    // New school multidimensional scroll (touchpads) deltas
+    deltaY = delta;
+    
+    // Gecko
+    if ( orgEvent.axis !== undefined && orgEvent.axis === orgEvent.HORIZONTAL_AXIS ) {
+        deltaY = 0;
+        deltaX = -1*delta;
+    }
+    
+    // Webkit
+    if ( orgEvent.wheelDeltaY !== undefined ) { deltaY = orgEvent.wheelDeltaY/120; }
+    if ( orgEvent.wheelDeltaX !== undefined ) { deltaX = -1*orgEvent.wheelDeltaX/120; }
+    
+    // Add event and delta to the front of the arguments
+    args.unshift(event, delta, deltaX, deltaY);
+    
+    return ($.event.dispatch || $.event.handle).apply(this, args);
+}
+
+})(jQuery);
+
 
 

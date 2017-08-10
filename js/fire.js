@@ -111,7 +111,6 @@ function notFirstTime(){
   if(!uid){return;}
 
   database.ref('users/'+uid+'/FirstTime').set('NO');
-  TrackAction('Finished tutorial!');
 }
 
 
